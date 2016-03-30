@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical"
+    android:weightSum="1"
+    android:background="@android:color/holo_red_light">
+
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="203dp"
+        android:id="@+id/listViewV"
+        android:layout_weight="0.61"
+        android:background="@android:color/white"
+        android:layout_margin="5dp" />
+
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="240dp"
+        android:id="@+id/listViewD"
+        android:layout_weight="0.33"
+        android:background="@android:color/white"
+        android:layout_margin="5dp" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/btnAddMatchView"
+        android:layout_gravity="bottom|end"
+        android:layout_weight="0.61"
+        android:src="@android:drawable/ic_input_add"
+        android:cropToPadding="true"
+        app:backgroundTint="@android:color/holo_blue_light"
+        android:tint="@android:color/white"
+        android:layout_margin="16dp" />
+</LinearLayout>

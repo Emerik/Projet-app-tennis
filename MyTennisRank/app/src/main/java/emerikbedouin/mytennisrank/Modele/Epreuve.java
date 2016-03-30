@@ -1,10 +1,13 @@
 package emerikbedouin.mytennisrank.Modele;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 /**
  * Created by emerikbedouin on 10/03/16.
  */
 
-public class Epreuve {
+public class Epreuve implements Parcelable{
 
     private int numEpreuve;
     private String nomEpreuve;
@@ -42,5 +45,43 @@ public class Epreuve {
 
     public void setType(int type) {
         this.type = type;
+    }
+
+
+
+    // Fonction Parcelable
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(numEpreuve);
+        dest.writeString(nomEpreuve);
+        dest.writeInt(type);
+    }
+
+    public static final Parcelable.Creator<Epreuve> CREATOR = new Parcelable.Creator<Epreuve>()
+    {
+        @Override
+        public Epreuve createFromParcel(Parcel source)
+        {
+            return new Epreuve(source);
+        }
+
+        @Override
+        public Epreuve[] newArray(int size)
+        {
+            return new Epreuve[size];
+        }
+    };
+
+    public Epreuve(Parcel in) {
+        this.numEpreuve= in.readInt();
+        this.nomEpreuve = in.readString();
+        this.type = in.readInt();
+
     }
 }

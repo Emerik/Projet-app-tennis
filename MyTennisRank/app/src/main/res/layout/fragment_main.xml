@@ -6,12 +6,118 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="emerikbedouin.mytennisrank.MainActivityFragment"
+    tools:context=".IHM.MainActivityFragment"
     tools:showIn="@layout/activity_main">
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!" />
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Bilan"
+        android:id="@+id/textViewBilan"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true"
+        android:textColor="@color/material_deep_teal_500" />
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Classement :"
+        android:id="@+id/textViewClassement"
+        android:layout_below="@+id/textViewBilan"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="31dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Nbre Victoire :"
+        android:id="@+id/textViewVictoire"
+        android:layout_below="@+id/textViewClassement"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Nbre Défaite :"
+        android:layout_below="@+id/textViewVictoire"
+        android:layout_alignParentStart="true"
+        android:id="@+id/textViewDefaite" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Points : "
+        android:id="@+id/textViewPts"
+        android:layout_alignTop="@+id/textViewClassement"
+        android:layout_toEndOf="@+id/textViewClassCur" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Classement F :"
+        android:id="@+id/textViewClassF"
+        android:layout_alignTop="@+id/textViewVictoire"
+        android:layout_alignStart="@+id/textViewPts" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Pts Man Sup :"
+        android:id="@+id/textViewPtsLevUp"
+        android:layout_below="@+id/textViewClassF"
+        android:layout_alignStart="@+id/textViewClassF" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Voir Match"
+        android:id="@+id/buttonM"
+        android:layout_marginBottom="42dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true" />
+
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="&lt;"
+        android:id="@+id/btnLeftArrow"
+        android:layout_marginBottom="35dp"
+        android:layout_above="@+id/listViewMatch"
+        android:layout_alignParentStart="true" />
+
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=">"
+        android:id="@+id/btnRightArrow"
+        android:layout_alignBottom="@+id/textViewClassCur"
+        android:layout_toEndOf="@+id/textViewClassF" />
+
+    <ListView
+        android:layout_width="100dp"
+        android:layout_height="200dp"
+        android:id="@+id/listViewMatch"
+        android:layout_alignParentStart="true"
+        android:layout_toStartOf="@+id/textViewPtsLevUp"
+        android:layout_alignParentEnd="true"
+        android:layout_above="@+id/buttonM"
+        android:background="@color/background_material_light" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Medium Text"
+        android:id="@+id/textViewClassCur"
+        android:layout_alignBottom="@+id/btnLeftArrow"
+        android:layout_toEndOf="@+id/textViewClassement" />
 </RelativeLayout>

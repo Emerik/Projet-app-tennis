@@ -7,7 +7,66 @@ import java.util.LinkedList;
  */
 public class Classement {
 
-    public static boolean maintienO(int classement, int pts) {
+
+
+
+    public static int calculClassement(Profil p){
+        Joueur j = p.getJoueurProfil();
+        LinkedList<Match> m = p.getMatchs();
+        int classement = 0;
+
+        if (maintien(j.getClassement(), calculPoint(j.getClassement(), m, 0))){
+            classement = j.getClassement();
+            classement++;
+            while(maintien(j.getClassement(), calculPoint(classement, m,0))){
+                classement++;
+            }
+
+            return classement -1;
+        }
+        else{
+            return  j.getClassement()-1;
+        }
+
+    }
+
+    public static int calculClassement(int classement, LinkedList<Match> matchs){
+
+        if (maintien(classement, calculPoint(classement, matchs, 0))){
+            classement++;
+            while(maintien(classement, calculPoint(classement, matchs, 0))){
+                classement++;
+            }
+
+            return classement-1;
+        }
+        else{
+            return  classement-1;
+        }
+
+    }
+
+
+    public static LinkedList<Match> getMatchsIntoAccount(int classement, LinkedList<Match> matchs){
+        LinkedList<Match> matchIntoAccount = new LinkedList<>();
+
+        for (int i=0; i < matchs.size() ; i++){
+            if( (matchs.get(i).getJ2().getClassement() > classement ||  matchs.get(i).getJ2().getClassement() >= classement-3)
+                    && matchs.get(i).getGagnant().equals(matchs.get(i).getJ1())){
+                matchIntoAccount.add(matchs.get(i));
+            }
+        }
+
+        return matchIntoAccount;
+    }
+
+    /**
+     * Détermine si le nombre de points passé en paramètre est suffisant pour le classement donné
+     * @param classement
+     * @param pts
+     * @return
+     */
+    public static boolean maintien(int classement, int pts) {
         if (ptsMaintien(classement) <= pts){
             return true;
         }
@@ -16,77 +75,18 @@ public class Classement {
         }
     }
 
-
-    /** Détermine si le joueur se maintien pour un classement et un nombre de pts donné
-     * @param classement
-     * @param pts
-     * @return
-     */
-    public static boolean maintienOld(int classement, int pts){
-        int m=0;
-        //Pour chaque classement
-        if(classement==0){
-            return true;}
-        else if(classement==1){
-            if(pts>0)
-                return true;}
-        else if(classement==2){
-            if(pts>6)
-                return true;}
-        else if(classement==3){
-            if(pts>70)
-                return true;}
-        else if(classement==4){
-            if(pts>120)
-                return true;}
-        else if(classement==5){
-            if(pts>170)
-                return true;}
-        else if(classement==6){
-            // 30/1
-            if(pts>210)
-                return true;}
-        else if(classement==7){
-            if(pts>280)
-                return true;}
-        else if(classement==8){
-            if(pts>300)
-                return true;}
-        else if(classement==9){
-            if(pts>310)
-                return true;}
-        else if(classement==10){
-            if(pts>320)
-                return true;}
-        else if(classement==11){
-            if(pts>340)
-                return true;}
-        else if(classement==12){
-            // 15/1
-            if(pts>370)
-                return true;}
-        else if(classement==13){
-            if(pts>430)
-                return true;}
-        else if(classement==14){
-            if(pts>430)
-                return true;}
-
-        return false;
-    }
-
     /** Fonction qui calcul la somme des points pour une liste de matchs pour un classement donné
-     * @param j Liste des matchs du joueur
+     * @param classement Le classement pour le calcul
+     * @param match La liste des matchs
+     * @param mode Le mode calcul pour le classement adverse (0 : eq , 1 : sup , 2 : inf)
      * @return Le nombre de points
      */
-    public static int calculPoint(Joueur j, int mode){
+    public static int calculPoint(int classement, LinkedList<Match> match, int mode){
         int points=0;
         int adverClassement=0;
-        LinkedList<Match> match = j.getMatch();
-        int classement = j.getClassement();
 
         for(int i=0;i<match.size();i++){
-            if(match.get(i).getGagnant() == j){
+            if( match.get(i).getGagnant().equals(match.get(i).getJ1()) ){
                 if(mode == 0){
                     adverClassement = match.get(i).getJ2().getClassement();
                 }
@@ -96,7 +96,9 @@ public class Classement {
                 else if(mode == 2){
                     adverClassement = match.get(i).getJ2().getClassement() - 1;
                 }
+
                 System.out.println("Mode"+mode+"Classement "+match.get(i).getJ2().getNom()+" futur:"+adverClassement);
+
                 if(adverClassement > classement+1){
                     points=(points+120);
                 }
@@ -201,6 +203,10 @@ public class Classement {
             classement="15";
         if(classementInt==14)
             classement="5/6";
+        if(classementInt==15)
+            classement="4/6";
+        if(classementInt==16)
+            classement="3/6";
 
         return classement;
     }
@@ -240,7 +246,101 @@ public class Classement {
             classement=13;
         if(c.equals("5/6"))
             classement=14;
+        if(c.equals("4/6"))
+            classement=15;
+        if(c.equals("3/6"))
+            classement=16;
 
         return classement;
     }
+
+    /**
+     * Retourne la liste des classements sous forme de String
+     * @return liste des classements
+     */
+    public static LinkedList<String> getClassements(){
+        LinkedList<String> listClassements = new LinkedList<>();
+
+        listClassements.add("NC");
+        listClassements.add("40");
+        listClassements.add("30/5");
+        listClassements.add("30/4");
+        listClassements.add("30/3");
+        listClassements.add("30/2");
+        listClassements.add("30/1");
+        listClassements.add("30");
+        listClassements.add("15/5");
+        listClassements.add("15/4");
+        listClassements.add("15/3");
+        listClassements.add("15/2");
+        listClassements.add("15/1");
+        listClassements.add("15");
+        listClassements.add("5/6");
+        listClassements.add("4/6");
+        listClassements.add("3/6");
+
+
+        return listClassements;
+
+    }
+
+
+    /** Détermine si le joueur se maintien pour un classement et un nombre de pts donné
+     * @param classement
+     * @param pts
+     * @return
+     */
+    public static boolean maintienOld(int classement, int pts){
+        int m=0;
+        //Pour chaque classement
+        if(classement==0){
+            return true;}
+        else if(classement==1){
+            if(pts>0)
+                return true;}
+        else if(classement==2){
+            if(pts>6)
+                return true;}
+        else if(classement==3){
+            if(pts>70)
+                return true;}
+        else if(classement==4){
+            if(pts>120)
+                return true;}
+        else if(classement==5){
+            if(pts>170)
+                return true;}
+        else if(classement==6){
+            // 30/1
+            if(pts>210)
+                return true;}
+        else if(classement==7){
+            if(pts>280)
+                return true;}
+        else if(classement==8){
+            if(pts>300)
+                return true;}
+        else if(classement==9){
+            if(pts>310)
+                return true;}
+        else if(classement==10){
+            if(pts>320)
+                return true;}
+        else if(classement==11){
+            if(pts>340)
+                return true;}
+        else if(classement==12){
+            // 15/1
+            if(pts>370)
+                return true;}
+        else if(classement==13){
+            if(pts>430)
+                return true;}
+        else if(classement==14){
+            if(pts>430)
+                return true;}
+
+        return false;
+    }
+
 }
