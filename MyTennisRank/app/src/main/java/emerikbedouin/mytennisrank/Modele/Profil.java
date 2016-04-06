@@ -33,7 +33,7 @@ public class Profil implements Parcelable{
     public int getNbreVictoire(){
         int nbr = 0;
         for (int i=0 ; i < matchs.size() ; i++){
-            if (matchs.get(i).getGagnant() == joueurProfil){
+            if (matchs.get(i).getGagnant().equals(joueurProfil) ){
                 nbr++;
             }
         }
@@ -44,7 +44,7 @@ public class Profil implements Parcelable{
     public int getNbreDefaite(){
         int nbr = 0;
         for (int i=0 ; i < matchs.size() ; i++){
-            if (matchs.get(i).getGagnant() != joueurProfil){
+            if ( !matchs.get(i).getGagnant().equals(joueurProfil) ){
                 nbr++;
             }
         }

@@ -4,12 +4,15 @@ import android.content.Intent;
 import android.sax.RootElement;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
+import android.text.Layout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.util.LinkedList;
@@ -32,9 +35,10 @@ public class MainActivityFragment extends Fragment {
     private int modeCalcul = 0;
 
     //View
-    private TextView tvClass, tvVict, tvDef, tvPts, tvClassFinal, tvLevUp, tvHypo;
+    private TextView tvClass, tvVict, tvDef, tvPts, tvClassFinal, tvLevUp, tvHypo, tvHypoResult;
     private ListView listViewMatch;
     private Button btnLeft, btnRight;
+    private RelativeLayout layoutHypo,layoutHypoResult;
 
 
 
@@ -70,11 +74,15 @@ public class MainActivityFragment extends Fragment {
         tvLevUp = (TextView) rootView.findViewById(R.id.textViewPtsLevUp);
 
         tvHypo = (TextView) rootView.findViewById(R.id.textViewClassCur);
+        layoutHypo = (RelativeLayout) rootView.findViewById(R.id.layoutHypo);
+        tvHypoResult = (TextView) rootView.findViewById(R.id.textViewClassResHypo);
+        layoutHypoResult = (RelativeLayout) rootView.findViewById(R.id.layoutResHypo);
+
 
         //Recuperation données ----------------------------------
         creationProfilFictif();
         classementBilan = mainProfil.getJoueurProfil().getClassement();
-
+        System.out.println("Classement bilan "+classementBilan);
         //CalculBilan
         calculBilanProfil();
         calculHypot();
@@ -86,6 +94,7 @@ public class MainActivityFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 if(classementBilan > 0) {
+                    System.out.println("Hypo class "+classementBilan);
                     classementBilan--;
                     calculHypot();
                 }
@@ -96,11 +105,14 @@ public class MainActivityFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 if(classementBilan < 20) {
+                    System.out.println("Hypo class "+classementBilan);
                     classementBilan++;
                     calculHypot();
                 }
             }
         });
+
+
 
         return rootView;
     }
@@ -109,7 +121,19 @@ public class MainActivityFragment extends Fragment {
 
         int ptsManquant = Classement.calculPoint(classementBilan, mainProfil.getMatchs(), modeCalcul);
         int classementCalcule = Classement.calculClassement(classementBilan, mainProfil.getMatchs());
-        tvHypo.setText(Classement.convertirClassementInt(classementCalcule)+" : "+ptsManquant);
+        tvHypo.setText(Classement.convertirClassementInt(classementBilan));
+        tvHypoResult.setText("Points : "+ptsManquant);
+
+        // Coloration du cadre classement hypothetique
+        if(classementCalcule > classementBilan){
+            layoutHypoResult.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.colorGreen));
+        }
+        else if(classementCalcule < classementBilan){
+            layoutHypoResult.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.colorRed));
+        }
+        else{
+            layoutHypoResult.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.colorOrange));
+        }
 
     }
 
@@ -138,8 +162,17 @@ public class MainActivityFragment extends Fragment {
 
     //To delete
     public void creationProfilFictif(){
+        try {
+            if (getActivity().getIntent().getExtras().getParcelable("profil") != null) {
+                mainProfil = getActivity().getIntent().getExtras().getParcelable("profil");
+            }
+        }
+        catch(Exception ex){
+            System.out.println(ex.getMessage());
 
-        if(getActivity().getIntent().getExtras().getParcelable("profil") != null) {
+        }
+
+        if(mainProfil == null){
             Joueur j1 = new Joueur(1, "John", 9, 10, 0);
             Joueur j2 = new Joueur(1, "Grigor", 9, 10, 0);
             Epreuve e1 = new Epreuve(1, "Championnat", 1);
@@ -155,9 +188,6 @@ public class MainActivityFragment extends Fragment {
             mainProfil.addMatch(m2);
             mainProfil.addMatch(m3);
             mainProfil.addMatch(m4);
-        }
-        else{
-            mainProfil = getActivity().getIntent().getExtras().getParcelable("profil");
         }
     }
 }

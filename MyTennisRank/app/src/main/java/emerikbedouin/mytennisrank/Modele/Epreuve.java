@@ -47,7 +47,26 @@ public class Epreuve implements Parcelable{
         this.type = type;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Epreuve)) return false;
 
+        Epreuve epreuve = (Epreuve) o;
+
+        if (getNumEpreuve() != epreuve.getNumEpreuve()) return false;
+        if (getType() != epreuve.getType()) return false;
+        return !(getNomEpreuve() != null ? !getNomEpreuve().equals(epreuve.getNomEpreuve()) : epreuve.getNomEpreuve() != null);
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = getNumEpreuve();
+        result = 31 * result + (getNomEpreuve() != null ? getNomEpreuve().hashCode() : 0);
+        result = 31 * result + getType();
+        return result;
+    }
 
     // Fonction Parcelable
 

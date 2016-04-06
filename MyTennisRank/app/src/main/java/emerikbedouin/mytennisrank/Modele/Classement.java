@@ -97,7 +97,7 @@ public class Classement {
                     adverClassement = match.get(i).getJ2().getClassement() - 1;
                 }
 
-                System.out.println("Mode"+mode+"Classement "+match.get(i).getJ2().getNom()+" futur:"+adverClassement);
+                //System.out.println("Mode"+mode+"Classement "+match.get(i).getJ2().getNom()+" futur:"+adverClassement);
 
                 if(adverClassement > classement+1){
                     points=(points+120);

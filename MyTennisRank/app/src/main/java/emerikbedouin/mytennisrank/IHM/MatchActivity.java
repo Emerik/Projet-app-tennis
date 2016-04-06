@@ -9,6 +9,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.LinkedList;
@@ -26,6 +27,7 @@ public class MatchActivity extends AppCompatActivity {
     // View
     private ListView listViewVictoire, listViewDefaite;
     private FloatingActionButton btnAddMatch;
+    private Button btnBilan;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,7 +92,19 @@ public class MatchActivity extends AppCompatActivity {
                 Intent intent = new Intent(MatchActivity.this, MatchDetailActivity.class);
                 //Passage du profil
                 intent.putExtra("profil", mainProfil);
-                intent.putExtra("mode","ajout");
+                intent.putExtra("mode","add");
+                startActivity(intent);
+            }
+        });
+
+        btnBilan = (Button) findViewById(R.id.buttonBilan);
+        btnBilan.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //Lancement de la fenetre d'ajout de match
+                Intent intent = new Intent(MatchActivity.this, MainActivity.class);
+                //Passage du profil
+                intent.putExtra("profil", mainProfil);
                 startActivity(intent);
             }
         });
@@ -118,11 +132,19 @@ public class MatchActivity extends AppCompatActivity {
             // l'index de l'item dans notre ListView
             int itemPosition = position;
 
-            // On récupère le texte de l'item cliqué
-            Match itemValue = (Match) ((ListView) view).getItemAtPosition(position);
+            // On récupère le match  cliqué
+            Match matchSelected = (Match) parent.getItemAtPosition(position);
 
             // On affiche ce texte avec un Toast
-            Toast.makeText( getApplicationContext(), "Position :" + itemPosition + "  ListItem : " + itemValue, Toast.LENGTH_LONG).show();
+            //Toast.makeText( getApplicationContext(), "Position :" + itemPosition + "  ListItem : " + itemValue, Toast.LENGTH_LONG).show();
+
+            // Lancement de l'activité MatchDetailActivity
+            Intent intent = new Intent(MatchActivity.this, MatchDetailActivity.class);
+            //Passage du profil
+            intent.putExtra("profil", mainProfil);
+            intent.putExtra("mode","modify");
+            intent.putExtra("match", matchSelected);
+            startActivity(intent);
         }
     }
 }

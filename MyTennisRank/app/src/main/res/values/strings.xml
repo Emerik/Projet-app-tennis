@@ -1,4 +1,14 @@
 <resources>
     <string name="app_name">MyTennisRank</string>
     <string name="action_settings">Settings</string>
+
+    <string name="text_bilan">Bilan</string>
+    <string name="text_rank">Classement</string>
+    <string name="text_name">Nom</string>
+
+    <string name="text_button_valid">Valider</string>
+    <string name="text_button_cancel">Annuler</string>
+
+
+
 </resources>

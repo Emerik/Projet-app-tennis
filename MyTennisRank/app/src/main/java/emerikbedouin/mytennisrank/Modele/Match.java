@@ -97,6 +97,40 @@ public class Match implements Parcelable{
         this.epreuve = epreuve;
     }
 
+    // Equals & HashCode
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Match)) return false;
+
+        Match match = (Match) o;
+
+        if (getResultat() != match.getResultat()) return false;
+        if (getJ1() != null ? !getJ1().equals(match.getJ1()) : match.getJ1() != null) return false;
+        if (getJ2() != null ? !getJ2().equals(match.getJ2()) : match.getJ2() != null) return false;
+        if (getScore() != null ? !getScore().equals(match.getScore()) : match.getScore() != null)
+            return false;
+        if (getSurface() != null ? !getSurface().equals(match.getSurface()) : match.getSurface() != null)
+            return false;
+        return !(getEpreuve() != null ? !getEpreuve().equals(match.getEpreuve()) : match.getEpreuve() != null);
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = getJ1() != null ? getJ1().hashCode() : 0;
+        result = 31 * result + (getJ2() != null ? getJ2().hashCode() : 0);
+        result = 31 * result + (getScore() != null ? getScore().hashCode() : 0);
+        result = 31 * result + (getSurface() != null ? getSurface().hashCode() : 0);
+        result = 31 * result + getResultat();
+        result = 31 * result + (getEpreuve() != null ? getEpreuve().hashCode() : 0);
+        return result;
+    }
+
+
+    // Parcelable function
+
     @Override
     public int describeContents() {
         return 0;

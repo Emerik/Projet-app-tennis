@@ -3,4 +3,14 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
+    <color name="colorPerso">#f44336</color>
+    <color name="colorPersoDark">#ff009688</color>
+    <color name="colorPersoAccent">#ff009688</color>
+
+    <color name="colorRed">#ffff4444</color>
+    <color name="colorGreen">#FFB7F993</color>
+    <color name="colorOrange">#f9c693</color>
+
+
+    <color name="black">#000000</color>
 </resources>
