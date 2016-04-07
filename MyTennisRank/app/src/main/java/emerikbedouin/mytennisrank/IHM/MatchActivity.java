@@ -73,9 +73,10 @@ public class MatchActivity extends AppCompatActivity {
         }
 
         //Définition de l'adapter
-        ArrayAdapter<Match> adapterV = new ArrayAdapter<Match>(this, android.R.layout.simple_list_item_1, android.R.id.text1, listVictoire);
-        ArrayAdapter<Match> adapterD = new ArrayAdapter<Match>(this, android.R.layout.simple_list_item_1, android.R.id.text1, listDefaite);
-
+       // ArrayAdapter<Match> adapterV = new ArrayAdapter<Match>(this, android.R.layout.simple_list_item_1, android.R.id.text1, listVictoire);
+       // ArrayAdapter<Match> adapterD = new ArrayAdapter<Match>(this, android.R.layout.simple_list_item_1, android.R.id.text1, listDefaite);
+        MatchAdapter adapterV = new MatchAdapter(this, listVictoire);
+        MatchAdapter adapterD = new MatchAdapter(this, listDefaite);
         listViewVictoire.setAdapter(adapterV);
         listViewDefaite.setAdapter(adapterD);
 

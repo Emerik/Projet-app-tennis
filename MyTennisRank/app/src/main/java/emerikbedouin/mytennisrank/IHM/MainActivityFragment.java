@@ -154,7 +154,7 @@ public class MainActivityFragment extends Fragment {
 
         //La listview
         LinkedList<Match> matchsIntoAccount = Classement.getMatchsIntoAccount(mainProfil.getJoueurProfil().getClassement(), mainProfil.getMatchs());
-        ArrayAdapter<Match> adapterM = new ArrayAdapter<Match>(this.getActivity(), android.R.layout.simple_list_item_1, android.R.id.text1, matchsIntoAccount);
+        MatchAdapter adapterM = new MatchAdapter(this.getActivity(), matchsIntoAccount);
 
         listViewMatch.setAdapter(adapterM);
     }
@@ -174,7 +174,7 @@ public class MainActivityFragment extends Fragment {
 
         if(mainProfil == null){
             Joueur j1 = new Joueur(1, "John", 9, 10, 0);
-            Joueur j2 = new Joueur(1, "Grigor", 9, 10, 0);
+            Joueur j2 = new Joueur(1, "Grigor Dimitrov", 9, 10, 0);
             Epreuve e1 = new Epreuve(1, "Championnat", 1);
 
             mainProfil = new Profil(1, "Emerik", j1);
