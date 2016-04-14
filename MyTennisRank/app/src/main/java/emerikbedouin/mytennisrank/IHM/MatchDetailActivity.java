@@ -1,6 +1,7 @@
 package emerikbedouin.mytennisrank.IHM;
 
 import android.content.Intent;
+import android.os.Parcelable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -94,7 +95,7 @@ public class MatchDetailActivity extends AppCompatActivity {
                     //Lancement de la fenetre des matchs
                     Intent intent = new Intent(MatchDetailActivity.this, MatchActivity.class);
                     //Passage du profil
-                    intent.putExtra("profil", mainProfil);
+                    intent.putExtra("profil", (Parcelable) mainProfil);
                     startActivity(intent);
                 }
                 else{
@@ -110,7 +111,7 @@ public class MatchDetailActivity extends AppCompatActivity {
                 //Lancement de la fenetre des matchs
                 Intent intent = new Intent(MatchDetailActivity.this, MatchActivity.class);
                 //Passage du profil
-                intent.putExtra("profil", mainProfil);
+                intent.putExtra("profil", (Parcelable) mainProfil);
                 startActivity(intent);
             }
         });

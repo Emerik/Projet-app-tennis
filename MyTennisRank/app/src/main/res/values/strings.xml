@@ -9,6 +9,8 @@
     <string name="text_button_valid">Valider</string>
     <string name="text_button_cancel">Annuler</string>
 
-
+    <string name="text_item_new_profil">Nouveau profil</string>
+    <string name="text_item_save_profil">Sauvegarder</string>
+    <string name="text_item_load_profil">Charger</string>
 
 </resources>

@@ -15,9 +15,9 @@
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="@string/text_name"
         android:id="@+id/textView8"
-        android:layout_marginBottom="35dp"
-        android:layout_above="@+id/editText"
-        android:layout_alignStart="@+id/editText" />
+        android:layout_alignParentTop="true"
+        android:layout_alignStart="@+id/editTextName"
+        android:layout_marginTop="135dp" />
 
     <EditText
         android:layout_width="wrap_content"
@@ -25,24 +25,32 @@
         android:inputType="textPersonName"
         android:text="@string/text_name"
         android:ems="10"
-        android:id="@+id/editText"
-        android:layout_above="@+id/buttonValid"
-        android:layout_alignParentStart="true"
-        android:layout_marginStart="40dp" />
+        android:id="@+id/editTextName"
+        android:layout_below="@+id/textView8"
+
+        android:layout_marginTop="38dp" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/text_button_valid"
         android:id="@+id/buttonValid"
-        android:layout_alignTop="@+id/buttonCancel"
-        android:layout_centerHorizontal="true" />
+
+        android:layout_below="@+id/spinnerClassement"
+        android:layout_toEndOf="@+id/editTextName" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/text_button_cancel"
         android:id="@+id/buttonCancel"
+        android:layout_alignTop="@+id/buttonValid"
+        android:layout_toEndOf="@+id/textView8" />
+
+    <Spinner
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/spinnerClassement"
         android:layout_centerVertical="true"
-        android:layout_alignStart="@+id/editText" />
+        />
 </RelativeLayout>

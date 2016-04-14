@@ -23,4 +23,6 @@
         <activity android:name=".IHM.NewProfilActivity"></activity>
     </application>
 
+    <uses-permission android:name="android.permission.WRITE_INTERNAL_STORAGE"></uses-permission>
+
 </manifest>

@@ -1,6 +1,7 @@
 package emerikbedouin.mytennisrank.IHM;
 
 import android.content.Intent;
+import android.os.Parcelable;
 import android.sax.RootElement;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
@@ -30,7 +31,6 @@ import emerikbedouin.mytennisrank.R;
  */
 public class MainActivityFragment extends Fragment {
 
-    private Profil mainProfil;
     private int classementBilan;
     private int modeCalcul = 0;
 
@@ -50,6 +50,7 @@ public class MainActivityFragment extends Fragment {
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_main, container, false);
 
+        classementBilan = 0;
 
         listViewMatch = (ListView) rootView.findViewById(R.id.listViewMatch);
 
@@ -60,7 +61,7 @@ public class MainActivityFragment extends Fragment {
 
                 Intent intent = new Intent(getActivity(), MatchActivity.class);
                 //Passage du profil
-                intent.putExtra("profil", mainProfil);
+                intent.putExtra("profil", (Parcelable) ((MainActivity) getActivity()).getMainProfil());
                 startActivity(intent);
 
             }
@@ -78,14 +79,6 @@ public class MainActivityFragment extends Fragment {
         tvHypoResult = (TextView) rootView.findViewById(R.id.textViewClassResHypo);
         layoutHypoResult = (RelativeLayout) rootView.findViewById(R.id.layoutResHypo);
 
-
-        //Recuperation données ----------------------------------
-        creationProfilFictif();
-        classementBilan = mainProfil.getJoueurProfil().getClassement();
-        System.out.println("Classement bilan "+classementBilan);
-        //CalculBilan
-        calculBilanProfil();
-        calculHypot();
 
         btnLeft = (Button) rootView.findViewById(R.id.btnLeftArrow);
         btnRight = (Button) rootView.findViewById(R.id.btnRightArrow);
@@ -112,12 +105,27 @@ public class MainActivityFragment extends Fragment {
             }
         });
 
+        //Recuperation données ---------------------------------------------------------------------
+
+        getProfil();
+
+        if(((MainActivity) getActivity()).getMainProfil() != null) {
+            classementBilan = ((MainActivity) getActivity()).getMainProfil().getJoueurProfil().getClassement();
+            System.out.println("Classement bilan " + classementBilan);
+            //CalculBilan
+            calculBilanProfil();
+            calculHypot();
+        }
+
+
 
 
         return rootView;
     }
 
     public void calculHypot(){
+
+        Profil mainProfil = ((MainActivity) getActivity()).getMainProfil();
 
         int ptsManquant = Classement.calculPoint(classementBilan, mainProfil.getMatchs(), modeCalcul);
         int classementCalcule = Classement.calculClassement(classementBilan, mainProfil.getMatchs());
@@ -138,6 +146,9 @@ public class MainActivityFragment extends Fragment {
     }
 
     public void calculBilanProfil(){
+
+        Profil mainProfil = ((MainActivity) getActivity()).getMainProfil();
+
         //Classement
         tvClass.setText(tvClass.getText()+" "+Classement.convertirClassementInt(mainProfil.getJoueurProfil().getClassement()));
         //Victoire
@@ -161,10 +172,11 @@ public class MainActivityFragment extends Fragment {
 
 
     //To delete
-    public void creationProfilFictif(){
+    public void getProfil(){
         try {
             if (getActivity().getIntent().getExtras().getParcelable("profil") != null) {
-                mainProfil = getActivity().getIntent().getExtras().getParcelable("profil");
+                ((MainActivity) getActivity()).setMainProfil( (Profil) getActivity().getIntent().getExtras().getParcelable("profil") );
+
             }
         }
         catch(Exception ex){
@@ -172,22 +184,22 @@ public class MainActivityFragment extends Fragment {
 
         }
 
-        if(mainProfil == null){
-            Joueur j1 = new Joueur(1, "John", 9, 10, 0);
+        if(((MainActivity) getActivity()).getMainProfil() == null){
+            /*Joueur j1 = new Joueur(1, "John", 9, 10, 0);
             Joueur j2 = new Joueur(1, "Grigor Dimitrov", 9, 10, 0);
             Epreuve e1 = new Epreuve(1, "Championnat", 1);
 
-            mainProfil = new Profil(1, "Emerik", j1);
+            ((MainActivity) getActivity()).setMainProfil( new Profil(1, "Emerik", j1) );
 
-            Match m1 = new Match(mainProfil.getJoueurProfil(), j2, "7/5-7/5", "GreenSet", 1, e1);
-            Match m2 = new Match(mainProfil.getJoueurProfil(), j2, "6/3-6/3", "Terre Battue", 2, e1);
-            Match m3 = new Match(mainProfil.getJoueurProfil(), j2, "7/5-6/4", "GreenSet", 1, e1);
-            Match m4 = new Match(mainProfil.getJoueurProfil(), j2, "7/5-6/4", "GreenSet", 2, e1);
+            Match m1 = new Match(((MainActivity) getActivity()).getMainProfil().getJoueurProfil(), j2, "7/5-7/5", "GreenSet", 1, e1);
+            Match m2 = new Match(((MainActivity) getActivity()).getMainProfil().getJoueurProfil(), j2, "6/3-6/3", "Terre Battue", 2, e1);
+            Match m3 = new Match(((MainActivity) getActivity()).getMainProfil().getJoueurProfil(), j2, "7/5-6/4", "GreenSet", 1, e1);
+            Match m4 = new Match(((MainActivity) getActivity()).getMainProfil().getJoueurProfil(), j2, "7/5-6/4", "GreenSet", 2, e1);
 
-            mainProfil.addMatch(m1);
-            mainProfil.addMatch(m2);
-            mainProfil.addMatch(m3);
-            mainProfil.addMatch(m4);
+            ((MainActivity) getActivity()).getMainProfil().addMatch(m1);
+            ((MainActivity) getActivity()).getMainProfil().addMatch(m2);
+            ((MainActivity) getActivity()).getMainProfil().addMatch(m3);
+            ((MainActivity) getActivity()).getMainProfil().addMatch(m4);*/
         }
     }
 }

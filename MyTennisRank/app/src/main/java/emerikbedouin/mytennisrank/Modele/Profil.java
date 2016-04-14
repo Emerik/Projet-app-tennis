@@ -3,12 +3,13 @@ package emerikbedouin.mytennisrank.Modele;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.io.Serializable;
 import java.util.LinkedList;
 
 /**
  * Created by emerikbedouin on 10/03/16.
  */
-public class Profil implements Parcelable{
+public class Profil implements Parcelable, Serializable{
 
     private int id_profil;
     private String nom;
@@ -16,7 +17,10 @@ public class Profil implements Parcelable{
     private LinkedList<Match> matchs;
 
     public Profil() {
-
+        id_profil = 0;
+        nom = "";
+        joueurProfil = new Joueur();
+        matchs = new LinkedList<>();
     }
 
     public Profil(int idp, String nom, Joueur j) {

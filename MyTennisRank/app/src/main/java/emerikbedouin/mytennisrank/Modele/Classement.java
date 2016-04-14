@@ -14,36 +14,39 @@ public class Classement {
         Joueur j = p.getJoueurProfil();
         LinkedList<Match> m = p.getMatchs();
         int classement = 0;
-
-        if (maintien(j.getClassement(), calculPoint(j.getClassement(), m, 0))){
-            classement = j.getClassement();
-            classement++;
-            while(maintien(j.getClassement(), calculPoint(classement, m,0))){
+        if(m.size() > 0) {
+            if (maintien(j.getClassement(), calculPoint(j.getClassement(), m, 0))) {
+                classement = j.getClassement();
                 classement++;
+                while (maintien(classement, calculPoint(classement, m, 0))) {
+                    classement++;
+                }
+
+                return classement - 1;
+            } else {
+                return j.getClassement() - 1;
             }
-
-            return classement -1;
-        }
-        else{
-            return  j.getClassement()-1;
         }
 
+        return classement-1;
     }
 
     public static int calculClassement(int classement, LinkedList<Match> matchs){
 
-        if (maintien(classement, calculPoint(classement, matchs, 0))){
-            classement++;
-            while(maintien(classement, calculPoint(classement, matchs, 0))){
+        if(matchs.size() > 0) {
+            if (maintien(classement, calculPoint(classement, matchs, 0))) {
                 classement++;
+                while (maintien(classement, calculPoint(classement, matchs, 0))) {
+                    classement++;
+                }
+
+                return classement - 1;
+            } else {
+                return classement - 1;
             }
-
-            return classement-1;
-        }
-        else{
-            return  classement-1;
         }
 
+        return classement-1;
     }
 
 

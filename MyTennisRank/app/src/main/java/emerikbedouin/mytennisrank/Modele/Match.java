@@ -3,10 +3,12 @@ package emerikbedouin.mytennisrank.Modele;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.io.Serializable;
+
 /**
  * Created by emerikbedouin on 10/03/16.
  */
-public class Match implements Parcelable{
+public class Match implements Parcelable, Serializable{
 
     private Joueur j1;
     private Joueur j2;
