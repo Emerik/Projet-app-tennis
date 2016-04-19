@@ -111,6 +111,9 @@ public class MatchActivity extends AppCompatActivity {
             }
         });
 
+
+        // Implémentation du swipe to delete
+
     }
 
     // A définir -----------------------------------------

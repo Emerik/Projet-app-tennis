@@ -111,7 +111,8 @@
         android:text="&lt;"
         android:id="@+id/btnLeftArrow"
         android:layout_alignTop="@+id/btnRightArrow"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:background="@color/colorPerso" />
 
     <Button
         style="?android:attr/buttonStyleSmall"
@@ -120,7 +121,8 @@
         android:text=">"
         android:id="@+id/btnRightArrow"
         android:layout_centerVertical="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignParentEnd="true"
+        android:background="@color/colorPerso" />
 
     <TextView
         android:layout_width="wrap_content"

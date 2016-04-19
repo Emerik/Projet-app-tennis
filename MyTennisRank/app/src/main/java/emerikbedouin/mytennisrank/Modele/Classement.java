@@ -288,6 +288,7 @@ public class Classement {
     }
 
 
+    @Deprecated
     /** Détermine si le joueur se maintien pour un classement et un nombre de pts donné
      * @param classement
      * @param pts
