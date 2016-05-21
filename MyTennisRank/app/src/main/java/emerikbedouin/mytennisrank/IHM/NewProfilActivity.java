@@ -12,6 +12,7 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import emerikbedouin.mytennisrank.Controler.FileManager;
+import emerikbedouin.mytennisrank.Controler.ProfilSingleton;
 import emerikbedouin.mytennisrank.Modele.Classement;
 import emerikbedouin.mytennisrank.Modele.Profil;
 import emerikbedouin.mytennisrank.R;
@@ -54,12 +55,19 @@ public class NewProfilActivity extends AppCompatActivity {
 
 
                     // Enregistrement
-                    FileManager.saveProfil(NewProfilActivity.this, newProfil, "profil.txt");
+                    if( FileManager.saveProfil(NewProfilActivity.this, newProfil, "profil.txt") ){
+                        Toast.makeText(getApplicationContext(), "Profil sauvegardé", Toast.LENGTH_LONG).show();
+                    }
+                    else{
+                        Toast.makeText(getApplicationContext(), "Erreur : Profil non sauvegardé", Toast.LENGTH_LONG).show();
+                    }
+
+                    ProfilSingleton.getInstance().setProfil(newProfil);
 
                     //Lancement de la fenetre principale
                     Intent intent = new Intent(NewProfilActivity.this, MainActivity.class);
                     //Passage du profil
-                    intent.putExtra("profil", (Parcelable) newProfil);
+                    //intent.putExtra("profil", (Parcelable) newProfil);
                     startActivity(intent);
                 }
                 else{

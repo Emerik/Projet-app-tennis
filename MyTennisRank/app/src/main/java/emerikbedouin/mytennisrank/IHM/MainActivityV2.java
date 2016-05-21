@@ -1,23 +1,18 @@
 package emerikbedouin.mytennisrank.IHM;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.os.Parcelable;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.View;
+import emerikbedouin.mytennisrank.R;
+import android.content.Intent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
-
 import emerikbedouin.mytennisrank.Controler.FileManager;
 import emerikbedouin.mytennisrank.Controler.ProfilSingleton;
-import emerikbedouin.mytennisrank.Modele.Profil;
-import emerikbedouin.mytennisrank.R;
 
-public class MainActivity extends AppCompatActivity {
+
+public class MainActivityV2 extends AppCompatActivity {
 
     //private Profil mainProfil = null;
 
@@ -30,10 +25,12 @@ public class MainActivity extends AppCompatActivity {
         // Recuperation d'un eventuel profil en memoire
         loadProfil();
 
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_main_activity_v2);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         toolbar.setNavigationIcon(R.drawable.balle);
+
+        toolbar.setTitle("Tennis Rank");
 
         /*FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -80,7 +77,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void newProfil(){
         //Lancement de la fenetre de création d'un nouveau profil
-        Intent intent = new Intent(MainActivity.this, NewProfilActivity.class);
+        Intent intent = new Intent(MainActivityV2.this, NewProfilActivity.class);
         startActivity(intent);
     }
 
@@ -112,3 +109,4 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 }
+

@@ -5,6 +5,7 @@ import android.os.Parcelable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Adapter;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -13,6 +14,7 @@ import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import emerikbedouin.mytennisrank.Controler.ProfilSingleton;
 import emerikbedouin.mytennisrank.Modele.Classement;
 import emerikbedouin.mytennisrank.Modele.Joueur;
 import emerikbedouin.mytennisrank.Modele.Match;
@@ -21,7 +23,7 @@ import emerikbedouin.mytennisrank.R;
 
 public class MatchDetailActivity extends AppCompatActivity {
 
-    private Profil mainProfil;
+    //private Profil mainProfil;
     private int mode;
     private Match matchDetailed;
     private boolean fieldsValid;
@@ -41,9 +43,11 @@ public class MatchDetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_match_detail);
 
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
+
         try {
-            if (getIntent().getExtras().getParcelable("profil") != null) {
-                mainProfil = getIntent().getExtras().getParcelable("profil");
+            if (getIntent().getExtras().get("mode") != null) {
+                //mainProfil = getIntent().getExtras().getParcelable("profil");
                 if(getIntent().getExtras().get("mode").equals("modify")){
                     mode = 1;
                     matchDetailed = getIntent().getExtras().getParcelable("match");
@@ -54,6 +58,10 @@ public class MatchDetailActivity extends AppCompatActivity {
                 else{
                     mode = 0;
                 }
+            }
+            else{
+                //mainProfil = new Profil();
+                mode = 2;
             }
         }
         catch(Exception ex){
@@ -95,7 +103,7 @@ public class MatchDetailActivity extends AppCompatActivity {
                     //Lancement de la fenetre des matchs
                     Intent intent = new Intent(MatchDetailActivity.this, MatchActivity.class);
                     //Passage du profil
-                    intent.putExtra("profil", (Parcelable) mainProfil);
+                    //intent.putExtra("profil", (Parcelable) mainProfil);
                     startActivity(intent);
                 }
                 else{
@@ -111,7 +119,7 @@ public class MatchDetailActivity extends AppCompatActivity {
                 //Lancement de la fenetre des matchs
                 Intent intent = new Intent(MatchDetailActivity.this, MatchActivity.class);
                 //Passage du profil
-                intent.putExtra("profil", (Parcelable) mainProfil);
+                //intent.putExtra("profil", (Parcelable) mainProfil);
                 startActivity(intent);
             }
         });
@@ -146,7 +154,7 @@ public class MatchDetailActivity extends AppCompatActivity {
         j2.setNom(editTextJ2.getText().toString());
         j2.setClassement(Classement.convertirClassementString((String) spinnerClassement.getSelectedItem()));
 
-        match.setJ1(mainProfil.getJoueurProfil());
+        match.setJ1(ProfilSingleton.getInstance().getProfil().getJoueurProfil());
         match.setJ2(j2);
 
         int selectedId = radioGroupVD.getCheckedRadioButtonId();
@@ -166,22 +174,37 @@ public class MatchDetailActivity extends AppCompatActivity {
     }
 
     public void addMatch(){
-        Match matchTemp = getMatchFromEntry();
+
         // Ajout au profil
-        mainProfil.getMatchs().add(matchTemp);
+        if(ProfilSingleton.getInstance().getProfil() != null) {
+            Match matchTemp = getMatchFromEntry();
+            ProfilSingleton.getInstance().getProfil().getMatchs().add(matchTemp);
+        }
+        else{
+            Toast.makeText(getApplicationContext(), "Erreur : Aucun profil !", Toast.LENGTH_LONG).show();
+        }
     }
 
     public void modifyMatch(){
-        Match matchTemp = getMatchFromEntry();
 
-        for (int i=0 ; i < mainProfil.getMatchs().size() ; i++){
-            if(mainProfil.getMatchs().get(i).equals(matchDetailed)){
-                mainProfil.getMatchs().remove(i);
+        if(ProfilSingleton.getInstance().getProfil() != null) {
+            Match matchTemp = getMatchFromEntry();
+            for (int i = 0; i < ProfilSingleton.getInstance().getProfil().getMatchs().size(); i++) {
+                if (ProfilSingleton.getInstance().getProfil().getMatchs().get(i).equals(matchDetailed)) {
+                    ProfilSingleton.getInstance().getProfil().getMatchs().remove(i);
+                }
             }
+            ProfilSingleton.getInstance().getProfil().getMatchs().add(matchTemp);
         }
-        mainProfil.getMatchs().add(matchTemp);
+        else{
+            Toast.makeText(getApplicationContext(), "Erreur : Aucun profil !", Toast.LENGTH_LONG).show();
+        }
     }
 
+    /**
+     * Controle des champs obligatoire
+     * @return
+     */
     public boolean controlField(){
         if (radioGroupVD.getCheckedRadioButtonId() == -1) return false;
 

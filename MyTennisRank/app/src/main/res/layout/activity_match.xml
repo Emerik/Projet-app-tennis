@@ -47,7 +47,7 @@
         android:text="Bilan"
         android:id="@+id/buttonBilan"
         android:layout_gravity="bottom|center"
-        android:background="@color/colorRed" />
+        android:background="@drawable/btn_tennisrank" />
 
     <android.support.design.widget.FloatingActionButton
         android:layout_width="wrap_content"

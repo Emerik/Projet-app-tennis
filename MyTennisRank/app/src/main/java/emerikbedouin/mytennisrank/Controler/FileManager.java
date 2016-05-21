@@ -27,7 +27,7 @@ public class FileManager {
      * @param profil
      * @return
      */
-    public static int saveProfil(Activity activity, Profil profil, String fileName){
+    public static boolean saveProfil(Activity activity, Profil profil, String fileName){
 
         FileOutputStream fos = null;
         ObjectOutputStream oos = null;
@@ -45,7 +45,7 @@ public class FileManager {
             if (fos != null)
                 fos.close();
 
-            return 1;
+            return true;
         }
         catch (FileNotFoundException e)
         {
@@ -58,7 +58,7 @@ public class FileManager {
             e.printStackTrace();
         }
 
-        return 0;
+        return false;
     }
 
     public static int deleteProfil(Profil p){
