@@ -28,6 +28,7 @@ public class Classement {
             }
         }
 
+        System.out.println("Classement"+classement);
         return classement-1;
     }
 
@@ -50,21 +51,225 @@ public class Classement {
     }
 
 
-    public static LinkedList<Match> getMatchsIntoAccount(int classement, LinkedList<Match> matchs){
+    public static int modeClassementAdversaire(int mode, Joueur adversaire){
+        if(mode == 0){
+            return adversaire.getClassement();
+        }
+        else if(mode == 1){
+            return adversaire.getFuturClassement();
+        }
+        else if(mode == 2){
+           return adversaire.getClassement() - 1;
+        }
+
+        return 0;
+    }
+
+    public static LinkedList<Match> getMatchsIntoAccount(int classement, LinkedList<Match> allMatchs, int mode){
+
+        int nbrMatchPEC = calculNbrVictoirePEC(allMatchs, classement, mode);
+        int adverClassement = 0;
+
         LinkedList<Match> matchIntoAccount = new LinkedList<>();
 
+        LinkedList<Match> matchs = Match.sortDesc(allMatchs);
+
         for (int i=0; i < matchs.size() ; i++){
-            if( (matchs.get(i).getJ2().getClassement() > classement ||  matchs.get(i).getJ2().getClassement() >= classement-3)
-                    && matchs.get(i).getGagnant().equals(matchs.get(i).getJ1())){
+
+            adverClassement = modeClassementAdversaire(mode, matchs.get(i).getJ2());
+
+            if( (adverClassement > classement ||  adverClassement >= classement-3)
+                    && matchs.get(i).getGagnant().equals(matchs.get(i).getJ1()) && nbrMatchPEC > 0 && matchs.get(i).getWo() != 1){
                 matchIntoAccount.add(matchs.get(i));
+                nbrMatchPEC --;
             }
         }
 
         return matchIntoAccount;
     }
 
+    public static int bonusChampionnat(LinkedList<Match> matchs){
+        int nbrBonusChpt = 3;
+        int pts = 0;
+        for(int i=0;i<matchs.size();i++) {
+            if (matchs.get(i).getBonusChpt() == 1 && nbrBonusChpt > 0 && matchs.get(i).getGagnant().equals(matchs.get(i).getJ1())) {
+                pts += 15;
+                nbrBonusChpt--;
+            }
+        }
+
+        return pts;
+    }
+
+    public static int bonusAbsenceDefaiteSignificative(LinkedList<Match> matchs, int classement, int mode){
+        int pts = 0;
+        int nbMatchs = 0;
+        int adverClassement = 0;
+
+
+        if(classement < 9 && classement > 4) pts=50;
+        else if(classement < 13) pts=100;
+        else pts = 150;
+
+        for (int i=0; i < matchs.size() ; i++){
+
+            adverClassement = modeClassementAdversaire(mode, matchs.get(i).getJ2());
+
+            if (matchs.get(i).getWo() == 0) {
+                if(matchs.get(i).getGagnant().equals(matchs.get(i).getJ2()) && adverClassement <= classement){
+                    return 0;
+                }
+
+                nbMatchs++;
+            }
+
+        }
+        if(nbMatchs > 4) return pts;
+        else return 0;
+    }
+
+
     /**
-     * Détermine si le nombre de points passé en paramètre est suffisant pour le classement donné
+     * D�termine le delta VE2I5G qui entre en compte dans la determination du nombre de victoire � prendre en compte
+     * @param matchs La liste des matchs du joueur
+     * @param classement classement du joueur
+     * @return
+     */
+    public static int calculVE2I5G(LinkedList<Match> matchs, int classement, int mode){
+        int ptsTotal = 0;
+        int adverClassement = 0;
+
+        for (int i=0; i < matchs.size() ; i++){
+
+            adverClassement = modeClassementAdversaire(mode, matchs.get(i).getJ2());
+
+            if( matchs.get(i).getGagnant().equals(matchs.get(i).getJ1()) ){
+                //Victoire
+                ptsTotal += 1;
+            }
+            else{
+                //Defaite
+                if( adverClassement == classement ){
+                    ptsTotal -= 1;
+                }
+                else if( adverClassement == classement-1 ){
+                    ptsTotal -= 2;
+                }
+                else if( adverClassement < classement ){
+                    ptsTotal -= 5;
+                }
+            }
+        }
+
+        return ptsTotal;
+    }
+
+    /**
+     * D�termine le nombre de victoire � prendre en compte
+     * @param match La liste des matchs du joueur
+     * @param classement classement du joueur
+     * @return
+     */
+    public static int calculNbrVictoireDelta(LinkedList<Match> match, int classement, int mode){
+
+        // Calcul du delta
+        int ptsDelta = calculVE2I5G(match, classement, mode);
+        int nbrVictoire = 0;
+
+        if(classement <= 6){
+            // 4eme serie
+
+            if(ptsDelta >= 0 && ptsDelta <= 4) nbrVictoire += 1;
+            else if(ptsDelta >= 5 && ptsDelta <= 9) nbrVictoire += 2;
+            else if(ptsDelta >= 10 && ptsDelta <= 14) nbrVictoire += 3;
+            else if(ptsDelta >= 15 && ptsDelta <= 19) nbrVictoire += 4;
+            else if(ptsDelta >= 20 && ptsDelta <= 24) nbrVictoire += 5;
+            else if(ptsDelta > 24) nbrVictoire += 6;
+        }
+        else if(classement >= 7 && classement < 13){
+            // 3eme serie
+
+            if(ptsDelta >= 0 && ptsDelta <= 7) nbrVictoire += 1;
+            else if(ptsDelta >= 8 && ptsDelta <= 14) nbrVictoire += 2;
+            else if(ptsDelta >= 15 && ptsDelta <= 22) nbrVictoire += 3;
+            else if(ptsDelta >= 23 && ptsDelta <= 29) nbrVictoire += 4;
+            else if(ptsDelta >= 30 && ptsDelta <= 39) nbrVictoire += 5;
+            else if(ptsDelta > 39) nbrVictoire += 6;
+        }
+        else if(classement >= 13 && classement < 20){
+            // 2eme serie positive
+            if(ptsDelta < -40) nbrVictoire -= 3;
+            else if(ptsDelta <= -31 && ptsDelta >= -40) nbrVictoire -= 2;
+            else if(ptsDelta <= -21 && ptsDelta >= -30) nbrVictoire -= 1;
+            else if(ptsDelta <= -1 && ptsDelta >= -20) nbrVictoire -= 0;
+            else if(ptsDelta >= 0 && ptsDelta <= 7) nbrVictoire += 1;
+            else if(ptsDelta >= 8 && ptsDelta <= 14) nbrVictoire += 2;
+            else if(ptsDelta >= 15 && ptsDelta <= 22) nbrVictoire += 3;
+            else if(ptsDelta >= 23 && ptsDelta <= 29) nbrVictoire += 4;
+            else if(ptsDelta >= 30 && ptsDelta <= 39) nbrVictoire += 5;
+            else if(ptsDelta > 39) nbrVictoire += 6;
+        }
+        else if(classement >= 20){
+            // 2eme serie négative
+            if(ptsDelta < -80) nbrVictoire -= 5;
+            else if(ptsDelta <= -61 && ptsDelta >= -80) nbrVictoire -= 4;
+            else if(ptsDelta <= -41 && ptsDelta >= -60) nbrVictoire -= 3;
+            else if(ptsDelta <= -31 && ptsDelta >= -40) nbrVictoire -= 2;
+            else if(ptsDelta <= -21 && ptsDelta >= -30) nbrVictoire -= 1;
+            else if(ptsDelta <= -1 && ptsDelta >= -20) nbrVictoire -= 0;
+            else if(ptsDelta >= 0 && ptsDelta <= 9) nbrVictoire += 1;
+            else if(ptsDelta >= 10 && ptsDelta <= 19) nbrVictoire += 2;
+            else if(ptsDelta >= 20 && ptsDelta <= 24) nbrVictoire += 3;
+            else if(ptsDelta >= 25 && ptsDelta <= 29) nbrVictoire += 4;
+            else if(ptsDelta >= 30 && ptsDelta <= 34) nbrVictoire += 5;
+            else if(ptsDelta >= 35 && ptsDelta <= 44) nbrVictoire += 6;
+            else if(ptsDelta > 44) nbrVictoire += 7;
+        }
+
+        return nbrVictoire;
+    }
+
+    /**
+     * D�termine le nombre de victoire � prendre en compte
+     * @param match La liste des matchs du joueur
+     * @param classement classement du joueur
+     * @return
+     */
+    public static int calculNbrVictoirePEC(LinkedList<Match> match, int classement, int mode){
+
+        int nbrVictoirePEC = 0;
+        if(classement <= 6){
+            // 4eme serie
+            nbrVictoirePEC = 6;
+        }
+        else if(classement >= 7 && classement < 13){
+            // 3eme serie
+            nbrVictoirePEC = 8;
+        }
+        else if(classement >= 13 && classement < 20){
+            // 2eme serie positive
+            if(classement < 16) nbrVictoirePEC = 9;
+            else if(classement == 16 || classement == 17) nbrVictoirePEC = 10;
+            else if(classement == 18) nbrVictoirePEC = 11;
+            else if(classement == 19) nbrVictoirePEC = 12;
+        }
+        else if(classement >= 20){
+            // 2eme serie négative
+            if(classement < 20) nbrVictoirePEC = 15;
+            else if(classement == 21) nbrVictoirePEC = 17;
+            else if(classement == 22) nbrVictoirePEC = 19;
+            else if(classement == 23) nbrVictoirePEC = 20; // top 100-60
+            else if(classement == 24) nbrVictoirePEC = 22; // top 60-40
+        }
+
+
+
+        return nbrVictoirePEC += calculNbrVictoireDelta(match, classement, mode);
+    }
+
+
+    /**
+     * D�termine si le nombre de points pass� en param�tre est suffisant pour le classement donn�
      * @param classement
      * @param pts
      * @return
@@ -78,56 +283,66 @@ public class Classement {
         }
     }
 
-    /** Fonction qui calcul la somme des points pour une liste de matchs pour un classement donné
+    /** Fonction qui calcul la somme des points pour une liste de matchs pour un classement donn�
      * @param classement Le classement pour le calcul
-     * @param match La liste des matchs
+     * @param allMatchs La liste des matchs du joueur
      * @param mode Le mode calcul pour le classement adverse (0 : eq , 1 : sup , 2 : inf)
      * @return Le nombre de points
      */
-    public static int calculPoint(int classement, LinkedList<Match> match, int mode){
+    public static int calculPoint(int classement, LinkedList<Match> allMatchs, int mode){
         int points=0;
         int adverClassement=0;
 
-        for(int i=0;i<match.size();i++){
-            if( match.get(i).getGagnant().equals(match.get(i).getJ1()) ){
-                if(mode == 0){
-                    adverClassement = match.get(i).getJ2().getClassement();
-                }
-                else if(mode == 1){
-                    adverClassement = match.get(i).getJ2().getFuturClassement();
-                }
-                else if(mode == 2){
-                    adverClassement = match.get(i).getJ2().getClassement() - 1;
-                }
+        // Bonus championnat et par absence de défaite significative
+        points += bonusChampionnat(allMatchs);
+        points += bonusAbsenceDefaiteSignificative(allMatchs, classement, mode);
 
-                //System.out.println("Mode"+mode+"Classement "+match.get(i).getJ2().getNom()+" futur:"+adverClassement);
+        LinkedList<Match> matchs = getMatchsIntoAccount(classement, allMatchs, mode);
 
-                if(adverClassement > classement+1){
-                    points=(points+120);
-                }
-                else if((adverClassement>classement) && (adverClassement<=classement+1)){
-                    points=(points+90);
-                }
-                else if(adverClassement==classement){
-                    points=(points+60);
-                }
-                else if(adverClassement==classement-1){
-                    points=(points+30);
-                }
-                else if(adverClassement==classement-2){
-                    points=(points+20);
-                }
-                else if(adverClassement==classement-3){
-                    points=(points+15);
-                }
+        for(int i=0;i<matchs.size();i++){
+            if( matchs.get(i).getGagnant().equals(matchs.get(i).getJ1()) ){
+
+                adverClassement = modeClassementAdversaire(mode, matchs.get(i).getJ2());
+
+                points += ptsMatch(classement, adverClassement);
+
             }
+
+
+
         }
         //points=(getPts()+points);
         System.out.println("Nombre de points à "+convertirClassementInt(classement)+" = "+points);
         return points;
     }
 
-    /** Retourne le nombre de points requis pour le maintien à un classement donné
+    public static int ptsMatch( int classement, int adverClassement){
+
+        int points = 0;
+
+        if(adverClassement > classement+1){
+            points=(points+120);
+        }
+        else if((adverClassement>classement) && (adverClassement<=classement+1)){
+            points=(points+90);
+        }
+        else if(adverClassement==classement){
+            points=(points+60);
+        }
+        else if(adverClassement==classement-1){
+            points=(points+30);
+        }
+        else if(adverClassement==classement-2){
+            points=(points+20);
+        }
+        else if(adverClassement==classement-3){
+            points=(points+15);
+        }
+
+        return points;
+    }
+
+    /** Retourne le nombre de points requis pour le maintien � un classement donn�
      * @param classement
      * @return
      */
@@ -210,6 +425,12 @@ public class Classement {
             classement="4/6";
         if(classementInt==16)
             classement="3/6";
+        if(classementInt==17)
+            classement="2/6";
+        if(classementInt==18)
+            classement="1/6";
+        if(classementInt==19)
+            classement="0";
 
         return classement;
     }
@@ -221,38 +442,44 @@ public class Classement {
         int classement = 0;
         if(c.equals("NC"))
             classement=0;
-        if(c.equals("40"))
+       else if(c.equals("40"))
             classement=1;
-        if(c.equals("30/5"))
+       else if(c.equals("30/5"))
             classement=2;
-        if(c.equals("30/4"))
+       else if(c.equals("30/4"))
             classement=3;
-        if(c.equals("30/3"))
+       else if(c.equals("30/3"))
             classement=4;
-        if(c.equals("30/2"))
+        else if(c.equals("30/2"))
             classement=5;
-        if(c.equals("30/1"))
+        else if(c.equals("30/1"))
             classement=6;
-        if(c.equals("30"))
+        else if(c.equals("30"))
             classement=7;
-        if(c.equals("15/5"))
+        else if(c.equals("15/5"))
             classement=8;
-        if(c.equals("15/4"))
+        else if(c.equals("15/4"))
             classement=9;
-        if(c.equals("15/3"))
+        else if(c.equals("15/3"))
             classement=10;
-        if(c.equals("15/2"))
+        else if(c.equals("15/2"))
             classement=11;
-        if(c.equals("15/1"))
+        else if(c.equals("15/1"))
             classement=12;
-        if(c.equals("15"))
+        else if(c.equals("15"))
             classement=13;
-        if(c.equals("5/6"))
+        else if(c.equals("5/6"))
             classement=14;
-        if(c.equals("4/6"))
+        else if(c.equals("4/6"))
             classement=15;
-        if(c.equals("3/6"))
+        else if(c.equals("3/6"))
             classement=16;
+        else if(c.equals("2/6"))
+            classement=17;
+        else if(c.equals("1/6"))
+            classement=18;
+        else if(c.equals("0"))
+            classement=19;
 
         return classement;
     }
@@ -281,6 +508,9 @@ public class Classement {
         listClassements.add("5/6");
         listClassements.add("4/6");
         listClassements.add("3/6");
+        listClassements.add("2/6");
+        listClassements.add("1/6");
+        listClassements.add("0");
 
 
         return listClassements;
@@ -289,7 +519,7 @@ public class Classement {
 
 
     @Deprecated
-    /** Détermine si le joueur se maintien pour un classement et un nombre de pts donné
+    /** D�termine si le joueur se maintien pour un classement et un nombre de pts donn�
      * @param classement
      * @param pts
      * @return

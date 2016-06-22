@@ -5,6 +5,9 @@
     <string name="text_bilan">Bilan</string>
     <string name="text_rank">Classement</string>
     <string name="text_name">Nom</string>
+    <string name="text_VE2I5G">V-E-2I-5G</string>
+    <string name="text_bonus">Bonus</string>
+    <string name="text_points">Points</string>
 
     <string name="text_button_valid">Valider</string>
     <string name="text_button_cancel">Annuler</string>
@@ -13,5 +16,6 @@
     <string name="text_item_save_profil">Sauvegarder</string>
     <string name="text_item_load_profil">Charger</string>
     <string name="title_activity_main_activity_v2">MainActivityV2</string>
+    <string name="title_activity_calcul_details">Détails du calcul</string>
 
 </resources>

@@ -59,7 +59,7 @@ public class MainActivityV2 extends AppCompatActivity {
 
         switch (item.getItemId()) {
             case R.id.action_settings:
-
+                settings();
                 return true;
             case R.id.action_new_profil:
                 newProfil();
@@ -74,6 +74,13 @@ public class MainActivityV2 extends AppCompatActivity {
 
 
     // Fonction des items du menu
+
+    public void settings(){
+        //Lancement de la fenetre du details du calcul
+        Intent intent = new Intent(MainActivityV2.this, CalculDetailsActivity.class);
+        intent.putExtra("classement", ProfilSingleton.getInstance().getProfil().getJoueurProfil().getClassement());
+        startActivity(intent);
+    }
 
     public void newProfil(){
         //Lancement de la fenetre de création d'un nouveau profil

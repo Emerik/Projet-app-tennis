@@ -2,17 +2,11 @@ package emerikbedouin.mytennisrank.IHM;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
-import android.os.Parcelable;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.BaseAdapter;
-import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.daimajia.swipe.adapters.BaseSwipeAdapter;
 
@@ -26,36 +20,45 @@ import emerikbedouin.mytennisrank.R;
 /**
  * Created by emerikbedouin on 06/04/16.
  */
-public class MatchAdapterV2 extends BaseSwipeAdapter implements AdapterView.OnItemClickListener {
+public class MatchAdapterDelete extends BaseSwipeAdapter implements AdapterView.OnItemClickListener {
 
-    private LinkedList<Match> listMatchs;
+    private LinkedList<Match> alistMatchs;
     private Context context;
     private AdapterView.OnItemClickListener onClickListener;
 
-    public MatchAdapterV2(Context context, LinkedList<Match> listMatchs){
-        this.listMatchs = listMatchs;
+    public MatchAdapterDelete(Context context, LinkedList<Match> listMatchs){
+        this.alistMatchs = listMatchs;
         this.context = context;
+
+        //Trie
+        System.out.println("Avant "+alistMatchs);
+        this.alistMatchs = Match.sortDesc(listMatchs);
+        System.out.println("Après "+alistMatchs);
+
     }
 
-    public MatchAdapterV2(Context context, LinkedList<Match> listMatchs, AdapterView.OnItemClickListener onClickListener){
-        this.listMatchs = listMatchs;
+    public MatchAdapterDelete(Context context, LinkedList<Match> listMatchs, AdapterView.OnItemClickListener onClickListener){
+        this.alistMatchs = listMatchs;
         this.context = context;
         this.onClickListener = onClickListener;
+
+        //Trie
+        this.alistMatchs = Match.sortDesc(listMatchs);
     }
 
     @Override
     public int getCount() {
-        return listMatchs.size();
+        return alistMatchs.size();
     }
 
     @Override
     public Object getItem(int position) {
-        return listMatchs.get(position);
+        return alistMatchs.get(position);
     }
 
     @Override
     public long getItemId(int position) {
-        return listMatchs.indexOf(getItem(position));
+        return alistMatchs.indexOf(getItem(position));
     }
 
     /*@Override
@@ -114,7 +117,7 @@ public class MatchAdapterV2 extends BaseSwipeAdapter implements AdapterView.OnIt
                 Toast.makeText(context, "Le delete", Toast.LENGTH_SHORT).show();
                 //int pos = (int)v.getTag();
                 listMatchs.remove(pos);
-                MatchAdapterV2.this.notifyDataSetChanged();
+                MatchAdapterDelete.this.notifyDataSetChanged();
 
                 // A faire autre part ! actualisation du profil suite à la suppression
                 ProfilSingleton.getInstance().getProfil().setMatchs(listMatchs);
@@ -160,19 +163,7 @@ public class MatchAdapterV2 extends BaseSwipeAdapter implements AdapterView.OnIt
         // On place l'identifiant dans le tag du bouton
         convertView.findViewById(R.id.buttonDelete).setTag(position);
 
-        convertView.findViewById(R.id.buttonDelete).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //Toast.makeText(context, "Le delete", Toast.LENGTH_SHORT).show();
-                int pos = (int) v.getTag();
-
-                listMatchs.remove(pos);
-                MatchAdapterV2.this.notifyDataSetChanged();
-
-                // A faire autre part ! actualisation du profil suite à la suppression
-                ProfilSingleton.getInstance().getProfil().setMatchs(listMatchs);
-            }
-        });
+        convertView.findViewById(R.id.buttonDelete).setOnClickListener(new DeleteClickListener());
 
 
 
@@ -194,6 +185,28 @@ public class MatchAdapterV2 extends BaseSwipeAdapter implements AdapterView.OnIt
     }
 
 
+    public void deleteMatch(int position){
+
+        Match tempMatch = alistMatchs.get(position);
+        for (int i = 0; i < ProfilSingleton.getInstance().getProfil().getMatchs().size(); i++) {
+            if (ProfilSingleton.getInstance().getProfil().getMatchs().get(i).equals(tempMatch)) {
+
+                ProfilSingleton.getInstance().getProfil().getMatchs().remove(i);
+
+            }
+        }
+        alistMatchs.remove(position);
+        dataUpdated();
+
+    }
+
+    public void dataUpdated(){
+
+
+        MatchAdapterDelete.this.notifyDataSetChanged();
+
+    }
+
     private class ViewHolder {
         TextView textViewClass, textViewNom, textViewScore;
     }
@@ -202,4 +215,16 @@ public class MatchAdapterV2 extends BaseSwipeAdapter implements AdapterView.OnIt
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
     }
+
+    public class DeleteClickListener implements View.OnClickListener{
+
+        @Override
+        public void onClick(View v) {
+            //Toast.makeText(context, "Le delete", Toast.LENGTH_SHORT).show();
+            int pos = (int) v.getTag();
+
+            deleteMatch(pos);
+        }
+    }
 }
+

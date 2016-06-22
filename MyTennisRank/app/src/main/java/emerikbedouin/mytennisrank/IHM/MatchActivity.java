@@ -7,10 +7,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.daimajia.swipe.SwipeLayout;
@@ -18,10 +16,7 @@ import com.daimajia.swipe.SwipeLayout;
 import java.util.LinkedList;
 
 import emerikbedouin.mytennisrank.Controler.ProfilSingleton;
-import emerikbedouin.mytennisrank.Modele.Epreuve;
-import emerikbedouin.mytennisrank.Modele.Joueur;
 import emerikbedouin.mytennisrank.Modele.Match;
-import emerikbedouin.mytennisrank.Modele.Profil;
 import emerikbedouin.mytennisrank.R;
 
 public class MatchActivity extends AppCompatActivity {
@@ -100,8 +95,8 @@ public class MatchActivity extends AppCompatActivity {
             //Définition de l'adapter
             // ArrayAdapter<Match> adapterV = new ArrayAdapter<Match>(this, android.R.layout.simple_list_item_1, android.R.id.text1, listVictoire);
             // ArrayAdapter<Match> adapterD = new ArrayAdapter<Match>(this, android.R.layout.simple_list_item_1, android.R.id.text1, listDefaite);
-            MatchAdapterV2 adapterV = new MatchAdapterV2(this, listVictoire);
-            MatchAdapterV2 adapterD = new MatchAdapterV2(this, listDefaite);
+            MatchAdapterDelete adapterV = new MatchAdapterDelete(this, listVictoire);
+            MatchAdapterDelete adapterD = new MatchAdapterDelete(this, listDefaite);
             listViewVictoire.setAdapter(adapterV);
             listViewDefaite.setAdapter(adapterD);
             //On click
@@ -199,15 +194,11 @@ public class MatchActivity extends AppCompatActivity {
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-
             // l'index de l'item dans notre ListView
             int itemPosition = position;
 
             // On récupère le match  cliqué
             Match matchSelected = (Match) parent.getItemAtPosition(position);
-
-            // On affiche ce texte avec un Toast
-            //Toast.makeText( getApplicationContext(), "Match "+position, Toast.LENGTH_LONG).show();
 
             // Lancement de l'activité MatchDetailActivity
             Intent intent = new Intent(MatchActivity.this, MatchDetailActivity.class);

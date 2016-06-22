@@ -9,6 +9,7 @@ import android.view.WindowManager;
 import android.widget.Adapter;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
@@ -33,7 +34,8 @@ public class MatchDetailActivity extends AppCompatActivity {
     private EditText editTextJ2, editTextScore, editTextSurface;
     private RadioGroup radioGroupVD;
     private Button btnValid, btnCancel;
-    private Spinner spinnerClassement;
+    private Spinner spinnerClassement, spinnerFuturClassement;
+    private CheckBox checkBoxBonusChpt, checkBoxWo;
 
     public MatchDetailActivity() {
     }
@@ -85,6 +87,12 @@ public class MatchDetailActivity extends AppCompatActivity {
         adapterClassement = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, android.R.id.text1, Classement.getClassements());
         spinnerClassement.setAdapter(adapterClassement);
 
+        spinnerFuturClassement = (Spinner) findViewById(R.id.spinnerFuturClassement);
+        spinnerFuturClassement.setAdapter(adapterClassement);
+
+        // Checkbox du bonus championnat
+        checkBoxBonusChpt = (CheckBox) findViewById(R.id.checkBoxBonusChpt);
+        checkBoxWo = (CheckBox) findViewById(R.id.checkBoxWo);
 
         // Les boutons
         btnValid = (Button) findViewById(R.id.buttonValid);
@@ -134,6 +142,8 @@ public class MatchDetailActivity extends AppCompatActivity {
 
         spinnerClassement.setSelection(adapterClassement.getPosition(Classement.convertirClassementInt(match.getJ2().getClassement())));
 
+        spinnerFuturClassement.setSelection(adapterClassement.getPosition(Classement.convertirClassementInt(match.getJ2().getFuturClassement())));
+
         editTextScore.setText(match.getScore());
 
         editTextSurface.setText(match.getSurface());
@@ -145,6 +155,20 @@ public class MatchDetailActivity extends AppCompatActivity {
             radioGroupVD.check(R.id.radioButtonV);
         }
 
+        if(match.getBonusChpt() == 1){
+            checkBoxBonusChpt.setChecked(true);
+        }
+        else{
+            checkBoxBonusChpt.setChecked(false);
+        }
+
+        if(match.getWo() == 1){
+            checkBoxWo.setChecked(true);
+        }
+        else{
+            checkBoxWo.setChecked(false);
+        }
+
     }
 
     public Match getMatchFromEntry(){
@@ -152,7 +176,10 @@ public class MatchDetailActivity extends AppCompatActivity {
         Joueur j2 = new Joueur();
 
         j2.setNom(editTextJ2.getText().toString());
+
         j2.setClassement(Classement.convertirClassementString((String) spinnerClassement.getSelectedItem()));
+
+        j2.setFuturClassement(Classement.convertirClassementString((String) spinnerFuturClassement.getSelectedItem()));
 
         match.setJ1(ProfilSingleton.getInstance().getProfil().getJoueurProfil());
         match.setJ2(j2);
@@ -168,6 +195,20 @@ public class MatchDetailActivity extends AppCompatActivity {
         match.setScore(editTextScore.getText().toString());
 
         match.setSurface(editTextSurface.getText().toString());
+
+        if(checkBoxBonusChpt.isChecked()){
+            match.setBonusChpt(1);
+        }
+        else{
+            match.setBonusChpt(0);
+        }
+
+        if(checkBoxWo.isChecked()){
+            match.setWo(1);
+        }
+        else{
+            match.setWo(0);
+        }
 
         return match;
 
@@ -191,7 +232,9 @@ public class MatchDetailActivity extends AppCompatActivity {
             Match matchTemp = getMatchFromEntry();
             for (int i = 0; i < ProfilSingleton.getInstance().getProfil().getMatchs().size(); i++) {
                 if (ProfilSingleton.getInstance().getProfil().getMatchs().get(i).equals(matchDetailed)) {
+
                     ProfilSingleton.getInstance().getProfil().getMatchs().remove(i);
+
                 }
             }
             ProfilSingleton.getInstance().getProfil().getMatchs().add(matchTemp);

@@ -82,7 +82,7 @@
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:text="Classement F :"
-            android:id="@+id/textViewClassF"
+            android:id="@+id/textViewBonus"
             android:layout_alignTop="@+id/textViewVictoire"
             android:layout_alignStart="@+id/textViewPts"
             />
@@ -93,7 +93,7 @@
             android:text="Pts Man Sup :"
             android:id="@+id/textViewPtsLevUp"
             android:layout_below="@+id/textViewVictoire"
-            android:layout_alignStart="@+id/textViewClassF" />
+            android:layout_alignStart="@+id/textViewBonus" />
 
     </RelativeLayout>
 

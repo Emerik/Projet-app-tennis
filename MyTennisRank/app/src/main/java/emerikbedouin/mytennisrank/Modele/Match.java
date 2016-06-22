@@ -4,6 +4,8 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 import java.io.Serializable;
+import java.util.Comparator;
+import java.util.LinkedList;
 
 /**
  * Created by emerikbedouin on 10/03/16.
@@ -16,14 +18,18 @@ public class Match implements Parcelable, Serializable{
     private String surface;
     private int resultat;
     private Epreuve epreuve;
+    private int bonusChpt;
+    private int wo;
 
-    public Match(Joueur j1, Joueur j2, String score, String surface, int resultat, Epreuve epreuve) {
+    public Match(Joueur j1, Joueur j2, String score, String surface, int resultat, Epreuve epreuve, int bonusChpt, int wo) {
         this.j1 = j1;
         this.j2 = j2;
         this.score = score;
         this.surface = surface;
         this.resultat = resultat;
         this.epreuve = epreuve;
+        this.bonusChpt = bonusChpt;
+        this.wo = wo;
     }
 
     public  Match(){
@@ -33,6 +39,8 @@ public class Match implements Parcelable, Serializable{
         this.surface = "";
         this.resultat = -1;
         this.epreuve = new Epreuve();
+        this.bonusChpt = 0;
+        this.wo = 0;
     }
 
     public Joueur getGagnant(){
@@ -99,6 +107,83 @@ public class Match implements Parcelable, Serializable{
         this.epreuve = epreuve;
     }
 
+    public int getBonusChpt() {
+        return bonusChpt;
+    }
+
+    public void setBonusChpt(int bonusChpt) {
+        this.bonusChpt = bonusChpt;
+    }
+
+    public int getWo() {
+        return wo;
+    }
+
+    public void setWo(int wo) {
+        this.wo = wo;
+    }
+
+    // Trie pas top
+    public static LinkedList<Match> sortDesc(LinkedList<Match> listToSort){
+        if(listToSort != null) {
+            int max = -1;
+            int indMax = -1;
+
+            /*while(listToSort.size() > 0) {
+                for (int i = 0; i < listToSort.size(); i++) {
+                    if (max < listToSort.get(i).getJ2().getClassement()) {
+                        max = listToSort.get(i).getJ2().getClassement();
+                        indMax = i;
+                    }
+                }
+
+                listSorted.add(listToSort.get(indMax));
+                listToSort.remove(indMax);
+                max = -1;
+            }*/
+
+            Match tempMatch = null;
+            int iter = 0;
+
+            for (int i = 1; i < listToSort.size(); i++) {
+
+                    if(i==1){
+                        if(listToSort.get(i).getJ2().getClassement() > listToSort.get(0).getJ2().getClassement()){
+                            System.out.println("Echange 1");
+                            tempMatch = listToSort.get(iter);
+                            listToSort.set(iter, listToSort.get(i));
+                            listToSort.set(i, tempMatch);
+                        }
+                    }
+                    else{
+
+                        iter = i-1;
+
+                        while(listToSort.get(i).getJ2().getClassement() > listToSort.get(iter).getJ2().getClassement() && iter != 0) {
+                            iter --;
+                        }
+
+                        iter++;
+
+                        System.out.println("iter "+iter+" i "+i+" j2 "+listToSort.get(iter).getJ2().getClassement()+" "+listToSort.get(iter).getJ2().getNom());
+                        if(iter != i) {
+                            System.out.println("Echange");
+                            tempMatch = listToSort.get(iter);
+                            listToSort.set(iter, listToSort.get(i));
+                            listToSort.set(i, tempMatch);
+                        }
+                    }
+
+            }
+
+            return listToSort;
+        }
+        else{
+            return null;
+        }
+    }
+
+
     // Equals & HashCode
 
     @Override
@@ -146,6 +231,8 @@ public class Match implements Parcelable, Serializable{
         dest.writeString(surface);
         dest.writeInt(resultat);
         dest.writeParcelable(epreuve,flags);
+        dest.writeInt(bonusChpt);
+        dest.writeInt(wo);
     }
 
     public static final Parcelable.Creator<Match> CREATOR = new Parcelable.Creator<Match>()
@@ -170,6 +257,8 @@ public class Match implements Parcelable, Serializable{
         this.surface = in.readString();
         this.resultat = in.readInt();
         this.epreuve = in.readParcelable(Epreuve.class.getClassLoader());
+        this.bonusChpt = in.readInt();
+        this.wo = in.readInt();
     }
 
 }

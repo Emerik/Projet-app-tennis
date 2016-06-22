@@ -22,11 +22,11 @@ public class ClassementTest {
     Joueur j3 = new Joueur(0, "Novak", 9, 10, 0);
     Joueur j4 = new Joueur(0, "Andy", 8, 10, 0);
     Joueur j5 = new Joueur(0, "Grigor", 10, 10, 0);
-    Match m1 = new Match(j1, j2, "6/0,6/0","surface",1, new Epreuve());
-    Match m2 = new Match(j1, j3, "6/0,6/0","surface",1, new Epreuve());
-    Match m3 = new Match(j1, j4, "6/0,6/0","surface",1, new Epreuve());
-    Match m4 = new Match(j1, j2, "6/0,6/0","surface",0, new Epreuve());
-    Match m5 = new Match(j1, j5, "6/0,6/0","surface",1, new Epreuve());
+    Match m1 = new Match(j1, j2, "6/0,6/0","surface",1, new Epreuve(), 0,0);
+    Match m2 = new Match(j1, j3, "6/0,6/0","surface",1, new Epreuve(), 0,0);
+    Match m3 = new Match(j1, j4, "6/0,6/0","surface",1, new Epreuve(), 0,0);
+    Match m4 = new Match(j1, j2, "6/0,6/0","surface",0, new Epreuve(), 0,0);
+    Match m5 = new Match(j1, j5, "6/0,6/0","surface",1, new Epreuve(), 0,0);
     LinkedList<Match> list1 = new LinkedList<>();
     Profil p1 = new Profil(0, "Federer", j1);
 
@@ -36,17 +36,51 @@ public class ClassementTest {
 
     }
 
+    /**
+     * Test si le calcul des points est correct
+     * Cas testé :
+     * @throws Exception
+     */
     @Test
     public void calculPoints_isCorrect() throws Exception {
+
+        // Match de base contre un 15/3
+        Match m6Temp = new Match(j1, j5, "6/0,6/0","surface",1, new Epreuve(), 0,0);
+        // Match de championnant bonus 15 pts
+        Match m7Temp = new Match(j1, j5, "6/0,6/0","surface",1, new Epreuve(), 1,0);
+        // Match WO à 15/2
+        Match m8Temp = new Match(j1, j2, "6/0,6/0","surface",1, new Epreuve(), 0,1);
+        // Match défaite à 15/4
+        Match m9Temp = new Match(j1, j3, "6/0,6/0","surface",0, new Epreuve(), 0,0);
+
+
         list1 = new LinkedList<>();
         list1.add(m1);
         list1.add(m2);
         list1.add(m3);
         list1.add(m4);
         list1.add(m5);
-        assertEquals(Classement.calculPoint(10, list1, 0), 200);
+        list1.add(m6Temp);
+        list1.add(m6Temp);
+        list1.add(m6Temp);
+        list1.add(m6Temp);
+        list1.add(m6Temp);
+        list1.add(m6Temp);
+        list1.add(m6Temp);
+        list1.add(m6Temp);
 
-        //
+        assertEquals(Classement.calculPoint(10, list1, 0), 730);
+
+        list1.add(m7Temp);
+        list1.add(m8Temp);
+
+        assertEquals(Classement.calculPoint(10, list1, 0), 745);
+
+        list1.add(m9Temp);
+
+        assertEquals(Classement.calculPoint(10, list1, 0), 645);
+
+        // Improve
     }
 
     @Test
@@ -61,6 +95,7 @@ public class ClassementTest {
 
         // Methode Classement / Liste Match
         assertEquals(Classement.calculClassement(10, list1), 9);
+
 
         // Methode Profil
         assertEquals(Classement.calculClassement(p1), 9);

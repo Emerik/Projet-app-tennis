@@ -19,7 +19,19 @@
         android:layout_height="fill_parent"
         android:orientation="vertical"
         android:weightSum="1"
-        android:background="@color/material_deep_teal_200">
+        android:background="@color/material_deep_teal_200"
+        android:padding="5dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Victoire"
+            android:id="@+id/textViewVictoire"
+            android:layout_weight="0.13"
+            android:textColor="@color/colorPerso"
+            android:padding="5dp"
+            android:textStyle="bold" />
 
         <ListView
             android:layout_width="match_parent"
@@ -27,7 +39,19 @@
             android:id="@+id/listViewV"
             android:layout_weight="0.61"
             android:background="@android:color/white"
-            android:layout_margin="5dp" />
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Défaite"
+            android:id="@+id/textViewDefaite"
+            android:layout_weight="0.13"
+            android:textColor="@color/colorPerso"
+            android:padding="5dp"
+            android:textStyle="bold" />
 
         <ListView
             android:layout_width="match_parent"
@@ -35,7 +59,8 @@
             android:id="@+id/listViewD"
             android:layout_weight="0.33"
             android:background="@android:color/white"
-            android:layout_margin="5dp" />
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp" />
 
 
 

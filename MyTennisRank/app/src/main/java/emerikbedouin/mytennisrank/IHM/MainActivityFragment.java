@@ -1,28 +1,21 @@
 package emerikbedouin.mytennisrank.IHM;
 
 import android.content.Intent;
-import android.os.Parcelable;
-import android.sax.RootElement;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
-import android.text.Layout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.util.LinkedList;
-import java.util.zip.Inflater;
 
 import emerikbedouin.mytennisrank.Controler.ProfilSingleton;
 import emerikbedouin.mytennisrank.Modele.Classement;
-import emerikbedouin.mytennisrank.Modele.Epreuve;
-import emerikbedouin.mytennisrank.Modele.Joueur;
 import emerikbedouin.mytennisrank.Modele.Match;
 import emerikbedouin.mytennisrank.Modele.Profil;
 import emerikbedouin.mytennisrank.R;
@@ -72,7 +65,7 @@ public class MainActivityFragment extends Fragment {
         tvVict = (TextView) rootView.findViewById(R.id.textViewVictoire);
         tvDef = (TextView) rootView.findViewById(R.id.textViewDefaite);
         tvPts = (TextView) rootView.findViewById(R.id.textViewPts);
-        tvClassFinal = (TextView) rootView.findViewById(R.id.textViewClassF);
+        tvClassFinal = (TextView) rootView.findViewById(R.id.textViewBonus);
         tvLevUp = (TextView) rootView.findViewById(R.id.textViewPtsLevUp);
 
         tvHypo = (TextView) rootView.findViewById(R.id.textViewClassCur);
@@ -165,8 +158,8 @@ public class MainActivityFragment extends Fragment {
 
 
         //La listview
-        LinkedList<Match> matchsIntoAccount = Classement.getMatchsIntoAccount(mainProfil.getJoueurProfil().getClassement(), mainProfil.getMatchs());
-        MatchAdapter adapterM = new MatchAdapter(this.getActivity(), matchsIntoAccount);
+        LinkedList<Match> matchsIntoAccount = Classement.getMatchsIntoAccount(mainProfil.getJoueurProfil().getClassement(), mainProfil.getMatchs(), 0);
+        MatchAdapter adapterM = new MatchAdapterPoints(this.getActivity(), matchsIntoAccount, 1, classementBilan);
 
         listViewMatch.setAdapter(adapterM);
     }
