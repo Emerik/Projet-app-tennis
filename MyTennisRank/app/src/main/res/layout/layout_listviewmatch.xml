@@ -7,7 +7,9 @@
 <TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/tableLayout1"
     android:layout_width="fill_parent"
-    android:layout_height="fill_parent" >
+    android:layout_height="fill_parent"
+    android:stretchColumns="*"
+    >
 
 
     <TableRow
@@ -18,12 +20,11 @@
         android:gravity="center_horizontal">
 
     <TextView
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="match_parent"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="Medium Text"
         android:id="@+id/textViewClassement"
-        android:layout_weight="1"
         android:gravity="center_horizontal"/>
 
    <!-- <View
@@ -35,22 +36,19 @@
     -->
 
     <TextView
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="match_parent"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="Medium Text"
         android:id="@+id/textViewNom"
-        android:layout_centerHorizontal="true"
-        android:layout_weight="1"
         android:gravity="center_horizontal"/>
 
     <TextView
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="match_parent"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="Medium Text"
         android:id="@+id/textViewScore"
-        android:layout_weight="1"
         android:gravity="center_horizontal"
          />
 <!--

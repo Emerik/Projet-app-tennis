@@ -11,7 +11,7 @@ import android.widget.TextView;
 
 import java.util.LinkedList;
 
-import emerikbedouin.mytennisrank.Controler.ProfilSingleton;
+import emerikbedouin.mytennisrank.DAO.ProfilSingleton;
 import emerikbedouin.mytennisrank.Modele.Classement;
 import emerikbedouin.mytennisrank.Modele.Match;
 import emerikbedouin.mytennisrank.Modele.Profil;
@@ -89,7 +89,7 @@ public class CalculDetailsActivity extends AppCompatActivity {
 
         Profil mainProfil = ProfilSingleton.getInstance().getProfil();
 
-        int points = Classement.calculPoint(classement, mainProfil.getMatchs(), modeCalcul);
+        int points = Classement.calculPointMatchs(classement, mainProfil.getMatchs(), modeCalcul);
         int bonus = Classement.bonusAbsenceDefaiteSignificative(mainProfil.getMatchs(), classement, modeCalcul) + Classement.bonusChampionnat(mainProfil.getMatchs());
 
         //Classement
@@ -109,12 +109,12 @@ public class CalculDetailsActivity extends AppCompatActivity {
         // Total
         tvTotal.setText(tvTotal.getText()+" "+(points+bonus));
         // Bilan
-        tvBilan.setText(tvBilan.getText()+" "+Classement.convertirClassementInt(Classement.calculClassement(mainProfil)));
+        tvBilan.setText(tvBilan.getText()+" "+Classement.convertirClassementInt(Classement.calculClassement(mainProfil, modeCalcul)));
 
 
         //La listview
         LinkedList<Match> matchsIntoAccount = Classement.getMatchsIntoAccount(mainProfil.getJoueurProfil().getClassement(), mainProfil.getMatchs(), modeCalcul);
-        MatchAdapter adapterM = new MatchAdapterPoints(this, matchsIntoAccount, 1, classement);
+        MatchAdapter adapterM = new MatchAdapterPoints(this, matchsIntoAccount, 1, classement, modeCalcul);
 
         listViewMatch.setAdapter(adapterM);
     }

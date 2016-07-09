@@ -1,7 +1,8 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:custom="http://schemas.android.com/apk/res-auto">
+    xmlns:custom="http://schemas.android.com/apk/res-auto"
+    android:background="@color/colorPersoBackground">
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="fill_parent"
@@ -38,9 +39,11 @@
             android:paddingLeft="@dimen/activity_horizontal_margin"
             android:paddingRight="@dimen/activity_horizontal_margin"
             android:paddingTop="@dimen/activity_vertical_margin"
-            android:background="@drawable/customborder"
+            android:background="@drawable/bordershadow"
             android:layout_weight="0.16"
-            android:alpha="0">
+            android:alpha="1"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp">
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -142,6 +145,38 @@
                 android:layout_centerVertical="true"
                 android:layout_alignParentEnd="true" />
 
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Descente"
+                android:id="@+id/buttonAllDrop"
+                android:layout_gravity="right"
+                android:layout_alignBottom="@+id/donut_progress"
+                android:layout_alignParentStart="true" />
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Prévu"
+                android:id="@+id/buttonFutur"
+                android:layout_alignBottom="@+id/donut_progress"
+                android:layout_alignEnd="@+id/btnRightArrow" />
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Monter"
+                android:id="@+id/buttonAllUp"
+                android:layout_above="@+id/donut_progress"
+                android:layout_alignParentEnd="true" />
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Actuel"
+                android:id="@+id/buttonNormal"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentStart="true" />
 
 
         </RelativeLayout>
@@ -164,22 +199,6 @@
                 android:background="@drawable/btn_tennisrank"
                 android:padding="10dp" />
 
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Descente"
-                android:id="@+id/buttonAllDrop"
-                android:layout_gravity="right"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentStart="true" />
-
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Prévu"
-                android:id="@+id/buttonAllJump"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentEnd="true" />
         </RelativeLayout>
 
     </LinearLayout>

@@ -8,8 +8,8 @@ import android.content.Intent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
-import emerikbedouin.mytennisrank.Controler.FileManager;
-import emerikbedouin.mytennisrank.Controler.ProfilSingleton;
+import emerikbedouin.mytennisrank.DAO.FileManager;
+import emerikbedouin.mytennisrank.DAO.ProfilSingleton;
 
 
 public class MainActivityV2 extends AppCompatActivity {

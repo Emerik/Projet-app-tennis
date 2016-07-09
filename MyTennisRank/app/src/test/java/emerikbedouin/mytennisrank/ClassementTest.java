@@ -42,7 +42,7 @@ public class ClassementTest {
      * @throws Exception
      */
     @Test
-    public void calculPoints_isCorrect() throws Exception {
+    public void calculPointsTotal_isCorrect() throws Exception {
 
         // Match de base contre un 15/3
         Match m6Temp = new Match(j1, j5, "6/0,6/0","surface",1, new Epreuve(), 0,0);
@@ -69,16 +69,16 @@ public class ClassementTest {
         list1.add(m6Temp);
         list1.add(m6Temp);
 
-        assertEquals(Classement.calculPoint(10, list1, 0), 730);
+        assertEquals(Classement.calculPointTotal(10, list1, 0), 730);
 
         list1.add(m7Temp);
         list1.add(m8Temp);
 
-        assertEquals(Classement.calculPoint(10, list1, 0), 745);
+        assertEquals(Classement.calculPointTotal(10, list1, 0), 745);
 
         list1.add(m9Temp);
 
-        assertEquals(Classement.calculPoint(10, list1, 0), 645);
+        assertEquals(Classement.calculPointTotal(10, list1, 0), 645);
 
         // Improve
     }
@@ -94,11 +94,11 @@ public class ClassementTest {
         p1.setMatchs(list1);
 
         // Methode Classement / Liste Match
-        assertEquals(Classement.calculClassement(10, list1), 9);
+        assertEquals(Classement.calculClassement(10, list1, 0), 9);
 
 
         // Methode Profil
-        assertEquals(Classement.calculClassement(p1), 9);
+        assertEquals(Classement.calculClassement(p1, 0), 9);
     }
 
 

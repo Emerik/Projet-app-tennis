@@ -1,4 +1,4 @@
-package emerikbedouin.mytennisrank.Controler;
+package emerikbedouin.mytennisrank.DAO;
 
 import emerikbedouin.mytennisrank.Modele.Profil;
 

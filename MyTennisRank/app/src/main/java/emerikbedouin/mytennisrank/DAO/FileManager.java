@@ -1,8 +1,7 @@
-package emerikbedouin.mytennisrank.Controler;
+package emerikbedouin.mytennisrank.DAO;
 
 import android.app.Activity;
 import android.content.Context;
-import android.os.Environment;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;

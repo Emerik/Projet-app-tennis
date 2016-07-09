@@ -16,7 +16,7 @@ import android.widget.Toast;
 
 import com.github.lzyzsd.circleprogress.DonutProgress;
 
-import emerikbedouin.mytennisrank.Controler.ProfilSingleton;
+import emerikbedouin.mytennisrank.DAO.ProfilSingleton;
 import emerikbedouin.mytennisrank.Modele.Classement;
 import emerikbedouin.mytennisrank.Modele.Epreuve;
 import emerikbedouin.mytennisrank.Modele.Joueur;
@@ -34,7 +34,7 @@ public class MainActivityV2Fragment extends Fragment {
 
     //View
     private TextView tvClass, tvVict, tvDef, tvPts, tvClassFinal, tvLevUp, tvHypo, tvHypoResult;
-    private Button btnLeft, btnRight, btnAllDrop, btnAllJump;
+    private Button btnLeft, btnRight, btnAllDrop, btnFutur, btnAllUp, btnNormal;
     private RelativeLayout layoutBilan,layoutHypoResult;
     private DonutProgress ptsBarProgress;
 
@@ -123,7 +123,9 @@ public class MainActivityV2Fragment extends Fragment {
 
         // Bouton all monter,descente
         btnAllDrop = (Button) rootView.findViewById(R.id.buttonAllDrop);
-        btnAllJump = (Button) rootView.findViewById(R.id.buttonAllJump);
+        btnFutur = (Button) rootView.findViewById(R.id.buttonFutur);
+        btnNormal = (Button) rootView.findViewById(R.id.buttonNormal);
+        btnAllUp = (Button) rootView.findViewById(R.id.buttonAllUp);
 
         btnAllDrop.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -133,13 +135,30 @@ public class MainActivityV2Fragment extends Fragment {
             }
         });
 
-        btnAllJump.setOnClickListener(new View.OnClickListener() {
+        btnFutur.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 modeCalcul = 1;
                 upProgressBar();
             }
         });
+
+        btnAllUp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                modeCalcul = 3;
+                upProgressBar();
+            }
+        });
+
+        btnNormal.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                modeCalcul = 0;
+                upProgressBar();
+            }
+        });
+
     }
 
     public void animateBilan(){
@@ -162,7 +181,7 @@ public class MainActivityV2Fragment extends Fragment {
         //Ratio nombre de points actuel / nombre de points requis
         Profil mainProfil = ProfilSingleton.getInstance().getProfil();
 
-        int pts = Classement.calculPoint(classementCalcul, mainProfil.getMatchs(), modeCalcul);
+        int pts = Classement.calculPointTotal(classementCalcul, mainProfil.getMatchs(), modeCalcul);
         int ptsMaintien = Classement.ptsMaintien(classementCalcul);
         System.out.println(classementCalcul);
 
@@ -220,9 +239,9 @@ public class MainActivityV2Fragment extends Fragment {
         //Defaite
         tvDef.setText(tvDef.getText()+" "+mainProfil.getNbreDefaite());
         // Points
-        tvPts.setText(tvPts.getText()+" "+ Classement.calculPoint(mainProfil.getJoueurProfil().getClassement(), mainProfil.getMatchs(), modeCalcul));
+        tvPts.setText(tvPts.getText()+" "+ Classement.calculPointTotal(mainProfil.getJoueurProfil().getClassement(), mainProfil.getMatchs(), modeCalcul));
         //Classement final
-        tvClassFinal.setText(tvClassFinal.getText()+" "+Classement.convertirClassementInt(Classement.calculClassement(mainProfil)));
+        tvClassFinal.setText(tvClassFinal.getText()+" "+Classement.convertirClassementInt(Classement.calculClassement(mainProfil, modeCalcul)));
         // Points manquant classement au dessus
         //tvLevUp.setText(tvLevUp.getText()+" "+mainProfil.getJoueurProfil().getClassement());
 

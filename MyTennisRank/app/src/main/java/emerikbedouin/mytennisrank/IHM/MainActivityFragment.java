@@ -14,7 +14,7 @@ import android.widget.TextView;
 
 import java.util.LinkedList;
 
-import emerikbedouin.mytennisrank.Controler.ProfilSingleton;
+import emerikbedouin.mytennisrank.DAO.ProfilSingleton;
 import emerikbedouin.mytennisrank.Modele.Classement;
 import emerikbedouin.mytennisrank.Modele.Match;
 import emerikbedouin.mytennisrank.Modele.Profil;
@@ -121,8 +121,8 @@ public class MainActivityFragment extends Fragment {
 
         Profil mainProfil = ProfilSingleton.getInstance().getProfil();
 
-        int ptsManquant = Classement.calculPoint(classementBilan, mainProfil.getMatchs(), modeCalcul);
-        int classementCalcule = Classement.calculClassement(classementBilan, mainProfil.getMatchs());
+        int ptsManquant = Classement.calculPointTotal(classementBilan, mainProfil.getMatchs(), modeCalcul);
+        int classementCalcule = Classement.calculClassement(classementBilan, mainProfil.getMatchs(), modeCalcul);
         tvHypo.setText(Classement.convertirClassementInt(classementBilan));
         tvHypoResult.setText("Points : "+ptsManquant);
 
@@ -150,16 +150,16 @@ public class MainActivityFragment extends Fragment {
         //Defaite
         tvDef.setText(tvDef.getText()+" "+mainProfil.getNbreDefaite());
         // Points
-        tvPts.setText(tvPts.getText()+" "+ Classement.calculPoint(mainProfil.getJoueurProfil().getClassement(), mainProfil.getMatchs(), 0));
+        tvPts.setText(tvPts.getText()+" "+ Classement.calculPointTotal(mainProfil.getJoueurProfil().getClassement(), mainProfil.getMatchs(), 0));
         //Classement final
-        tvClassFinal.setText(tvClassFinal.getText()+" "+Classement.convertirClassementInt(Classement.calculClassement(mainProfil)));
+        tvClassFinal.setText(tvClassFinal.getText()+" "+Classement.convertirClassementInt(Classement.calculClassement(mainProfil, modeCalcul)));
         // Points manquant classement au dessus
         //tvLevUp.setText(tvLevUp.getText()+" "+mainProfil.getJoueurProfil().getClassement());
 
 
         //La listview
         LinkedList<Match> matchsIntoAccount = Classement.getMatchsIntoAccount(mainProfil.getJoueurProfil().getClassement(), mainProfil.getMatchs(), 0);
-        MatchAdapter adapterM = new MatchAdapterPoints(this.getActivity(), matchsIntoAccount, 1, classementBilan);
+        MatchAdapter adapterM = new MatchAdapterPoints(this.getActivity(), matchsIntoAccount, 1, classementBilan, modeCalcul);
 
         listViewMatch.setAdapter(adapterM);
     }

@@ -3,10 +3,13 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
-    <color name="colorPerso">#f44336</color>
+    <!-- <color name="colorPerso">#f44336</color> -->
     <color name="colorPersoSombre">#FFB9332A</color>
-    <color name="colorPersoDark">#ff009688</color>
-    <color name="colorPersoAccent">#ff009688</color>
+    <!-- <color name="colorPersoDark">#ff009688</color> -->
+    <color name="colorPerso">#009688</color>
+    <color name="colorPersoAccent">#26A69A</color>
+    <color name="colorPersoDark">#004d40</color>
+    <color name="colorPersoBackground">#e0f2f1</color>
 
     <color name="colorRed">#ffff4444</color>
     <color name="colorGreen">#FF3EF453</color>

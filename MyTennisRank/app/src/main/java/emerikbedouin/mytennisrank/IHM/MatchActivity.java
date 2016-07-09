@@ -15,7 +15,7 @@ import com.daimajia.swipe.SwipeLayout;
 
 import java.util.LinkedList;
 
-import emerikbedouin.mytennisrank.Controler.ProfilSingleton;
+import emerikbedouin.mytennisrank.DAO.ProfilSingleton;
 import emerikbedouin.mytennisrank.Modele.Match;
 import emerikbedouin.mytennisrank.R;
 

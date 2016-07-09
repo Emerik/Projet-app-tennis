@@ -20,6 +20,7 @@ import emerikbedouin.mytennisrank.R;
 public class MatchAdapterPoints extends MatchAdapter implements AdapterView.OnItemClickListener {
 
     protected int mode;
+    protected int modeCalcul;
     protected int classement;
 
     public MatchAdapterPoints(Context context, LinkedList<Match> listMatchs, int mode, int classement) {
@@ -27,6 +28,15 @@ public class MatchAdapterPoints extends MatchAdapter implements AdapterView.OnIt
 
         this.mode = mode;
         this.classement = classement;
+        this.modeCalcul = 0;
+    }
+
+    public MatchAdapterPoints(Context context, LinkedList<Match> listMatchs, int mode, int classement, int modeCalcul) {
+        super(context, listMatchs);
+
+        this.mode = mode;
+        this.classement = classement;
+        this.modeCalcul = modeCalcul;
     }
 
     @Override
@@ -75,9 +85,9 @@ public class MatchAdapterPoints extends MatchAdapter implements AdapterView.OnIt
 
         // Attribution des valeurs aux vues
         if(mode == 1) {
-            viewHolder.textViewClass.setText(Classement.convertirClassementInt(match.getJ2().getClassement()));
+            viewHolder.textViewClass.setText(Classement.convertirClassementInt(Classement.modeClassementAdversaire(modeCalcul, match.getJ2())));
             viewHolder.textViewNom.setText(String.valueOf(match.getJ2().getNom()));
-            viewHolder.textViewScore.setText(String.valueOf(Classement.ptsMatch(classement, match.getJ2().getClassement())));
+            viewHolder.textViewScore.setText(String.valueOf(Classement.ptsMatch(classement, Classement.modeClassementAdversaire(modeCalcul, match.getJ2()))));
         }
         else{
             viewHolder.textViewClass.setText(Classement.convertirClassementInt(match.getJ2().getClassement()));

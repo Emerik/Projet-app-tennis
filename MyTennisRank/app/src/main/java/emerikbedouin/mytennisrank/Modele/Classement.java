@@ -8,17 +8,21 @@ import java.util.LinkedList;
 public class Classement {
 
 
-
-
-    public static int calculClassement(Profil p){
+    /**
+     * Calcul pour un profil le classement résultat
+     * @param p
+     * @param mode
+     * @return
+     */
+    public static int calculClassement(Profil p, int mode){
         Joueur j = p.getJoueurProfil();
         LinkedList<Match> m = p.getMatchs();
         int classement = 0;
         if(m.size() > 0) {
-            if (maintien(j.getClassement(), calculPoint(j.getClassement(), m, 0))) {
+            if (maintien(j.getClassement(), calculPointTotal(j.getClassement(), m, mode))) {
                 classement = j.getClassement();
                 classement++;
-                while (maintien(classement, calculPoint(classement, m, 0))) {
+                while (maintien(classement, calculPointTotal(classement, m, mode))) {
                     classement++;
                 }
 
@@ -32,12 +36,19 @@ public class Classement {
         return classement-1;
     }
 
-    public static int calculClassement(int classement, LinkedList<Match> matchs){
+    /**
+     * Calcul pour un classement et une liste de matchs le classement résultat
+     * @param classement le classement du joueur
+     * @param matchs la liste de matchs
+     * @param mode
+     * @return
+     */
+    public static int calculClassement(int classement, LinkedList<Match> matchs, int mode){
 
         if(matchs.size() > 0) {
-            if (maintien(classement, calculPoint(classement, matchs, 0))) {
+            if (maintien(classement, calculPointTotal(classement, matchs, mode))) {
                 classement++;
-                while (maintien(classement, calculPoint(classement, matchs, 0))) {
+                while (maintien(classement, calculPointTotal(classement, matchs, mode))) {
                     classement++;
                 }
 
@@ -50,7 +61,12 @@ public class Classement {
         return classement-1;
     }
 
-
+    /**
+     * Retourne le classement adverse pris en compte en fonction du mode
+     * @param mode
+     * @param adversaire
+     * @return
+     */
     public static int modeClassementAdversaire(int mode, Joueur adversaire){
         if(mode == 0){
             return adversaire.getClassement();
@@ -61,10 +77,20 @@ public class Classement {
         else if(mode == 2){
            return adversaire.getClassement() - 1;
         }
+        else if(mode == 3){
+            return adversaire.getClassement() + 1;
+        }
 
         return 0;
     }
 
+    /**
+     * Récupère la liste des matchs à prendre en compte
+     * @param classement
+     * @param allMatchs
+     * @param mode
+     * @return
+     */
     public static LinkedList<Match> getMatchsIntoAccount(int classement, LinkedList<Match> allMatchs, int mode){
 
         int nbrMatchPEC = calculNbrVictoirePEC(allMatchs, classement, mode);
@@ -88,6 +114,11 @@ public class Classement {
         return matchIntoAccount;
     }
 
+    /**
+     * Calcul les points gagnés par bonus championnat
+     * @param matchs
+     * @return
+     */
     public static int bonusChampionnat(LinkedList<Match> matchs){
         int nbrBonusChpt = 3;
         int pts = 0;
@@ -101,6 +132,13 @@ public class Classement {
         return pts;
     }
 
+    /**
+     * Calcul les points gagnés poru absence de défaite significative
+     * @param matchs
+     * @param classement
+     * @param mode
+     * @return
+     */
     public static int bonusAbsenceDefaiteSignificative(LinkedList<Match> matchs, int classement, int mode){
         int pts = 0;
         int nbMatchs = 0;
@@ -267,6 +305,22 @@ public class Classement {
         return nbrVictoirePEC += calculNbrVictoireDelta(match, classement, mode);
     }
 
+    /**
+     * Recupere les bonus pour absence de défaite significative et de championnat
+     * @param allMatchs
+     * @param classement
+     * @param mode
+     * @return
+     */
+    public static int calculBonus(LinkedList allMatchs, int classement, int mode){
+        int points = 0;
+        // Bonus championnat et pour absence de défaite significative
+        points += bonusChampionnat(allMatchs);
+        points += bonusAbsenceDefaiteSignificative(allMatchs, classement, mode);
+
+        return points;
+    }
+
 
     /**
      * D�termine si le nombre de points pass� en param�tre est suffisant pour le classement donn�
@@ -283,19 +337,34 @@ public class Classement {
         }
     }
 
+
+    /**
+     * Calcul des points total, des matchs et des bonus
+     * @param classement
+     * @param allMatchs
+     * @param mode
+     * @return
+     */
+    public static int calculPointTotal(int classement, LinkedList<Match> allMatchs, int mode){
+        int points = 0;
+
+        // Bonus championnat et pour absence de défaite significative
+        points += calculBonus(allMatchs, classement, mode);
+
+        points += calculPointMatchs(classement, allMatchs, mode);
+
+        return points;
+    }
+
     /** Fonction qui calcul la somme des points pour une liste de matchs pour un classement donn�
      * @param classement Le classement pour le calcul
      * @param allMatchs La liste des matchs du joueur
      * @param mode Le mode calcul pour le classement adverse (0 : eq , 1 : sup , 2 : inf)
      * @return Le nombre de points
      */
-    public static int calculPoint(int classement, LinkedList<Match> allMatchs, int mode){
+    public static int calculPointMatchs(int classement, LinkedList<Match> allMatchs, int mode){
         int points=0;
         int adverClassement=0;
-
-        // Bonus championnat et par absence de défaite significative
-        points += bonusChampionnat(allMatchs);
-        points += bonusAbsenceDefaiteSignificative(allMatchs, classement, mode);
 
         LinkedList<Match> matchs = getMatchsIntoAccount(classement, allMatchs, mode);
 
@@ -309,13 +378,19 @@ public class Classement {
             }
 
 
-
         }
         //points=(getPts()+points);
         System.out.println("Nombre de points à "+convertirClassementInt(classement)+" = "+points);
         return points;
     }
 
+
+    /**
+     * Retourne le nombre de points gagnés en fonction du classement du joueur et de son adversaire
+     * @param classement
+     * @param adverClassement
+     * @return
+     */
     public static int ptsMatch( int classement, int adverClassement){
 
         int points = 0;

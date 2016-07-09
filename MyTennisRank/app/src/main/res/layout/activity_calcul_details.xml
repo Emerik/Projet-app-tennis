@@ -5,7 +5,8 @@
         android:layout_height="fill_parent"
         android:orientation="vertical"
         tools:context=".IHM.CalculDetailsActivity"
-        android:weightSum="1">
+        android:weightSum="1"
+    android:background="@color/colorPersoBackground">
 
 
     <!-- Details calcul -->
@@ -27,7 +28,9 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_margin="10dp">
+        android:layout_margin="10dp"
+        android:background="@drawable/bordershadow"
+        android:padding="5dp">
 
         <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
             xmlns:tools="http://schemas.android.com/tools"
@@ -207,14 +210,16 @@
         android:id="@+id/textViewBilan"
         android:layout_gravity="center_horizontal"
         android:layout_margin="10dp"
-        android:textColor="@color/colorPersoDark" />
+        android:textColor="@color/colorPersoDark"
+        android:padding="5dp" />
 
     <ListView
         android:layout_width="match_parent"
         android:layout_height="300dp"
         android:id="@+id/listViewMatch"
         android:layout_weight="0.21"
-        android:foreground="@drawable/customborder" />
+        android:foreground="@drawable/customborder"
+        android:background="@android:color/white" />
 
 
 
