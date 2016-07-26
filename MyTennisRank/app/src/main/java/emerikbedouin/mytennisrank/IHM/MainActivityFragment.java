@@ -1,21 +1,27 @@
 package emerikbedouin.mytennisrank.IHM;
 
+import android.animation.ObjectAnimator;
 import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.DecelerateInterpolator;
 import android.widget.Button;
-import android.widget.ListView;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import java.util.LinkedList;
+import com.github.lzyzsd.circleprogress.DonutProgress;
 
 import emerikbedouin.mytennisrank.DAO.ProfilSingleton;
 import emerikbedouin.mytennisrank.Modele.Classement;
+import emerikbedouin.mytennisrank.Modele.Epreuve;
+import emerikbedouin.mytennisrank.Modele.Joueur;
 import emerikbedouin.mytennisrank.Modele.Match;
 import emerikbedouin.mytennisrank.Modele.Profil;
 import emerikbedouin.mytennisrank.R;
@@ -25,15 +31,15 @@ import emerikbedouin.mytennisrank.R;
  */
 public class MainActivityFragment extends Fragment {
 
-    private int classementBilan;
+    private int classementCalcul;
     private int modeCalcul = 0;
 
     //View
     private TextView tvClass, tvVict, tvDef, tvPts, tvClassFinal, tvLevUp, tvHypo, tvHypoResult;
-    private ListView listViewMatch;
     private Button btnLeft, btnRight;
-    private RelativeLayout layoutHypo,layoutHypoResult;
-
+    private RelativeLayout layoutBilan,layoutHypoResult;
+    private DonutProgress ptsBarProgress;
+    private ImageView currentImageView, upImageView, downImageView, futurImageView;
 
 
     public MainActivityFragment() {
@@ -42,25 +48,47 @@ public class MainActivityFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_main, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_main_activity, container, false);
 
-        classementBilan = 0;
+        // Recuperation des Vue
+        initComp(rootView);
 
-        listViewMatch = (ListView) rootView.findViewById(R.id.listViewMatch);
+
+        animateBilan();
+        colorBall(currentImageView);
+
+        // Traitement
+        classementCalcul = 0;
+        if(ProfilSingleton.getInstance().getProfil() != null) {
+            classementCalcul = ProfilSingleton.getInstance().getProfil().getJoueurProfil().getClassement();
+            calculBilanProfil();
+            upProgressBar();
+        }
+        else{
+            creationProfilComplet();
+            classementCalcul = ProfilSingleton.getInstance().getProfil().getJoueurProfil().getClassement();
+            calculBilanProfil();
+            upProgressBar();
+        }
+
+        return rootView;
+    }
+
+
+    public void initComp(View rootView){
 
         Button btnM = (Button) rootView.findViewById(R.id.buttonM);
         btnM.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 Intent intent = new Intent(getActivity(), MatchActivity.class);
-                //Passage du profil
-                //intent.putExtra("profil", (Parcelable) ((MainActivity) getActivity()).getMainProfil());
                 startActivity(intent);
-
             }
         });
 
+
+        // Bilan
+        layoutBilan = (RelativeLayout) rootView.findViewById(R.id.relativLayoutBilan);
         tvClass = (TextView) rootView.findViewById(R.id.textViewClassement);
         tvVict = (TextView) rootView.findViewById(R.id.textViewVictoire);
         tvDef = (TextView) rootView.findViewById(R.id.textViewDefaite);
@@ -68,22 +96,18 @@ public class MainActivityFragment extends Fragment {
         tvClassFinal = (TextView) rootView.findViewById(R.id.textViewBonus);
         tvLevUp = (TextView) rootView.findViewById(R.id.textViewPtsLevUp);
 
-        tvHypo = (TextView) rootView.findViewById(R.id.textViewClassCur);
-        layoutHypo = (RelativeLayout) rootView.findViewById(R.id.layoutHypo);
-        tvHypoResult = (TextView) rootView.findViewById(R.id.textViewClassResHypo);
-        layoutHypoResult = (RelativeLayout) rootView.findViewById(R.id.layoutResHypo);
 
-
+        // Hypo - circle
         btnLeft = (Button) rootView.findViewById(R.id.btnLeftArrow);
         btnRight = (Button) rootView.findViewById(R.id.btnRightArrow);
 
         btnLeft.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(classementBilan > 0) {
-                    System.out.println("Hypo class "+classementBilan);
-                    classementBilan--;
-                    calculHypot();
+                if(classementCalcul > 0) {
+
+                    classementCalcul--;
+                    upProgressBar();
                 }
             }
         });
@@ -91,51 +115,148 @@ public class MainActivityFragment extends Fragment {
         btnRight.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(classementBilan < 20) {
-                    System.out.println("Hypo class "+classementBilan);
-                    classementBilan++;
-                    calculHypot();
+                if(classementCalcul < 20) {
+
+                    classementCalcul++;
+                    upProgressBar();
                 }
             }
         });
 
-        //Recuperation données ---------------------------------------------------------------------
-
-        //getProfil();
-
-        if(ProfilSingleton.getInstance().getProfil() != null) {
-            classementBilan = ProfilSingleton.getInstance().getProfil().getJoueurProfil().getClassement();
-            System.out.println("Classement bilan " + classementBilan);
-            //CalculBilan
-            calculBilanProfil();
-            calculHypot();
-        }
+        ptsBarProgress = (DonutProgress) rootView.findViewById(R.id.donut_progress);
 
 
+        // Image Bouton
+        currentImageView = (ImageView) rootView.findViewById(R.id.currentImageView);
+        upImageView = (ImageView) rootView.findViewById(R.id.upImageView);
+        downImageView = (ImageView) rootView.findViewById(R.id.downImageView);
+        futurImageView = (ImageView) rootView.findViewById(R.id.futurImageView);
+
+        currentImageView.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                v.setSelected(event.getAction()==MotionEvent.ACTION_DOWN);
+                modeCalcul = 0;
+                upProgressBar();
+                colorBall((ImageView) v);
+                return true;
+            }
+        });
+
+        upImageView.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                v.setSelected(event.getAction()==MotionEvent.ACTION_DOWN);
+                modeCalcul = 3;
+                upProgressBar();
+                colorBall((ImageView) v);
+                return true;
+            }
+        });
+
+        downImageView.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                v.setSelected(event.getAction()==MotionEvent.ACTION_DOWN);
+                modeCalcul = 2;
+                upProgressBar();
+                colorBall((ImageView) v);
+                return true;
+            }
+        });
+
+        futurImageView.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                v.setSelected(event.getAction()==MotionEvent.ACTION_DOWN);
+                modeCalcul = 1;
+                upProgressBar();
+                colorBall((ImageView) v);
+                return true;
+            }
+        });
 
 
-        return rootView;
+
     }
 
-    public void calculHypot(){
+    public void animateBilan(){
+        // Set the content view to 0% opacity but visible, so that it is visible
+        // (but fully transparent) during the animation.
+       // layoutBilan.setAlpha(0f);
 
+        // Animate the content view to 100% opacity, and clear any animation
+        // listener set on the view.
+
+
+        layoutBilan.animate()
+                .alpha(1f)
+                .setDuration(500)
+                .setListener(null);
+
+    }
+
+    public void colorBall(ImageView v){
+
+        currentImageView.setImageResource(R.drawable.balle_moyen);
+        upImageView.setImageResource(R.drawable.balle_moyen);
+        downImageView.setImageResource(R.drawable.balle_moyen);
+        futurImageView.setImageResource(R.drawable.balle_moyen);
+
+        ((ImageView)v).setImageResource(R.drawable.balleperso_moyen);
+
+    }
+
+    public void upProgressBar(){
+        //Ratio nombre de points actuel / nombre de points requis
         Profil mainProfil = ProfilSingleton.getInstance().getProfil();
 
-        int ptsManquant = Classement.calculPointTotal(classementBilan, mainProfil.getMatchs(), modeCalcul);
-        int classementCalcule = Classement.calculClassement(classementBilan, mainProfil.getMatchs(), modeCalcul);
-        tvHypo.setText(Classement.convertirClassementInt(classementBilan));
-        tvHypoResult.setText("Points : "+ptsManquant);
+        int pts = Classement.calculPointTotal(classementCalcul, mainProfil.getMatchs(), modeCalcul);
+        int ptsMaintien = Classement.ptsMaintien(classementCalcul);
+        System.out.println(classementCalcul);
 
-        // Coloration du cadre classement hypothetique
-        if(classementCalcule > classementBilan){
-            layoutHypoResult.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.colorGreen));
-        }
-        else if(classementCalcule < classementBilan){
-            layoutHypoResult.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.colorRed));
+        int res = 0;
+
+        if(ptsMaintien != 0) res = pts*100/ptsMaintien;
+
+        System.out.println("Res circle "+res+" p "+pts+" "+ptsMaintien);
+
+        if(res >= 100) {
+            res = 100;
+            ptsBarProgress.setFinishedStrokeColor(ContextCompat.getColor(getContext(), R.color.colorSuccess));
+            ptsBarProgress.setProgress(0);
         }
         else{
-            layoutHypoResult.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.colorOrange));
+            ptsBarProgress.setFinishedStrokeColor(ContextCompat.getColor(getContext(), R.color.colorFail));
         }
+
+        //ptsBarProgress.setProgress(res);
+
+
+        // Animation de la progress bar
+        int time = 0;
+        int diffProgress = ptsBarProgress.getProgress() - res ;
+        if(Math.abs(diffProgress) < 30) time = 250; else time = 750;
+        ObjectAnimator animation = ObjectAnimator.ofInt(ptsBarProgress, "progress", res);
+        animation.setDuration(time);
+        animation.setInterpolator(new DecelerateInterpolator());
+        animation.start();
+
+        ptsBarProgress.setInnerBottomText(pts+" points à "+Classement.convertirClassementInt(classementCalcul));
+        ptsBarProgress.setInnerBottomTextColor(ContextCompat.getColor(getContext(), R.color.colorPersoDark));
+
+
+        // Onclick lance le detail du calcul
+        ptsBarProgress.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //Lancement de la fenetre de création d'un nouveau profil
+                Intent intent = new Intent(getActivity(), CalculDetailsActivity.class);
+                intent.putExtra("classement", classementCalcul);
+                intent.putExtra("mode", modeCalcul);
+                startActivity(intent);
+            }
+        });
 
     }
 
@@ -150,7 +271,7 @@ public class MainActivityFragment extends Fragment {
         //Defaite
         tvDef.setText(tvDef.getText()+" "+mainProfil.getNbreDefaite());
         // Points
-        tvPts.setText(tvPts.getText()+" "+ Classement.calculPointTotal(mainProfil.getJoueurProfil().getClassement(), mainProfil.getMatchs(), 0));
+        tvPts.setText(tvPts.getText()+" "+ Classement.calculPointTotal(mainProfil.getJoueurProfil().getClassement(), mainProfil.getMatchs(), modeCalcul));
         //Classement final
         tvClassFinal.setText(tvClassFinal.getText()+" "+Classement.convertirClassementInt(Classement.calculClassement(mainProfil, modeCalcul)));
         // Points manquant classement au dessus
@@ -158,42 +279,61 @@ public class MainActivityFragment extends Fragment {
 
 
         //La listview
-        LinkedList<Match> matchsIntoAccount = Classement.getMatchsIntoAccount(mainProfil.getJoueurProfil().getClassement(), mainProfil.getMatchs(), 0);
-        MatchAdapter adapterM = new MatchAdapterPoints(this.getActivity(), matchsIntoAccount, 1, classementBilan, modeCalcul);
+        //LinkedList<Match> matchsIntoAccount = Classement.getMatchsIntoAccount(mainProfil.getJoueurProfil().getClassement(), mainProfil.getMatchs());
+        //MatchAdapter adapterM = new MatchAdapter(this.getActivity(), matchsIntoAccount);
 
-        listViewMatch.setAdapter(adapterM);
+        //listViewMatch.setAdapter(adapterM);
     }
 
 
-    //To delete
-    public void getProfil(){
-        try {
-            if (getActivity().getIntent().getExtras().getParcelable("profil") != null) {
-               // ((MainActivity) getActivity()).setMainProfil( (Profil) getActivity().getIntent().getExtras().getParcelable("profil") );
+    // Pour les tests ------ To delete
+    public void creationProfilComplet(){
 
-            }
-        }
-        catch(Exception ex){
-            System.out.println(ex.getMessage());
+        Profil p = new Profil();
 
-        }
+        Joueur j1 = new Joueur(0, "Roger", 10, 10, 0); // Principal 15/3
+        Joueur j2 = new Joueur(0, "David", 10, 9, 0);
+        Joueur j3 = new Joueur(0, "Yannick", 11, 10, 0);
+        Joueur j4 = new Joueur(0, "Victor", 9, 8, 0);
+        Joueur j5 = new Joueur(0, "gwenael", 9, 8, 0);
+        Joueur j6 = new Joueur(0, "Jerome", 8, 8, 0);
+        Joueur j7 = new Joueur(0, "Gaylor", 8, 7, 0);
+        Joueur j8 = new Joueur(0, "Sebastien", 8, 9, 0);
+        Joueur j9 = new Joueur(0, "Noam", 11, 11, 0);
+        Joueur j10 = new Joueur(0, "Pierre", 10, 11, 0);
 
-        if(ProfilSingleton.getInstance().getProfil() == null){
-            /*Joueur j1 = new Joueur(1, "John", 9, 10, 0);
-            Joueur j2 = new Joueur(1, "Grigor Dimitrov", 9, 10, 0);
-            Epreuve e1 = new Epreuve(1, "Championnat", 1);
 
-            ((MainActivity) getActivity()).setMainProfil( new Profil(1, "Emerik", j1) );
 
-            Match m1 = new Match(((MainActivity) getActivity()).getMainProfil().getJoueurProfil(), j2, "7/5-7/5", "GreenSet", 1, e1);
-            Match m2 = new Match(((MainActivity) getActivity()).getMainProfil().getJoueurProfil(), j2, "6/3-6/3", "Terre Battue", 2, e1);
-            Match m3 = new Match(((MainActivity) getActivity()).getMainProfil().getJoueurProfil(), j2, "7/5-6/4", "GreenSet", 1, e1);
-            Match m4 = new Match(((MainActivity) getActivity()).getMainProfil().getJoueurProfil(), j2, "7/5-6/4", "GreenSet", 2, e1);
+        Match m1 = new Match(j1, j2, "6/0,6/0","surface",1, new Epreuve(),0,0);
+        Match m2 = new Match(j1, j3, "6/0,6/0","surface",1, new Epreuve(),0,0);
+        Match m3 = new Match(j1, j4, "6/0,6/0","surface",1, new Epreuve(),0,0);
+        Match m4 = new Match(j1, j5, "6/0,6/0","surface",1, new Epreuve(),0,0);
+        Match m5 = new Match(j1, j6, "6/0,6/0","surface",1, new Epreuve(),0,0);
+        Match m6 = new Match(j1, j7, "6/0,6/0","surface",1, new Epreuve(),0,0);
+        Match m7 = new Match(j1, j8, "6/0,6/0","surface",1, new Epreuve(),0,0);
+        Match m8 = new Match(j1, j6, "6/0,6/0","surface",1, new Epreuve(),0,0);
 
-            ((MainActivity) getActivity()).getMainProfil().addMatch(m1);
-            ((MainActivity) getActivity()).getMainProfil().addMatch(m2);
-            ((MainActivity) getActivity()).getMainProfil().addMatch(m3);
-            ((MainActivity) getActivity()).getMainProfil().addMatch(m4);*/
-        }
+        Match m9 = new Match(j1, j9, "6/0,6/0","surface",0, new Epreuve(),0,0);
+        Match m10 = new Match(j1, j10, "6/0,6/0","surface",0, new Epreuve(),0,0);
+
+        p.setJoueurProfil(j1);
+
+        p.getMatchs().add(m1);
+        p.getMatchs().add(m2);
+        p.getMatchs().add(m3);
+        p.getMatchs().add(m4);
+        p.getMatchs().add(m5);
+        p.getMatchs().add(m6);
+        p.getMatchs().add(m7);
+        p.getMatchs().add(m8);
+        p.getMatchs().add(m9);
+        p.getMatchs().add(m10);
+
+        ProfilSingleton.getInstance().setProfil(p);
+
+        Toast.makeText(getActivity().getApplicationContext(), "Profil temp !", Toast.LENGTH_LONG).show();
+
+
     }
+
 }

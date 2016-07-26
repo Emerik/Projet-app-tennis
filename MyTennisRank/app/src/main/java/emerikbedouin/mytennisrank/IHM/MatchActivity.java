@@ -61,7 +61,7 @@ public class MatchActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //Lancement de la fenetre d'ajout de match
-                Intent intent = new Intent(MatchActivity.this, MainActivityV2.class);
+                Intent intent = new Intent(MatchActivity.this, MainActivity.class);
                 //Passage du profil
                 //intent.putExtra("profil", (Parcelable) mainProfil);
                 startActivity(intent);

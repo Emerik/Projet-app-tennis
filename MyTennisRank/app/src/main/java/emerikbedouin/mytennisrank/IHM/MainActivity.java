@@ -1,16 +1,16 @@
 package emerikbedouin.mytennisrank.IHM;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import emerikbedouin.mytennisrank.R;
+import android.content.Intent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
-
 import emerikbedouin.mytennisrank.DAO.FileManager;
 import emerikbedouin.mytennisrank.DAO.ProfilSingleton;
-import emerikbedouin.mytennisrank.R;
+
 
 public class MainActivity extends AppCompatActivity {
 
@@ -25,10 +25,12 @@ public class MainActivity extends AppCompatActivity {
         // Recuperation d'un eventuel profil en memoire
         loadProfil();
 
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_main_activity);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         toolbar.setNavigationIcon(R.drawable.balle);
+
+        toolbar.setTitle("Tennis Rank");
 
         /*FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -57,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
 
         switch (item.getItemId()) {
             case R.id.action_settings:
-
+                settings();
                 return true;
             case R.id.action_new_profil:
                 newProfil();
@@ -72,6 +74,13 @@ public class MainActivity extends AppCompatActivity {
 
 
     // Fonction des items du menu
+
+    public void settings(){
+        //Lancement de la fenetre du details du calcul
+        Intent intent = new Intent(MainActivity.this, CalculDetailsActivity.class);
+        intent.putExtra("classement", ProfilSingleton.getInstance().getProfil().getJoueurProfil().getClassement());
+        startActivity(intent);
+    }
 
     public void newProfil(){
         //Lancement de la fenetre de création d'un nouveau profil
@@ -107,3 +116,4 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 }
+
