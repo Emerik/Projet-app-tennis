@@ -25,7 +25,8 @@
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="Medium Text"
         android:id="@+id/textViewClassement"
-        android:gravity="center_horizontal"/>
+        android:gravity="center_horizontal"
+        android:textColor="@color/textColor" />
 
    <!-- <View
         android:layout_height="match_parent"
@@ -41,7 +42,8 @@
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="Medium Text"
         android:id="@+id/textViewNom"
-        android:gravity="center_horizontal"/>
+        android:gravity="center_horizontal"
+        android:textColor="@color/textColor" />
 
     <TextView
         android:layout_width="0dp"
@@ -50,7 +52,7 @@
         android:text="Medium Text"
         android:id="@+id/textViewScore"
         android:gravity="center_horizontal"
-         />
+        android:textColor="@color/textColor" />
 <!--
             android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true" -->

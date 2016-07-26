@@ -2,14 +2,17 @@ package emerikbedouin.mytennisrank.IHM;
 
 import android.animation.ObjectAnimator;
 import android.content.Intent;
+import android.media.Image;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -34,9 +37,10 @@ public class MainActivityV2Fragment extends Fragment {
 
     //View
     private TextView tvClass, tvVict, tvDef, tvPts, tvClassFinal, tvLevUp, tvHypo, tvHypoResult;
-    private Button btnLeft, btnRight, btnAllDrop, btnFutur, btnAllUp, btnNormal;
+    private Button btnLeft, btnRight;
     private RelativeLayout layoutBilan,layoutHypoResult;
     private DonutProgress ptsBarProgress;
+    private ImageView currentImageView, upImageView, downImageView, futurImageView;
 
 
     public MainActivityV2Fragment() {
@@ -52,6 +56,7 @@ public class MainActivityV2Fragment extends Fragment {
 
 
         animateBilan();
+        colorBall(currentImageView);
 
         // Traitement
         classementCalcul = 0;
@@ -121,43 +126,58 @@ public class MainActivityV2Fragment extends Fragment {
 
         ptsBarProgress = (DonutProgress) rootView.findViewById(R.id.donut_progress);
 
-        // Bouton all monter,descente
-        btnAllDrop = (Button) rootView.findViewById(R.id.buttonAllDrop);
-        btnFutur = (Button) rootView.findViewById(R.id.buttonFutur);
-        btnNormal = (Button) rootView.findViewById(R.id.buttonNormal);
-        btnAllUp = (Button) rootView.findViewById(R.id.buttonAllUp);
 
-        btnAllDrop.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                modeCalcul = 2;
-                upProgressBar();
-            }
-        });
+        // Image Bouton
+        currentImageView = (ImageView) rootView.findViewById(R.id.currentImageView);
+        upImageView = (ImageView) rootView.findViewById(R.id.upImageView);
+        downImageView = (ImageView) rootView.findViewById(R.id.downImageView);
+        futurImageView = (ImageView) rootView.findViewById(R.id.futurImageView);
 
-        btnFutur.setOnClickListener(new View.OnClickListener() {
+        currentImageView.setOnTouchListener(new View.OnTouchListener() {
             @Override
-            public void onClick(View v) {
-                modeCalcul = 1;
-                upProgressBar();
-            }
-        });
-
-        btnAllUp.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                modeCalcul = 3;
-                upProgressBar();
-            }
-        });
-
-        btnNormal.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+            public boolean onTouch(View v, MotionEvent event) {
+                v.setSelected(event.getAction()==MotionEvent.ACTION_DOWN);
                 modeCalcul = 0;
                 upProgressBar();
+                colorBall((ImageView) v);
+                return true;
             }
         });
+
+        upImageView.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                v.setSelected(event.getAction()==MotionEvent.ACTION_DOWN);
+                modeCalcul = 3;
+                upProgressBar();
+                colorBall((ImageView) v);
+                return true;
+            }
+        });
+
+        downImageView.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                v.setSelected(event.getAction()==MotionEvent.ACTION_DOWN);
+                modeCalcul = 2;
+                upProgressBar();
+                colorBall((ImageView) v);
+                return true;
+            }
+        });
+
+        futurImageView.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                v.setSelected(event.getAction()==MotionEvent.ACTION_DOWN);
+                modeCalcul = 1;
+                upProgressBar();
+                colorBall((ImageView) v);
+                return true;
+            }
+        });
+
+
 
     }
 
@@ -177,6 +197,17 @@ public class MainActivityV2Fragment extends Fragment {
 
     }
 
+    public void colorBall(ImageView v){
+
+        currentImageView.setImageResource(R.drawable.balle_moyen);
+        upImageView.setImageResource(R.drawable.balle_moyen);
+        downImageView.setImageResource(R.drawable.balle_moyen);
+        futurImageView.setImageResource(R.drawable.balle_moyen);
+
+        ((ImageView)v).setImageResource(R.drawable.balleperso_moyen);
+
+    }
+
     public void upProgressBar(){
         //Ratio nombre de points actuel / nombre de points requis
         Profil mainProfil = ProfilSingleton.getInstance().getProfil();
@@ -193,13 +224,15 @@ public class MainActivityV2Fragment extends Fragment {
 
         if(res >= 100) {
             res = 100;
-            ptsBarProgress.setFinishedStrokeColor(ContextCompat.getColor(getContext(), R.color.colorGreen));
+            ptsBarProgress.setFinishedStrokeColor(ContextCompat.getColor(getContext(), R.color.colorSuccess));
+            ptsBarProgress.setProgress(0);
         }
         else{
-            ptsBarProgress.setFinishedStrokeColor(ContextCompat.getColor(getContext(), R.color.colorPerso));
+            ptsBarProgress.setFinishedStrokeColor(ContextCompat.getColor(getContext(), R.color.colorFail));
         }
 
         //ptsBarProgress.setProgress(res);
+
 
         // Animation de la progress bar
         int time = 0;

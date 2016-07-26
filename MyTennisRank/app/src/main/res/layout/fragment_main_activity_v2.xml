@@ -29,7 +29,7 @@
             android:layout_marginTop="@dimen/activity_vertical_margin"
             android:layout_marginBottom="@dimen/activity_vertical_margin"/>
 
-        <!-- Partie Bilan -->
+        <!--        Partie Bilan          -->
         <RelativeLayout
             xmlns:android="http://schemas.android.com/apk/res/android"
             android:id="@+id/relativLayoutBilan"
@@ -113,7 +113,8 @@
             xmlns:android="http://schemas.android.com/apk/res/android"
             android:layout_width="match_parent"
             android:layout_height="340dp"
-            android:layout_weight="0.16">
+            android:layout_weight="0.16"
+            android:padding="5dp">
             <Button
                 style="?android:attr/buttonStyleSmall"
                 android:layout_width="wrap_content"
@@ -145,38 +146,77 @@
                 android:layout_centerVertical="true"
                 android:layout_alignParentEnd="true" />
 
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Descente"
-                android:id="@+id/buttonAllDrop"
-                android:layout_gravity="right"
-                android:layout_alignBottom="@+id/donut_progress"
-                android:layout_alignParentStart="true" />
+            <ImageView
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:id="@+id/currentImageView"
+                android:src="@drawable/balle_selector"
+                android:layout_alignTop="@+id/donut_progress"
+                android:layout_alignEnd="@+id/textViewCurrent" />
 
-            <Button
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Prévu"
-                android:id="@+id/buttonFutur"
-                android:layout_alignBottom="@+id/donut_progress"
-                android:layout_alignEnd="@+id/btnRightArrow" />
-
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Monter"
-                android:id="@+id/buttonAllUp"
-                android:layout_above="@+id/donut_progress"
-                android:layout_alignParentEnd="true" />
-
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
                 android:text="Actuel"
-                android:id="@+id/buttonNormal"
+                android:id="@+id/textViewCurrent"
                 android:layout_alignParentTop="true"
-                android:layout_alignParentStart="true" />
+                android:layout_alignParentStart="true"
+                android:textSize="20sp" />
+
+            <ImageView
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:id="@+id/upImageView"
+                android:src="@drawable/balle_selector"
+                android:layout_alignBottom="@+id/donut_progress"
+                android:layout_alignStart="@+id/futurImageView" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="Monter"
+                android:id="@+id/textViewUp"
+                android:textSize="20sp"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentRight="true" />
+
+            <ImageView
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:id="@+id/downImageView"
+                android:src="@drawable/balle_selector"
+                android:layout_alignBottom="@+id/donut_progress"
+                android:layout_alignEnd="@+id/textViewCurrent" />
+
+            <ImageView
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:id="@+id/futurImageView"
+                android:src="@drawable/balle_selector"
+                android:layout_alignTop="@+id/donut_progress"
+                android:layout_alignStart="@+id/textViewUp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="Descente"
+                android:id="@+id/textViewDown"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentStart="true"
+                android:textSize="20sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="Prévu"
+                android:id="@+id/textViewFutur"
+                android:textSize="20sp"
+                android:layout_alignTop="@+id/textViewCurrent"
+                android:layout_alignEnd="@+id/btnRightArrow" />
 
 
         </RelativeLayout>

@@ -30,7 +30,7 @@
         android:orientation="horizontal"
         android:layout_margin="10dp"
         android:background="@drawable/bordershadow"
-        android:padding="5dp">
+        android:padding="10dp">
 
         <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
             xmlns:tools="http://schemas.android.com/tools"
@@ -44,7 +44,7 @@
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:text="@string/text_rank"
                 android:id="@+id/textViewClassement"
-                />
+                android:textColor="@color/textColor" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -53,21 +53,23 @@
                 android:text="Nbre Victoire :"
                 android:id="@+id/textViewVictoire"
                 android:layout_marginBottom="5dp"
-                />
+                android:textColor="@color/textColor" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:text="Nbre Défaite :"
-                android:id="@+id/textViewDefaite"/>
+                android:id="@+id/textViewDefaite"
+                android:textColor="@color/textColor" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:text="V-E-2I-5G : "
-                android:id="@+id/textViewDelta"/>
+                android:id="@+id/textViewDelta"
+                android:textColor="@color/textColor" />
 
         </LinearLayout>
 
@@ -85,14 +87,16 @@
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:text="Nombre PEC :"
-                android:id="@+id/textViewPEC"/>
+                android:id="@+id/textViewPEC"
+                android:textColor="@color/textColor" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:text="@string/text_points"
-                android:id="@+id/textViewPts" />
+                android:id="@+id/textViewPts"
+                android:textColor="@color/textColor" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -100,13 +104,14 @@
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:text="@string/text_bonus"
                 android:id="@+id/textViewBonus"
-                />
+                android:textColor="@color/textColor" />
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:text="Total (requis) : "
-                android:id="@+id/textViewTotal"/>
+                android:id="@+id/textViewTotal"
+                android:textColor="@color/textColor" />
 
         </LinearLayout>
 
@@ -210,7 +215,7 @@
         android:id="@+id/textViewBilan"
         android:layout_gravity="center_horizontal"
         android:layout_margin="10dp"
-        android:textColor="@color/colorPersoDark"
+        android:textColor="@color/textColor"
         android:padding="5dp" />
 
     <ListView
