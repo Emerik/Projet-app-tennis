@@ -1,6 +1,11 @@
 package emerikbedouin.mytennisrank.IHM;
 
 import android.os.Bundle;
+import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import emerikbedouin.mytennisrank.R;
@@ -8,6 +13,10 @@ import android.content.Intent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import emerikbedouin.mytennisrank.DAO.FileManager;
 import emerikbedouin.mytennisrank.DAO.ProfilSingleton;
 
@@ -15,7 +24,8 @@ import emerikbedouin.mytennisrank.DAO.ProfilSingleton;
 public class MainActivity extends AppCompatActivity {
 
     //private Profil mainProfil = null;
-
+    private TabLayout tabLayout;
+    private ViewPager viewPager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,14 +42,21 @@ public class MainActivity extends AppCompatActivity {
 
         toolbar.setTitle("Tennis Rank");
 
-        /*FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+        viewPager = (ViewPager) findViewById(R.id.viewpager);
+        setupViewPager(viewPager);
+
+        tabLayout = (TabLayout) findViewById(R.id.tabs);
+        tabLayout.setupWithViewPager(viewPager);
+
+        try {
+            if (getIntent().getExtras().get("tab") != null) {
+                viewPager.setCurrentItem(1);
             }
-        });*/
+
+        }
+        catch (NullPointerException ex){
+            System.out.println("[ERROR] MainActivity "+ex.getMessage());
+        }
 
 
     }
@@ -115,5 +132,43 @@ public class MainActivity extends AppCompatActivity {
 
         }
     }
+
+
+    private void setupViewPager(ViewPager viewPager) {
+        ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
+        adapter.addFragment(new MainActivityFragment(), "Bilan");
+        adapter.addFragment(new MatchFragment(), "Matchs");
+        viewPager.setAdapter(adapter);
+    }
+
+    class ViewPagerAdapter extends FragmentPagerAdapter {
+        private final List<Fragment> mFragmentList = new ArrayList<>();
+        private final List<String> mFragmentTitleList = new ArrayList<>();
+
+        public ViewPagerAdapter(FragmentManager manager) {
+            super(manager);
+        }
+
+        @Override
+        public Fragment getItem(int position) {
+            return mFragmentList.get(position);
+        }
+
+        @Override
+        public int getCount() {
+            return mFragmentList.size();
+        }
+
+        public void addFragment(Fragment fragment, String title) {
+            mFragmentList.add(fragment);
+            mFragmentTitleList.add(title);
+        }
+
+        @Override
+        public CharSequence getPageTitle(int position) {
+            return mFragmentTitleList.get(position);
+        }
+    }
+
 }
 

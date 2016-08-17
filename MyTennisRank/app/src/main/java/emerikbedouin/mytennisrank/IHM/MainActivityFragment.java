@@ -35,7 +35,7 @@ public class MainActivityFragment extends Fragment {
     private int modeCalcul = 0;
 
     //View
-    private TextView tvClass, tvVict, tvDef, tvPts, tvClassFinal, tvLevUp, tvHypo, tvHypoResult;
+    private TextView tvBilan, tvClass, tvVict, tvDef, tvPts, tvClassFinal, tvLevUp, tvHypo, tvHypoResult;
     private Button btnLeft, btnRight;
     private RelativeLayout layoutBilan,layoutHypoResult;
     private DonutProgress ptsBarProgress;
@@ -77,24 +77,12 @@ public class MainActivityFragment extends Fragment {
 
     public void initComp(View rootView){
 
-        Button btnM = (Button) rootView.findViewById(R.id.buttonM);
-        btnM.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), MatchActivity.class);
-                startActivity(intent);
-            }
-        });
-
 
         // Bilan
         layoutBilan = (RelativeLayout) rootView.findViewById(R.id.relativLayoutBilan);
         tvClass = (TextView) rootView.findViewById(R.id.textViewClassement);
         tvVict = (TextView) rootView.findViewById(R.id.textViewVictoire);
         tvDef = (TextView) rootView.findViewById(R.id.textViewDefaite);
-        tvPts = (TextView) rootView.findViewById(R.id.textViewPts);
-        tvClassFinal = (TextView) rootView.findViewById(R.id.textViewBonus);
-        tvLevUp = (TextView) rootView.findViewById(R.id.textViewPtsLevUp);
 
 
         // Hypo - circle
@@ -265,15 +253,15 @@ public class MainActivityFragment extends Fragment {
         Profil mainProfil = ProfilSingleton.getInstance().getProfil();
 
         //Classement
-        tvClass.setText(tvClass.getText()+" "+Classement.convertirClassementInt(mainProfil.getJoueurProfil().getClassement()));
+        tvClass.setText(Classement.convertirClassementInt(mainProfil.getJoueurProfil().getClassement()));
         //Victoire
-        tvVict.setText(tvVict.getText()+" "+mainProfil.getNbreVictoire());
+        tvVict.setText(mainProfil.getNbreVictoire()+" Victoire");
         //Defaite
-        tvDef.setText(tvDef.getText()+" "+mainProfil.getNbreDefaite());
+        tvDef.setText(mainProfil.getNbreDefaite()+" Défaites");
         // Points
-        tvPts.setText(tvPts.getText()+" "+ Classement.calculPointTotal(mainProfil.getJoueurProfil().getClassement(), mainProfil.getMatchs(), modeCalcul));
+        //tvPts.setText(tvPts.getText()+" "+ Classement.calculPointTotal(mainProfil.getJoueurProfil().getClassement(), mainProfil.getMatchs(), modeCalcul));
         //Classement final
-        tvClassFinal.setText(tvClassFinal.getText()+" "+Classement.convertirClassementInt(Classement.calculClassement(mainProfil, modeCalcul)));
+        //tvClassFinal.setText(tvClassFinal.getText()+" "+Classement.convertirClassementInt(Classement.calculClassement(mainProfil, modeCalcul)));
         // Points manquant classement au dessus
         //tvLevUp.setText(tvLevUp.getText()+" "+mainProfil.getJoueurProfil().getClassement());
 

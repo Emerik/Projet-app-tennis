@@ -105,11 +105,7 @@ public class MatchDetailActivity extends AppCompatActivity {
                         addMatch();
                     }
 
-                    //Lancement de la fenetre des matchs
-                    Intent intent = new Intent(MatchDetailActivity.this, MatchActivity.class);
-                    //Passage du profil
-                    //intent.putExtra("profil", (Parcelable) mainProfil);
-                    startActivity(intent);
+                    appelFenetreMatchs();
                 }
                 else{
                     // Match incomlet
@@ -121,11 +117,7 @@ public class MatchDetailActivity extends AppCompatActivity {
         btnCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Lancement de la fenetre des matchs
-                Intent intent = new Intent(MatchDetailActivity.this, MatchActivity.class);
-                //Passage du profil
-                //intent.putExtra("profil", (Parcelable) mainProfil);
-                startActivity(intent);
+                appelFenetreMatchs();
             }
         });
 
@@ -241,8 +233,15 @@ public class MatchDetailActivity extends AppCompatActivity {
         }
     }
 
+    public void appelFenetreMatchs(){
+        //Lancement de la fenetre des matchs
+        Intent intent = new Intent(MatchDetailActivity.this, MainActivity.class);
+        intent.putExtra("tab","matchs");
+        startActivity(intent);
+    }
+
     /**
-     * Controle des champs obligatoire
+     * Cette fonction controle les champs obligatoire pour un match
      * @return
      */
     public boolean controlField(){

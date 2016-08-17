@@ -12,8 +12,9 @@
 <item>
     <shape>
         <solid
-            android:color="@color/colorPerso"
             />
+            <!--android:color="@color/colorPerso"-->
+
     </shape>
 </item>
 </selector>

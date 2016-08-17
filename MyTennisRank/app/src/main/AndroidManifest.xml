@@ -10,7 +10,6 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".IHM.MatchActivity" />
         <activity android:name=".IHM.MatchDetailActivity" />
         <activity android:name=".IHM.NewProfilActivity" />
         <activity
