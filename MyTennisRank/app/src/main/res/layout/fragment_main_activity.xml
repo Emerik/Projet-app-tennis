@@ -40,7 +40,7 @@
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:text="Classement"
                 android:id="@+id/textViewClassement"
-                android:textColor="@color/colorPerso"
+                android:textColor="@color/colorUdacityGreen"
                 android:layout_centerVertical="true"
                 android:layout_centerHorizontal="true"
                 android:textSize="48sp" />
@@ -51,7 +51,7 @@
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:text="Victoire "
                 android:id="@+id/textViewVictoire"
-                android:textColor="@color/colorPerso"
+                android:textColor="@color/textColor"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentTop="true"
                 android:textSize="22sp"/>
@@ -61,7 +61,7 @@
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:text="Défaite "
-                android:textColor="@color/colorPerso"
+                android:textColor="@color/textColor"
                 android:id="@+id/textViewDefaite"
                 android:layout_alignParentRight="true"
                 android:layout_alignParentTop="true"
@@ -81,14 +81,26 @@
         </RelativeLayout>
 
         <!--       Partie circle       -->
-
         <RelativeLayout
             xmlns:android="http://schemas.android.com/apk/res/android"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="0.7"
+            android:layout_weight="0.6"
             android:padding="5dp"
             android:layout_margin="10dp">
+
+            <TextView
+                android:id="@+id/simulationTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:text="Simulation classement"
+                android:textSize="20sp"
+                android:textColor="@android:color/black"
+
+                />
+
             <Button
                 style="?android:attr/buttonStyleSmall"
                 android:layout_width="wrap_content"
@@ -122,80 +134,86 @@
                 android:layout_alignParentEnd="true"
                 android:textSize="28sp" />
 
-            <ImageView
-                android:layout_width="45dp"
-                android:layout_height="45dp"
-                android:id="@+id/currentImageView"
-                android:src="@drawable/balle_selector"
-                android:layout_alignTop="@+id/donut_progress"
-                android:layout_alignEnd="@+id/textViewCurrent" />
-
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceLarge"
-                android:text="Actuel"
-                android:id="@+id/textViewCurrent"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentStart="true"
-                android:textSize="18sp" />
-
-            <ImageView
-                android:layout_width="45dp"
-                android:layout_height="45dp"
-                android:id="@+id/upImageView"
-                android:src="@drawable/balle_selector"
-                android:layout_alignBottom="@+id/donut_progress"
-                android:layout_alignStart="@+id/futurImageView" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceLarge"
-                android:text="Monter"
-                android:id="@+id/textViewUp"
-                android:textSize="18sp"
                 android:layout_alignParentBottom="true"
-                android:layout_alignParentRight="true" />
+                android:layout_centerHorizontal="true"
+                android:text="selection type de simulation"
+                android:textSize="14sp"
+                android:textColor="@android:color/black"
+                android:textAllCaps="true"
+                />
 
-            <ImageView
-                android:layout_width="45dp"
-                android:layout_height="45dp"
-                android:id="@+id/downImageView"
-                android:src="@drawable/balle_selector"
-                android:layout_alignBottom="@+id/donut_progress"
-                android:layout_alignEnd="@+id/textViewCurrent" />
-
-            <ImageView
-                android:layout_width="45dp"
-                android:layout_height="45dp"
-                android:id="@+id/futurImageView"
-                android:src="@drawable/balle_selector"
-                android:layout_alignTop="@+id/donut_progress"
-                android:layout_alignStart="@+id/textViewUp" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceLarge"
-                android:text="Descente"
-                android:id="@+id/textViewDown"
-                android:layout_alignParentBottom="true"
-                android:layout_alignParentStart="true"
-                android:textSize="18sp" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceLarge"
-                android:text="Prévu"
-                android:id="@+id/textViewFutur"
-                android:textSize="18sp"
-                android:layout_alignTop="@+id/textViewCurrent"
-                android:layout_alignEnd="@+id/btnRightArrow" />
 
 
         </RelativeLayout>
+
+        <!-- Partie mode de simulation -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.1"
+            android:orientation="horizontal"
+            android:weightSum="4"
+            tools:context=".IHM.MainActivityFragment"
+            >
+            <Button
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:id="@+id/currentButton"
+                android:background="@color/colorUdacity"
+                android:textColor="@color/colorUdacityGreen"
+                android:text="Actuel"
+                />
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:background="@color/colorUdacityGreen"/>
+
+            <Button
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:id="@+id/futurButton"
+                android:background="@color/colorUdacity"
+                android:textColor="@color/colorUdacityGreen"
+                android:text="Prévu"
+                />
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:background="@color/colorUdacityGreen"/>
+
+            <Button
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:id="@+id/downButton"
+                android:background="@color/colorUdacity"
+                android:textColor="@color/colorUdacityGreen"
+                android:text="Descente"
+                />
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:background="@color/colorUdacityGreen"/>
+
+            <Button
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:id="@+id/upButton"
+                android:background="@color/colorUdacity"
+                android:textColor="@color/colorUdacityGreen"
+                android:text="Monter"
+                />
+
+        </LinearLayout>
 
     </LinearLayout>
 </ScrollView>

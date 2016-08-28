@@ -24,7 +24,7 @@ import emerikbedouin.mytennisrank.R;
 /**
  * Created by emerikbedouin on 16/08/16.
  */
-public class MatchFragment extends Fragment {
+public class MatchFragment extends Fragment implements UpdateFragment{
 
     // View
     private ListView listViewVictoire, listViewDefaite;
@@ -39,12 +39,10 @@ public class MatchFragment extends Fragment {
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_match, container, false);
 
+        System.out.println("Chargement de MatchFragement ---------------");
 
 
-
-        if(ProfilSingleton.getInstance().getProfil() != null){
-            initComposant(rootView);
-        }
+        initComposant(rootView);
 
         return rootView;
     }
@@ -62,34 +60,12 @@ public class MatchFragment extends Fragment {
 
 
 
-
         listViewVictoire = (ListView) rootView.findViewById(R.id.listViewV);
         listViewDefaite = (ListView) rootView.findViewById(R.id.listViewD);
 
-        LinkedList<Match> listMatch = ProfilSingleton.getInstance().getProfil().getMatchs();
-        LinkedList<Match> listVictoire = new LinkedList<>();
-        LinkedList<Match> listDefaite = new LinkedList<>();
-
-
-        for(int i=0; i < listMatch.size() ; i++){
-            if(listMatch.get(i).getGagnant().equals(ProfilSingleton.getInstance().getProfil().getJoueurProfil()) ){
-                listVictoire.add(listMatch.get(i));
-            }
-            else {
-                listDefaite.add(listMatch.get(i));
-            }
+        if(ProfilSingleton.getInstance().getProfil() != null) {
+            fillData();
         }
-
-        //Définition de l'adapter
-        // ArrayAdapter<Match> adapterV = new ArrayAdapter<Match>(this, android.R.layout.simple_list_item_1, android.R.id.text1, listVictoire);
-        // ArrayAdapter<Match> adapterD = new ArrayAdapter<Match>(this, android.R.layout.simple_list_item_1, android.R.id.text1, listDefaite);
-        MatchAdapterDelete adapterV = new MatchAdapterDelete(getActivity(), listVictoire);
-        MatchAdapterDelete adapterD = new MatchAdapterDelete(getActivity(), listDefaite);
-        listViewVictoire.setAdapter(adapterV);
-        listViewDefaite.setAdapter(adapterD);
-        //On click
-        listViewVictoire.setOnItemClickListener(new ClickOnItemMatch());
-        listViewDefaite.setOnItemClickListener(new ClickOnItemMatch());
 
     }
 
@@ -178,5 +154,37 @@ public class MatchFragment extends Fragment {
 
     }
 
+
+    public void fillData(){
+        LinkedList<Match> listMatch = ProfilSingleton.getInstance().getProfil().getMatchs();
+        LinkedList<Match> listVictoire = new LinkedList<>();
+        LinkedList<Match> listDefaite = new LinkedList<>();
+
+
+        for (int i = 0; i < listMatch.size(); i++) {
+            if (listMatch.get(i).getGagnant().equals(ProfilSingleton.getInstance().getProfil().getJoueurProfil())) {
+                listVictoire.add(listMatch.get(i));
+            } else {
+                listDefaite.add(listMatch.get(i));
+            }
+        }
+
+        //Définition de l'adapter
+        // ArrayAdapter<Match> adapterV = new ArrayAdapter<Match>(this, android.R.layout.simple_list_item_1, android.R.id.text1, listVictoire);
+        // ArrayAdapter<Match> adapterD = new ArrayAdapter<Match>(this, android.R.layout.simple_list_item_1, android.R.id.text1, listDefaite);
+        MatchAdapterDelete adapterV = new MatchAdapterDelete(getActivity(), listVictoire);
+        MatchAdapterDelete adapterD = new MatchAdapterDelete(getActivity(), listDefaite);
+        listViewVictoire.setAdapter(adapterV);
+        listViewDefaite.setAdapter(adapterD);
+        //On click
+        listViewVictoire.setOnItemClickListener(new ClickOnItemMatch());
+        listViewDefaite.setOnItemClickListener(new ClickOnItemMatch());
+    }
+
+    @Override
+    public void update() {
+        System.out.println("UPDATE MOI LE SPUTAINS DE DONNEES AAAHHAHAHAHH");
+        fillData();
+    }
 
 }

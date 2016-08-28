@@ -7,7 +7,7 @@
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:orientation="vertical"
-        android:background="@color/material_deep_teal_200"
+        android:background="@color/colorPersoBackground2"
         android:padding="5dp">
 
         <TextView
@@ -17,7 +17,7 @@
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:text="Victoire"
             android:id="@+id/textViewVictoire"
-            android:textColor="@color/colorPersoDark"
+            android:textColor="@android:color/white"
             android:padding="5dp"
             android:textStyle="bold" />
 
@@ -37,7 +37,7 @@
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:text="Défaite"
             android:id="@+id/textViewDefaite"
-            android:textColor="@color/colorPersoDark"
+            android:textColor="@android:color/white"
             android:padding="5dp"
             android:textStyle="bold" />
 

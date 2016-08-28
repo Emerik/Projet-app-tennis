@@ -17,7 +17,7 @@
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="Détails du calcul"
         android:id="@+id/textViewTitleDetailCalcul"
-        android:textColor="@color/material_deep_teal_500"
+        android:textColor="@color/textColor"
         android:layout_marginLeft="@dimen/activity_horizontal_margin"
         android:layout_marginTop="@dimen/activity_vertical_margin"/>
 

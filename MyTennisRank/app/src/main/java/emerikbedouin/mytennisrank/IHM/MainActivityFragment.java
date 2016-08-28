@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -29,17 +30,17 @@ import emerikbedouin.mytennisrank.R;
 /**
  * A placeholder fragment containing a simple view.
  */
-public class MainActivityFragment extends Fragment {
+public class MainActivityFragment extends Fragment implements UpdateFragment{
 
     private int classementCalcul;
     private int modeCalcul = 0;
 
     //View
-    private TextView tvBilan, tvClass, tvVict, tvDef, tvPts, tvClassFinal, tvLevUp, tvHypo, tvHypoResult;
+    private TextView tvBilan, tvClass, tvVict, tvDef, tvSimulation;
     private Button btnLeft, btnRight;
-    private RelativeLayout layoutBilan,layoutHypoResult;
+    private RelativeLayout layoutBilan;
     private DonutProgress ptsBarProgress;
-    private ImageView currentImageView, upImageView, downImageView, futurImageView;
+    private Button btnCurrent, btnFutur, btnDown, btnUp;
 
 
     public MainActivityFragment() {
@@ -55,7 +56,7 @@ public class MainActivityFragment extends Fragment {
 
 
         animateBilan();
-        colorBall(currentImageView);
+
 
         // Traitement
         classementCalcul = 0;
@@ -113,58 +114,39 @@ public class MainActivityFragment extends Fragment {
 
         ptsBarProgress = (DonutProgress) rootView.findViewById(R.id.donut_progress);
 
+        tvSimulation = (TextView) rootView.findViewById(R.id.simulationTextView);
 
-        // Image Bouton
-        currentImageView = (ImageView) rootView.findViewById(R.id.currentImageView);
-        upImageView = (ImageView) rootView.findViewById(R.id.upImageView);
-        downImageView = (ImageView) rootView.findViewById(R.id.downImageView);
-        futurImageView = (ImageView) rootView.findViewById(R.id.futurImageView);
 
-        currentImageView.setOnTouchListener(new View.OnTouchListener() {
+        // Boutons de modification du mode de calcul
+        btnCurrent = (Button) rootView.findViewById(R.id.currentButton);
+        btnFutur = (Button) rootView.findViewById(R.id.futurButton);
+        btnDown = (Button) rootView.findViewById(R.id.downButton);
+        btnUp = (Button) rootView.findViewById(R.id.upButton);
+
+        btnCurrent.setOnClickListener(new View.OnClickListener() {
             @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                v.setSelected(event.getAction()==MotionEvent.ACTION_DOWN);
-                modeCalcul = 0;
-                upProgressBar();
-                colorBall((ImageView) v);
-                return true;
+            public void onClick(View v) {
+                setCurrent();
             }
         });
-
-        upImageView.setOnTouchListener(new View.OnTouchListener() {
+        btnFutur.setOnClickListener(new View.OnClickListener() {
             @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                v.setSelected(event.getAction()==MotionEvent.ACTION_DOWN);
-                modeCalcul = 3;
-                upProgressBar();
-                colorBall((ImageView) v);
-                return true;
+            public void onClick(View v) {
+                setFutur();
             }
         });
-
-        downImageView.setOnTouchListener(new View.OnTouchListener() {
+        btnDown.setOnClickListener(new View.OnClickListener() {
             @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                v.setSelected(event.getAction()==MotionEvent.ACTION_DOWN);
-                modeCalcul = 2;
-                upProgressBar();
-                colorBall((ImageView) v);
-                return true;
+            public void onClick(View v) {
+                setDown();
             }
         });
-
-        futurImageView.setOnTouchListener(new View.OnTouchListener() {
+        btnUp.setOnClickListener(new View.OnClickListener() {
             @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                v.setSelected(event.getAction()==MotionEvent.ACTION_DOWN);
-                modeCalcul = 1;
-                upProgressBar();
-                colorBall((ImageView) v);
-                return true;
+            public void onClick(View v) {
+                setUp();
             }
         });
-
-
 
     }
 
@@ -184,16 +166,6 @@ public class MainActivityFragment extends Fragment {
 
     }
 
-    public void colorBall(ImageView v){
-
-        currentImageView.setImageResource(R.drawable.balle_moyen);
-        upImageView.setImageResource(R.drawable.balle_moyen);
-        downImageView.setImageResource(R.drawable.balle_moyen);
-        futurImageView.setImageResource(R.drawable.balle_moyen);
-
-        ((ImageView)v).setImageResource(R.drawable.balleperso_moyen);
-
-    }
 
     public void upProgressBar(){
         //Ratio nombre de points actuel / nombre de points requis
@@ -274,6 +246,49 @@ public class MainActivityFragment extends Fragment {
     }
 
 
+    // Fonctions pour la séléction du mode de calcul
+
+    public void setCurrent(){
+        modeCalcul = 0;
+        tvSimulation.setText("Simulation classement ACTUEL");
+        upProgressBar();
+    }
+
+    public void setFutur(){
+        modeCalcul = 1;
+        tvSimulation.setText("Simulation classement PRÉVU");
+        upProgressBar();
+    }
+
+    public void setDown(){
+        modeCalcul = 2;
+        tvSimulation.setText("Simulation classement DESCENTE");
+        upProgressBar();
+    }
+
+    public void setUp(){
+        modeCalcul = 3;
+        tvSimulation.setText("Simulation classement MONTER");
+        upProgressBar();
+    }
+
+
+    public boolean initialized(){
+        if (tvSimulation == null || tvClass == null || tvBilan == null || tvDef == null || tvVict == null) return false;
+        if(ptsBarProgress == null) return false;
+        if(btnCurrent == null || btnFutur == null || btnDown == null || btnUp == null) return false;
+
+        return true;
+    }
+
+    @Override
+    public void update() {
+        if (initialized()) {
+            calculBilanProfil();
+            upProgressBar();
+        }
+    }
+
     // Pour les tests ------ To delete
     public void creationProfilComplet(){
 
@@ -321,7 +336,8 @@ public class MainActivityFragment extends Fragment {
 
         Toast.makeText(getActivity().getApplicationContext(), "Profil temp !", Toast.LENGTH_LONG).show();
 
-
+        // Actualisation des données du Fragment des Matchs
+        ((ViewPagerAdapter) ((MainActivity) getActivity()).getViewPager().getAdapter()).updateItems();
     }
 
 }

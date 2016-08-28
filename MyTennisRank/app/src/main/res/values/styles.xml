@@ -6,8 +6,8 @@
         <!--<item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>-->
-        <item name="colorPrimary">@color/colorPerso</item>
-        <item name="colorPrimaryDark">@color/colorPersoDark</item>
+        <item name="colorPrimary">@color/colorUdacity</item>
+        <item name="colorPrimaryDark">@color/colorUdacityGreen</item>
         <item name="colorAccent">@color/colorPersoAccent</item>
         <item name="android:textColorPrimary">@color/black</item>
     </style>
