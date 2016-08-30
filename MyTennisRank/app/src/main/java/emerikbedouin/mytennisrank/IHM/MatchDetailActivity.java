@@ -1,4 +1,4 @@
-package emerikbedouin.mytennisrank.IHM;
+package emerikbedouin.mytennisrank.ihm;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -13,28 +13,26 @@ import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import emerikbedouin.mytennisrank.DAO.ProfilSingleton;
-import emerikbedouin.mytennisrank.Modele.Classement;
-import emerikbedouin.mytennisrank.Modele.Joueur;
-import emerikbedouin.mytennisrank.Modele.Match;
+import emerikbedouin.mytennisrank.dao.ProfilSingleton;
+import emerikbedouin.mytennisrank.modele.Classement;
+import emerikbedouin.mytennisrank.modele.Joueur;
+import emerikbedouin.mytennisrank.modele.Match;
 import emerikbedouin.mytennisrank.R;
 
 public class MatchDetailActivity extends AppCompatActivity {
 
-    //private Profil mainProfil;
     private int mode;
     private Match matchDetailed;
-    private boolean fieldsValid;
     private ArrayAdapter<String> adapterClassement;
 
     // View
     private EditText editTextJ2, editTextScore, editTextSurface;
     private RadioGroup radioGroupVD;
-    private Button btnValid, btnCancel;
     private Spinner spinnerClassement, spinnerFuturClassement;
     private CheckBox checkBoxBonusChpt, checkBoxWo;
 
     public MatchDetailActivity() {
+        // Constructeur MatchDetailActivity
     }
 
     @Override
@@ -92,8 +90,8 @@ public class MatchDetailActivity extends AppCompatActivity {
         checkBoxWo = (CheckBox) findViewById(R.id.checkBoxWo);
 
         // Les boutons
-        btnValid = (Button) findViewById(R.id.buttonValid);
-        btnCancel = (Button) findViewById(R.id.buttonCancel);
+        Button btnValid = (Button) findViewById(R.id.buttonValid);
+        Button btnCancel = (Button) findViewById(R.id.buttonCancel);
 
         btnValid.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -126,7 +124,7 @@ public class MatchDetailActivity extends AppCompatActivity {
         }
     }
 
-    void fillMatchItem(Match match){
+    public void fillMatchItem(Match match){
         editTextJ2.setText(match.getJ2().getNom());
 
         spinnerClassement.setSelection(adapterClassement.getPosition(Classement.convertirClassementInt(match.getJ2().getClassement())));

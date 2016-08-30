@@ -1,6 +1,6 @@
-package emerikbedouin.mytennisrank.DAO;
+package emerikbedouin.mytennisrank.dao;
 
-import emerikbedouin.mytennisrank.Modele.Profil;
+import emerikbedouin.mytennisrank.modele.Profil;
 
 /**
 *	Classe d'acc�s unique au profil actuel

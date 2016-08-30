@@ -4,7 +4,7 @@
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:orientation="vertical"
-        tools:context=".IHM.CalculDetailsActivity"
+        tools:context=".ihm.CalculDetailsActivity"
         android:weightSum="1"
     android:background="@color/colorPersoBackground">
 

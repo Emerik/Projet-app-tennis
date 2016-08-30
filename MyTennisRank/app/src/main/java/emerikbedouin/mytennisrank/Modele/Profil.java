@@ -1,4 +1,4 @@
-package emerikbedouin.mytennisrank.Modele;
+package emerikbedouin.mytennisrank.modele;
 
 import android.os.Parcel;
 import android.os.Parcelable;

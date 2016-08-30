@@ -1,4 +1,4 @@
-package emerikbedouin.mytennisrank.Modele;
+package emerikbedouin.mytennisrank.modele;
 
 import java.util.LinkedList;
 
@@ -38,12 +38,14 @@ public class Classement {
 
     /**
      * Calcul pour un classement et une liste de matchs le classement résultat
-     * @param classement le classement du joueur
+     * @param inputClassement le classement du joueur
      * @param matchs la liste de matchs
      * @param mode
      * @return
      */
-    public static int calculClassement(int classement, LinkedList<Match> matchs, int mode){
+    public static int calculClassement(int inputClassement, LinkedList<Match> matchs, int mode){
+
+        int classement = inputClassement;
 
         if(matchs.size() > 0) {
             if (maintien(classement, calculPointTotal(classement, matchs, mode))) {
@@ -323,18 +325,17 @@ public class Classement {
 
 
     /**
-     * D�termine si le nombre de points pass� en param�tre est suffisant pour le classement donn�
+     * Determine si le nombre de points passe en parametre est suffisant pour le classement donne
      * @param classement
      * @param pts
      * @return
      */
     public static boolean maintien(int classement, int pts) {
-        if (ptsMaintien(classement) <= pts){
-            return true;
-        }
-        else{
-            return false;
-        }
+
+        if (ptsMaintien(classement) <= pts) return true ;
+
+        return false;
+
     }
 
 
@@ -468,43 +469,43 @@ public class Classement {
         String classement="";
         if(classementInt==0)
             classement="NC";
-        if(classementInt==1)
+        else if(classementInt==1)
             classement="40";
-        if(classementInt==2)
+        else if(classementInt==2)
             classement="30/5";
-        if(classementInt==3)
+        else if(classementInt==3)
             classement="30/4";
-        if(classementInt==4)
+        else if(classementInt==4)
             classement="30/3";
-        if(classementInt==5)
+        else if(classementInt==5)
             classement="30/2";
-        if(classementInt==6)
+        else if(classementInt==6)
             classement="30/1";
-        if(classementInt==7)
+        else if(classementInt==7)
             classement="30";
-        if(classementInt==8)
+        else if(classementInt==8)
             classement="15/5";
-        if(classementInt==9)
+        else if(classementInt==9)
             classement="15/4";
-        if(classementInt==10)
+        else if(classementInt==10)
             classement="15/3";
-        if(classementInt==11)
+        else if(classementInt==11)
             classement="15/2";
-        if(classementInt==12)
+        else if(classementInt==12)
             classement="15/1";
-        if(classementInt==13)
+        else if(classementInt==13)
             classement="15";
-        if(classementInt==14)
+        else if(classementInt==14)
             classement="5/6";
-        if(classementInt==15)
+        else if(classementInt==15)
             classement="4/6";
-        if(classementInt==16)
+        else if(classementInt==16)
             classement="3/6";
-        if(classementInt==17)
+        else if(classementInt==17)
             classement="2/6";
-        if(classementInt==18)
+        else if(classementInt==18)
             classement="1/6";
-        if(classementInt==19)
+        else if(classementInt==19)
             classement="0";
 
         return classement;
@@ -515,45 +516,46 @@ public class Classement {
      */
     public static int convertirClassementString(String c){
         int classement = 0;
-        if(c.equals("NC"))
+
+        if("NC".equals(c))
             classement=0;
-       else if(c.equals("40"))
+       else if("40".equals(c))
             classement=1;
-       else if(c.equals("30/5"))
+       else if("30/5".equals(c))
             classement=2;
-       else if(c.equals("30/4"))
+       else if("30/4".equals(c))
             classement=3;
-       else if(c.equals("30/3"))
+       else if("30/3".equals(c))
             classement=4;
-        else if(c.equals("30/2"))
+        else if("30/2".equals(c))
             classement=5;
-        else if(c.equals("30/1"))
+        else if("30/1".equals(c))
             classement=6;
-        else if(c.equals("30"))
+        else if("30".equals(c))
             classement=7;
-        else if(c.equals("15/5"))
+        else if("15/5".equals(c))
             classement=8;
-        else if(c.equals("15/4"))
+        else if("15/4".equals(c))
             classement=9;
-        else if(c.equals("15/3"))
+        else if("15/3".equals(c))
             classement=10;
-        else if(c.equals("15/2"))
+        else if("15/2".equals(c))
             classement=11;
-        else if(c.equals("15/1"))
+        else if("15/1".equals(c))
             classement=12;
-        else if(c.equals("15"))
+        else if("15".equals(c))
             classement=13;
-        else if(c.equals("5/6"))
+        else if("5/6".equals(c))
             classement=14;
-        else if(c.equals("4/6"))
+        else if("4/6".equals(c))
             classement=15;
-        else if(c.equals("3/6"))
+        else if("3/6".equals(c))
             classement=16;
-        else if(c.equals("2/6"))
+        else if("2/6".equals(c))
             classement=17;
-        else if(c.equals("1/6"))
+        else if("1/6".equals(c))
             classement=18;
-        else if(c.equals("0"))
+        else if("0".equals(c))
             classement=19;
 
         return classement;
@@ -592,64 +594,5 @@ public class Classement {
 
     }
 
-
-    @Deprecated
-    /** D�termine si le joueur se maintien pour un classement et un nombre de pts donn�
-     * @param classement
-     * @param pts
-     * @return
-     */
-    public static boolean maintienOld(int classement, int pts){
-        int m=0;
-        //Pour chaque classement
-        if(classement==0){
-            return true;}
-        else if(classement==1){
-            if(pts>0)
-                return true;}
-        else if(classement==2){
-            if(pts>6)
-                return true;}
-        else if(classement==3){
-            if(pts>70)
-                return true;}
-        else if(classement==4){
-            if(pts>120)
-                return true;}
-        else if(classement==5){
-            if(pts>170)
-                return true;}
-        else if(classement==6){
-            // 30/1
-            if(pts>210)
-                return true;}
-        else if(classement==7){
-            if(pts>280)
-                return true;}
-        else if(classement==8){
-            if(pts>300)
-                return true;}
-        else if(classement==9){
-            if(pts>310)
-                return true;}
-        else if(classement==10){
-            if(pts>320)
-                return true;}
-        else if(classement==11){
-            if(pts>340)
-                return true;}
-        else if(classement==12){
-            // 15/1
-            if(pts>370)
-                return true;}
-        else if(classement==13){
-            if(pts>430)
-                return true;}
-        else if(classement==14){
-            if(pts>430)
-                return true;}
-
-        return false;
-    }
 
 }

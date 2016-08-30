@@ -1,4 +1,4 @@
-package emerikbedouin.mytennisrank.IHM;
+package emerikbedouin.mytennisrank.ihm;
 
 import android.app.Activity;
 import android.content.Context;
@@ -10,8 +10,8 @@ import android.widget.TextView;
 
 import java.util.LinkedList;
 
-import emerikbedouin.mytennisrank.Modele.Classement;
-import emerikbedouin.mytennisrank.Modele.Match;
+import emerikbedouin.mytennisrank.modele.Classement;
+import emerikbedouin.mytennisrank.modele.Match;
 import emerikbedouin.mytennisrank.R;
 
 /**
@@ -99,11 +99,11 @@ public class MatchAdapterPoints extends MatchAdapter implements AdapterView.OnIt
     }
 
     private class ViewHolder {
-        TextView textViewClass, textViewNom, textViewScore;
+        public TextView textViewClass, textViewNom, textViewScore;
     }
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
+        // For futur usage
     }
 }

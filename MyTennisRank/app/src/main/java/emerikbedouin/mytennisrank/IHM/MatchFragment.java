@@ -1,4 +1,4 @@
-package emerikbedouin.mytennisrank.IHM;
+package emerikbedouin.mytennisrank.ihm;
 
 import android.support.v4.app.Fragment;
 import android.content.Intent;
@@ -9,7 +9,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -17,21 +16,21 @@ import com.daimajia.swipe.SwipeLayout;
 
 import java.util.LinkedList;
 
-import emerikbedouin.mytennisrank.DAO.ProfilSingleton;
-import emerikbedouin.mytennisrank.Modele.Match;
+import emerikbedouin.mytennisrank.dao.ProfilSingleton;
+import emerikbedouin.mytennisrank.modele.Match;
 import emerikbedouin.mytennisrank.R;
 
 /**
  * Created by emerikbedouin on 16/08/16.
+ * Fragment d'affichage des matchs du joueur
  */
 public class MatchFragment extends Fragment implements UpdateFragment{
 
     // View
     private ListView listViewVictoire, listViewDefaite;
-    private FloatingActionButton btnAddMatch;
 
     public MatchFragment(){
-
+        // Constructeur MatchFragment
     }
 
     @Override
@@ -48,9 +47,14 @@ public class MatchFragment extends Fragment implements UpdateFragment{
     }
 
 
-    void initComposant(View rootView){
+    /**
+     * Initialisation des composant du Fragment
+     * @param rootView
+     */
+    public void initComposant(View rootView){
 
-        btnAddMatch = (FloatingActionButton) rootView.findViewById(R.id.btnFloatAddMatch);
+        // Le bouton d'ajout de match
+        FloatingActionButton btnAddMatch = (FloatingActionButton) rootView.findViewById(R.id.btnFloatAddMatch);
         btnAddMatch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -58,11 +62,11 @@ public class MatchFragment extends Fragment implements UpdateFragment{
             }
         });
 
-
-
+        // Les listView des matchs (Victoire et Defaite)
         listViewVictoire = (ListView) rootView.findViewById(R.id.listViewV);
         listViewDefaite = (ListView) rootView.findViewById(R.id.listViewD);
 
+        // On recupere les donnees seulement si un profil est charge
         if(ProfilSingleton.getInstance().getProfil() != null) {
             fillData();
         }
@@ -75,6 +79,7 @@ public class MatchFragment extends Fragment implements UpdateFragment{
         intent.putExtra("mode","add");
         startActivity(intent);
     }
+
 
     public void swipeToDelete(View rootView){
         SwipeLayout swipeLayout =  (SwipeLayout)rootView.findViewById(R.id.swipeLayoutMatch);
@@ -99,7 +104,7 @@ public class MatchFragment extends Fragment implements UpdateFragment{
 
             @Override
             public void onStartOpen(SwipeLayout layout) {
-
+                //
             }
 
             @Override
@@ -109,7 +114,7 @@ public class MatchFragment extends Fragment implements UpdateFragment{
 
             @Override
             public void onStartClose(SwipeLayout layout) {
-
+                //
             }
 
             @Override
@@ -119,6 +124,10 @@ public class MatchFragment extends Fragment implements UpdateFragment{
         });
     }
 
+    /**
+     * Cette fonction lance la fenetre pour modifier le match
+     * @param matchSelected
+     */
     public void modifyMatch(Match matchSelected){
         // Lancement de l'activité MatchDetailActivity
         Intent intent = new Intent(getActivity(), MatchDetailActivity.class);
@@ -138,7 +147,7 @@ public class MatchFragment extends Fragment implements UpdateFragment{
             int itemPosition = position;
 
             // On récupère le match  cliqué
-            Match matchSelected = (Match) parent.getItemAtPosition(position);
+            Match matchSelected = (Match) parent.getItemAtPosition(itemPosition);
 
             // Lancement de l'activité MatchDetailActivity
             Intent intent = new Intent(getActivity(), MatchDetailActivity.class);
@@ -149,12 +158,13 @@ public class MatchFragment extends Fragment implements UpdateFragment{
             startActivity(intent);
 
 
-
         }
 
     }
 
-
+    /**
+     * Cette fonction rempli les view avec les informations du profil en mémoire
+     */
     public void fillData(){
         LinkedList<Match> listMatch = ProfilSingleton.getInstance().getProfil().getMatchs();
         LinkedList<Match> listVictoire = new LinkedList<>();
@@ -181,9 +191,11 @@ public class MatchFragment extends Fragment implements UpdateFragment{
         listViewDefaite.setOnItemClickListener(new ClickOnItemMatch());
     }
 
+    /**
+     * Cette fonction actualise les données de la Fragement
+     */
     @Override
     public void update() {
-        System.out.println("UPDATE MOI LE SPUTAINS DE DONNEES AAAHHAHAHAHH");
         fillData();
     }
 

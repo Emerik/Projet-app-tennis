@@ -1,4 +1,4 @@
-package emerikbedouin.mytennisrank.DAO;
+package emerikbedouin.mytennisrank.dao;
 
 import android.app.Activity;
 import android.content.Context;
@@ -10,7 +10,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
-import emerikbedouin.mytennisrank.Modele.Profil;
+import emerikbedouin.mytennisrank.modele.Profil;
 
 /**
  * Created by emerikbedouin on 25/03/16.

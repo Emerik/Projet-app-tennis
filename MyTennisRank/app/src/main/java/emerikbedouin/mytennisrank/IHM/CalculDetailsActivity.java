@@ -1,4 +1,4 @@
-package emerikbedouin.mytennisrank.IHM;
+package emerikbedouin.mytennisrank.ihm;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,10 +11,10 @@ import android.widget.TextView;
 
 import java.util.LinkedList;
 
-import emerikbedouin.mytennisrank.DAO.ProfilSingleton;
-import emerikbedouin.mytennisrank.Modele.Classement;
-import emerikbedouin.mytennisrank.Modele.Match;
-import emerikbedouin.mytennisrank.Modele.Profil;
+import emerikbedouin.mytennisrank.dao.ProfilSingleton;
+import emerikbedouin.mytennisrank.modele.Classement;
+import emerikbedouin.mytennisrank.modele.Match;
+import emerikbedouin.mytennisrank.modele.Profil;
 import emerikbedouin.mytennisrank.R;
 
 public class CalculDetailsActivity extends AppCompatActivity {

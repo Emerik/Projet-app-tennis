@@ -1,4 +1,4 @@
-package emerikbedouin.mytennisrank.IHM;
+package emerikbedouin.mytennisrank.ihm;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;

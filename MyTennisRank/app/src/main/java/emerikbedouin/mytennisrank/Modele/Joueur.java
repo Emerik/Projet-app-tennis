@@ -1,10 +1,9 @@
-package emerikbedouin.mytennisrank.Modele;
+package emerikbedouin.mytennisrank.modele;
 
 import android.os.Parcel;
 import android.os.Parcelable;
 
 import java.io.Serializable;
-import java.util.LinkedList;
 
 /**
  * Created by emerikbedouin on 10/03/16.

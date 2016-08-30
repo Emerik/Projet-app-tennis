@@ -1,10 +1,7 @@
-package emerikbedouin.mytennisrank.IHM;
+package emerikbedouin.mytennisrank.ihm;
 
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -14,11 +11,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import emerikbedouin.mytennisrank.DAO.FileManager;
-import emerikbedouin.mytennisrank.DAO.ProfilSingleton;
+import emerikbedouin.mytennisrank.dao.FileManager;
+import emerikbedouin.mytennisrank.dao.ProfilSingleton;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -93,7 +87,7 @@ public class MainActivity extends AppCompatActivity {
     // Fonction des items du menu
 
     public void settings(){
-
+        // To define
     }
 
     public void newProfil(){
@@ -124,10 +118,9 @@ public class MainActivity extends AppCompatActivity {
             else
                 Toast.makeText(getApplicationContext(), "Aucun profil en mémoire", Toast.LENGTH_LONG).show();
         }
-        else{
-            // c'est déja chargé
 
-        }
+        // Else c'est déja chargé
+
     }
 
 

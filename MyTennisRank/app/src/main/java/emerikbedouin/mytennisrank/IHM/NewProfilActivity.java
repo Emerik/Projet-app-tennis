@@ -1,4 +1,4 @@
-package emerikbedouin.mytennisrank.IHM;
+package emerikbedouin.mytennisrank.ihm;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -10,10 +10,10 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import emerikbedouin.mytennisrank.DAO.FileManager;
-import emerikbedouin.mytennisrank.DAO.ProfilSingleton;
-import emerikbedouin.mytennisrank.Modele.Classement;
-import emerikbedouin.mytennisrank.Modele.Profil;
+import emerikbedouin.mytennisrank.dao.FileManager;
+import emerikbedouin.mytennisrank.dao.ProfilSingleton;
+import emerikbedouin.mytennisrank.modele.Classement;
+import emerikbedouin.mytennisrank.modele.Profil;
 import emerikbedouin.mytennisrank.R;
 
 public class NewProfilActivity extends AppCompatActivity {

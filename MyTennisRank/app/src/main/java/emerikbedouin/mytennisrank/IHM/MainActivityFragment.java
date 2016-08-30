@@ -1,30 +1,27 @@
-package emerikbedouin.mytennisrank.IHM;
+package emerikbedouin.mytennisrank.ihm;
 
 import android.animation.ObjectAnimator;
 import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
-import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.github.lzyzsd.circleprogress.DonutProgress;
 
-import emerikbedouin.mytennisrank.DAO.ProfilSingleton;
-import emerikbedouin.mytennisrank.Modele.Classement;
-import emerikbedouin.mytennisrank.Modele.Epreuve;
-import emerikbedouin.mytennisrank.Modele.Joueur;
-import emerikbedouin.mytennisrank.Modele.Match;
-import emerikbedouin.mytennisrank.Modele.Profil;
+import emerikbedouin.mytennisrank.dao.ProfilSingleton;
+import emerikbedouin.mytennisrank.modele.Classement;
+import emerikbedouin.mytennisrank.modele.Epreuve;
+import emerikbedouin.mytennisrank.modele.Joueur;
+import emerikbedouin.mytennisrank.modele.Match;
+import emerikbedouin.mytennisrank.modele.Profil;
 import emerikbedouin.mytennisrank.R;
 
 /**
@@ -44,6 +41,7 @@ public class MainActivityFragment extends Fragment implements UpdateFragment{
 
 
     public MainActivityFragment() {
+        // Constructeur MainActivityFragment
     }
 
     @Override
@@ -52,7 +50,7 @@ public class MainActivityFragment extends Fragment implements UpdateFragment{
         View rootView = inflater.inflate(R.layout.fragment_main_activity, container, false);
 
         // Recuperation des Vue
-        initComp(rootView);
+        initComposant(rootView);
 
 
         animateBilan();
@@ -76,7 +74,11 @@ public class MainActivityFragment extends Fragment implements UpdateFragment{
     }
 
 
-    public void initComp(View rootView){
+    /**
+     * Initialisation des composant du Fragment
+     * @param rootView
+     */
+    public void initComposant(View rootView){
 
 
         // Bilan
@@ -272,7 +274,10 @@ public class MainActivityFragment extends Fragment implements UpdateFragment{
         upProgressBar();
     }
 
-
+    /**
+     * Cett fonction vérifie que les composants ont bien été initialisé
+     * @return
+     */
     public boolean initialized(){
         if (tvSimulation == null || tvClass == null || tvBilan == null || tvDef == null || tvVict == null) return false;
         if(ptsBarProgress == null) return false;
@@ -281,6 +286,9 @@ public class MainActivityFragment extends Fragment implements UpdateFragment{
         return true;
     }
 
+    /**
+     * Cette fonction actualise les données de la Fragement
+     */
     @Override
     public void update() {
         if (initialized()) {

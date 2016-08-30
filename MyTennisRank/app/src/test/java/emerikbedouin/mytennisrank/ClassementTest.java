@@ -4,11 +4,11 @@ import org.junit.Test;
 
 import java.util.LinkedList;
 
-import emerikbedouin.mytennisrank.Modele.Classement;
-import emerikbedouin.mytennisrank.Modele.Epreuve;
-import emerikbedouin.mytennisrank.Modele.Joueur;
-import emerikbedouin.mytennisrank.Modele.Match;
-import emerikbedouin.mytennisrank.Modele.Profil;
+import emerikbedouin.mytennisrank.modele.Classement;
+import emerikbedouin.mytennisrank.modele.Epreuve;
+import emerikbedouin.mytennisrank.modele.Joueur;
+import emerikbedouin.mytennisrank.modele.Match;
+import emerikbedouin.mytennisrank.modele.Profil;
 
 import static org.junit.Assert.assertEquals;
 
@@ -17,23 +17,27 @@ import static org.junit.Assert.assertEquals;
  */
 public class ClassementTest {
 
-    Joueur j1 = new Joueur(0, "Roger", 10, 10, 0); // Principal 15/3
-    Joueur j2 = new Joueur(0, "Rafa", 11, 10, 0);
-    Joueur j3 = new Joueur(0, "Novak", 9, 10, 0);
-    Joueur j4 = new Joueur(0, "Andy", 8, 10, 0);
-    Joueur j5 = new Joueur(0, "Grigor", 10, 10, 0);
-    Match m1 = new Match(j1, j2, "6/0,6/0","surface",1, new Epreuve(), 0,0);
-    Match m2 = new Match(j1, j3, "6/0,6/0","surface",1, new Epreuve(), 0,0);
-    Match m3 = new Match(j1, j4, "6/0,6/0","surface",1, new Epreuve(), 0,0);
-    Match m4 = new Match(j1, j2, "6/0,6/0","surface",0, new Epreuve(), 0,0);
-    Match m5 = new Match(j1, j5, "6/0,6/0","surface",1, new Epreuve(), 0,0);
-    LinkedList<Match> list1 = new LinkedList<>();
-    Profil p1 = new Profil(0, "Federer", j1);
+    private Joueur j1 = new Joueur(0, "Roger", 10, 10, 0); // Principal 15/3
+    private Joueur j2 = new Joueur(0, "Rafa", 11, 10, 0);
+    private Joueur j3 = new Joueur(0, "Novak", 9, 10, 0);
+    private Joueur j4 = new Joueur(0, "Andy", 8, 10, 0);
+    private Joueur j5 = new Joueur(0, "Grigor", 10, 10, 0);
+    private Match m1 = new Match(j1, j2, "6/0,6/0","surface",1, new Epreuve(), 0,0);
+    private Match m2 = new Match(j1, j3, "6/0,6/0","surface",1, new Epreuve(), 0,0);
+    private Match m3 = new Match(j1, j4, "6/0,6/0","surface",1, new Epreuve(), 0,0);
+    private Match m4 = new Match(j1, j2, "6/0,6/0","surface",0, new Epreuve(), 0,0);
+    private Match m5 = new Match(j1, j5, "6/0,6/0","surface",1, new Epreuve(), 0,0);
+    private LinkedList<Match> list1 = new LinkedList<>();
+    private Profil p1 = new Profil(0, "Federer", j1);
 
 
+    /**
+     * Test si la fonction retourne le bon nombre de match à prendre en compte
+     * @throws Exception
+     */
     @Test
-    public void getMatchsIntoAccount_isCorrect() throws Exception {
-
+    public void getMatchsIntoAccountIsCorrect() throws Exception {
+        // To define
     }
 
     /**
@@ -42,7 +46,7 @@ public class ClassementTest {
      * @throws Exception
      */
     @Test
-    public void calculPointsTotal_isCorrect() throws Exception {
+    public void calculPointsTotalIsCorrect() throws Exception {
 
         // Match de base contre un 15/3
         Match m6Temp = new Match(j1, j5, "6/0,6/0","surface",1, new Epreuve(), 0,0);
@@ -83,8 +87,12 @@ public class ClassementTest {
         // Improve
     }
 
+    /**
+     * Test si le calcul de classement est correct
+     * @throws Exception
+     */
     @Test
-    public void calculClassement_isCorrect() throws Exception {
+    public void calculClassementIsCorrect() throws Exception {
         list1 = new LinkedList<>();
         list1.add(m1);
         list1.add(m2);
@@ -101,9 +109,12 @@ public class ClassementTest {
         assertEquals(Classement.calculClassement(p1, 0), 9);
     }
 
-
+    /**
+     * Test la fonction qui détermine pour un classement donné le nombre de points nécessaire pour se maintenir
+     * @throws Exception
+     */
     @Test
-    public void ptsMaintien_isCorrect() throws Exception {
+    public void ptsMaintienIsCorrect() throws Exception {
         assertEquals(Classement.ptsMaintien(3), 70);
         assertEquals(Classement.ptsMaintien(9), 310);
         assertEquals(Classement.ptsMaintien(10), 320);
@@ -114,8 +125,13 @@ public class ClassementTest {
         //assertEquals(Classement.ptsMaintien(15), 430);
     }
 
+
+    /**
+     * Test la fonction qui calcule si le joueur se maintien
+     * @throws Exception
+     */
     @Test
-    public void maintien_isCorrect() throws Exception {
+    public void maintienIsCorrect() throws Exception {
         assertEquals(Classement.maintien(3,70), true);
         assertEquals(Classement.maintien(3,65), false);
 
@@ -129,8 +145,12 @@ public class ClassementTest {
         assertEquals(Classement.maintien(12,360), false);
     }
 
+    /**
+     * Test les deux fonctions de conversion de classement int <-> String
+     * @throws Exception
+     */
     @Test
-    public void convertClassement_isCorrect() throws Exception {
+    public void convertClassementIsCorrect() throws Exception {
         assertEquals(Classement.convertirClassementInt(3), "30/4");
         assertEquals(Classement.convertirClassementInt(6), "30/1");
         assertEquals(Classement.convertirClassementInt(9), "15/4");

@@ -1,4 +1,4 @@
-package emerikbedouin.mytennisrank.IHM;
+package emerikbedouin.mytennisrank.ihm;
 
 import android.app.Activity;
 import android.content.Context;
@@ -12,9 +12,9 @@ import com.daimajia.swipe.adapters.BaseSwipeAdapter;
 
 import java.util.LinkedList;
 
-import emerikbedouin.mytennisrank.DAO.ProfilSingleton;
-import emerikbedouin.mytennisrank.Modele.Classement;
-import emerikbedouin.mytennisrank.Modele.Match;
+import emerikbedouin.mytennisrank.dao.ProfilSingleton;
+import emerikbedouin.mytennisrank.modele.Classement;
+import emerikbedouin.mytennisrank.modele.Match;
 import emerikbedouin.mytennisrank.R;
 
 /**
