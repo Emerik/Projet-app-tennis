@@ -113,6 +113,7 @@ public class Classement {
             }
         }
 
+
         return matchIntoAccount;
     }
 
@@ -380,8 +381,7 @@ public class Classement {
 
 
         }
-        //points=(getPts()+points);
-        System.out.println("Nombre de points à "+convertirClassementInt(classement)+" = "+points);
+
         return points;
     }
 

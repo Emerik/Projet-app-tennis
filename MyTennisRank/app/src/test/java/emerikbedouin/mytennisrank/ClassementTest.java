@@ -32,12 +32,68 @@ public class ClassementTest {
 
 
     /**
+     * Cette focntion définie le jeu de donnee permettant les tests
+     */
+    public void jeuDeDonnee(){
+
+        p1 = new Profil(0, "Federer", j1);
+        j1 = new Joueur(0, "Roger", 10, 10, 0); // Principal 15/3
+
+
+        Joueur j2 = new Joueur(0, "Rafa", 11, 10, 0); // 15/2
+        Joueur j3 = new Joueur(0, "Novak", 9, 10, 0); // 15/4
+        Joueur j4 = new Joueur(0, "Andy", 8, 10, 0); // 15/5
+        Joueur j5 = new Joueur(0, "Grigor", 10, 10, 0); // 15/3
+        Match m1 = new Match(j1, j2, "6/0,6/0","surface",1, new Epreuve(), 0,0); // V
+        Match m2 = new Match(j1, j3, "6/0,6/0","surface",1, new Epreuve(), 0,0); // V
+        Match m3 = new Match(j1, j4, "6/0,6/0","surface",1, new Epreuve(), 0,0); // V
+        Match m4 = new Match(j1, j2, "6/0,6/0","surface",0, new Epreuve(), 0,0); // D 15/2
+        Match m5 = new Match(j1, j5, "6/0,6/0","surface",1, new Epreuve(), 0,0); // V
+
+        // Match de base victoire contre un 15/3
+        Match m6Temp = new Match(j1, j5, "6/0,6/0","surface",1, new Epreuve(), 0,0);
+        // Match de championnant bonus 15 pts
+        Match m7Temp = new Match(j1, j5, "6/0,6/0","surface",1, new Epreuve(), 1,0);
+        // Match WO à 15/2
+        Match m8Temp = new Match(j1, j2, "6/0,6/0","surface",1, new Epreuve(), 0,1);
+        // Match défaite à 15/4
+        Match m9Temp = new Match(j1, j3, "6/0,6/0","surface",0, new Epreuve(), 0,0);
+
+
+        list1 = new LinkedList<>();
+        list1.add(m1);
+        list1.add(m2);
+        list1.add(m3);
+        list1.add(m4);
+        list1.add(m5);
+        list1.add(m6Temp);
+        list1.add(m6Temp);
+        list1.add(m6Temp);
+        list1.add(m6Temp);
+        list1.add(m6Temp);
+        list1.add(m6Temp);
+        list1.add(m6Temp);
+        list1.add(m6Temp);
+
+        // List 1 avec 13 Matchs : 12 victoire (0,1,9,1,1) 1 defaite (1,0,0,0)
+
+        // TODO ajouter des données
+    }
+
+    /**
      * Test si la fonction retourne le bon nombre de match à prendre en compte
      * @throws Exception
      */
     @Test
     public void getMatchsIntoAccountIsCorrect() throws Exception {
-        // To define
+
+        jeuDeDonnee();
+
+        LinkedList<Match> listMatch = Classement.getMatchsIntoAccount(j1.getClassement(), list1, 0);
+
+        assertEquals(listMatch.size(), 10);
+
+        // TODO ajouter cas de test
     }
 
     /**

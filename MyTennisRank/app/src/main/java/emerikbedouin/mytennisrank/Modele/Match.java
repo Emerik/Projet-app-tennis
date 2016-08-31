@@ -2,6 +2,7 @@ package emerikbedouin.mytennisrank.modele;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.util.Log;
 
 import java.io.Serializable;
 import java.util.LinkedList;
@@ -53,7 +54,7 @@ public class Match implements Parcelable, Serializable{
     }
 
     public String toString(){
-        return j1.getNom()+" vs "+j2.getNom()+" score :"+score;
+        return j1.getNom()+" vs "+j2.getNom()+" "+j2.getClassement()+" score :"+score;
     }
 
     // Getters & Setters
@@ -122,8 +123,62 @@ public class Match implements Parcelable, Serializable{
         this.wo = wo;
     }
 
-    // Trie pas top
+
+    public static void affichageListeClassement(LinkedList<Match> list){
+        System.out.print(" Liste : ");
+        for (int i =0; i < list.size() ; i++){
+            System.out.print(" "+list.get(i).getJ2().getClassement()+" ");
+        }
+        System.out.println(" ");
+    }
+
+    // Tri
+    public static int partitionner(LinkedList<Match> listToSort, int premier, int dernier, int pivot){
+        Match temp = listToSort.get(dernier);
+        listToSort.set(dernier, listToSort.get(pivot));
+        listToSort.set(pivot, temp);
+
+        int j = premier;
+        for(int i = premier ; i < dernier ; i++){
+            // A modifier si on veut un trie croissant ou décroissant (<=)
+            if(listToSort.get(i).getJ2().getClassement() >= listToSort.get(dernier).getJ2().getClassement()){
+                Match tempFor = listToSort.get(i);
+                listToSort.set(i, listToSort.get(j));
+                listToSort.set(j, tempFor);
+                j++;
+            }
+        }
+
+        // Placement final du pivot
+        Match temp2 = listToSort.get(j);
+        listToSort.set(j, listToSort.get(dernier));
+        listToSort.set(dernier, temp2);
+
+        return j;
+    }
+
+    public static void tri_rapide(LinkedList<Match> listToSort, int premier, int dernier){
+        if(premier < dernier){
+            int pivot = dernier; // Arbitraire a changer pour optimiser
+            pivot = partitionner(listToSort, premier, dernier, pivot);
+            tri_rapide(listToSort, premier, pivot-1);
+            tri_rapide(listToSort, pivot+1, dernier);
+
+        }
+    }
+
     public static LinkedList<Match> sortDesc(LinkedList<Match> listToSort){
+        if(listToSort != null) {
+            tri_rapide(listToSort, 0, listToSort.size()-1);
+
+        }
+
+        return listToSort;
+
+    }
+
+    // Trie pas top
+    public static LinkedList<Match> oldsortDesc(LinkedList<Match> listToSort){
         if(listToSort != null) {
             int max = -1;
             int indMax = -1;
