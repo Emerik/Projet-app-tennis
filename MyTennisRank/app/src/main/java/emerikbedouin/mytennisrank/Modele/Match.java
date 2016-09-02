@@ -180,8 +180,7 @@ public class Match implements Parcelable, Serializable{
     // Trie pas top
     public static LinkedList<Match> oldsortDesc(LinkedList<Match> listToSort){
         if(listToSort != null) {
-            int max = -1;
-            int indMax = -1;
+
 
             /*while(listToSort.size() > 0) {
                 for (int i = 0; i < listToSort.size(); i++) {

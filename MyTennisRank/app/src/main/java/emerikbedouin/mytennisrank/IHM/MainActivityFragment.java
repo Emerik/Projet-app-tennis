@@ -60,14 +60,14 @@ public class MainActivityFragment extends Fragment implements UpdateFragment{
         classementCalcul = 0;
         if(ProfilSingleton.getInstance().getProfil() != null) {
             classementCalcul = ProfilSingleton.getInstance().getProfil().getJoueurProfil().getClassement();
-            calculBilanProfil();
+            upBilanProfil();
             upProgressBar();
         }
         else{
-            creationProfilComplet();
+            /*creationProfilComplet();
             classementCalcul = ProfilSingleton.getInstance().getProfil().getJoueurProfil().getClassement();
             calculBilanProfil();
-            upProgressBar();
+            upProgressBar();*/
         }
 
         return rootView;
@@ -95,22 +95,14 @@ public class MainActivityFragment extends Fragment implements UpdateFragment{
         btnLeft.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(classementCalcul > 0) {
-
-                    classementCalcul--;
-                    upProgressBar();
-                }
+                changeClassementCalcul(-1);
             }
         });
 
         btnRight.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(classementCalcul < 20) {
-
-                    classementCalcul++;
-                    upProgressBar();
-                }
+                changeClassementCalcul(1);
             }
         });
 
@@ -169,60 +161,66 @@ public class MainActivityFragment extends Fragment implements UpdateFragment{
     }
 
 
+    /**
+     * Cette fonction actualise la bar de progression du joueur
+     */
     public void upProgressBar(){
+
         //Ratio nombre de points actuel / nombre de points requis
         Profil mainProfil = ProfilSingleton.getInstance().getProfil();
 
-        int pts = Classement.calculPointTotal(classementCalcul, mainProfil.getMatchs(), modeCalcul);
-        int ptsMaintien = Classement.ptsMaintien(classementCalcul);
-        System.out.println(classementCalcul);
+        if(mainProfil != null) {
 
-        int res = 0;
+            int pts = Classement.calculPointTotal(classementCalcul, mainProfil.getMatchs(), modeCalcul);
+            int ptsMaintien = Classement.ptsMaintien(classementCalcul);
 
-        if(ptsMaintien != 0) res = pts*100/ptsMaintien;
+            int res = 0;
 
-        System.out.println("Res circle "+res+" p "+pts+" "+ptsMaintien);
+            if (ptsMaintien != 0) res = pts * 100 / ptsMaintien;
 
-        if(res >= 100) {
-            res = 100;
-            ptsBarProgress.setFinishedStrokeColor(ContextCompat.getColor(getContext(), R.color.colorSuccess));
-            ptsBarProgress.setProgress(0);
-        }
-        else{
-            ptsBarProgress.setFinishedStrokeColor(ContextCompat.getColor(getContext(), R.color.colorFail));
-        }
-
-        //ptsBarProgress.setProgress(res);
-
-
-        // Animation de la progress bar
-        int time = 0;
-        int diffProgress = ptsBarProgress.getProgress() - res ;
-        if(Math.abs(diffProgress) < 30) time = 250; else time = 750;
-        ObjectAnimator animation = ObjectAnimator.ofInt(ptsBarProgress, "progress", res);
-        animation.setDuration(time);
-        animation.setInterpolator(new DecelerateInterpolator());
-        animation.start();
-
-        ptsBarProgress.setInnerBottomText(pts+" points à "+Classement.convertirClassementInt(classementCalcul));
-        ptsBarProgress.setInnerBottomTextColor(ContextCompat.getColor(getContext(), R.color.colorPersoDark));
-
-
-        // Onclick lance le detail du calcul
-        ptsBarProgress.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //Lancement de la fenetre de création d'un nouveau profil
-                Intent intent = new Intent(getActivity(), CalculDetailsActivity.class);
-                intent.putExtra("classement", classementCalcul);
-                intent.putExtra("mode", modeCalcul);
-                startActivity(intent);
+            if (res >= 100) {
+                res = 100;
+                ptsBarProgress.setFinishedStrokeColor(ContextCompat.getColor(getContext(), R.color.colorSuccess));
+                ptsBarProgress.setProgress(0);
+            } else {
+                ptsBarProgress.setFinishedStrokeColor(ContextCompat.getColor(getContext(), R.color.colorFail));
             }
-        });
 
+            //ptsBarProgress.setProgress(res);
+
+
+            // Animation de la progress bar
+            int time = 0;
+            int diffProgress = ptsBarProgress.getProgress() - res;
+            if (Math.abs(diffProgress) < 30) time = 250;
+            else time = 750;
+            ObjectAnimator animation = ObjectAnimator.ofInt(ptsBarProgress, "progress", res);
+            animation.setDuration(time);
+            animation.setInterpolator(new DecelerateInterpolator());
+            animation.start();
+
+            ptsBarProgress.setInnerBottomText(pts + " points à " + Classement.convertirClassementInt(classementCalcul));
+            ptsBarProgress.setInnerBottomTextColor(ContextCompat.getColor(getContext(), R.color.colorPersoDark));
+
+
+            // Onclick lance le detail du calcul
+            ptsBarProgress.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    //Lancement de la fenetre de création d'un nouveau profil
+                    Intent intent = new Intent(getActivity(), CalculDetailsActivity.class);
+                    intent.putExtra("classement", classementCalcul);
+                    intent.putExtra("mode", modeCalcul);
+                    startActivity(intent);
+                }
+            });
+        }
     }
 
-    public void calculBilanProfil(){
+    /**
+     * Cette fonction actualise la partie Bilan avec les données du profil
+     */
+    public void upBilanProfil(){
 
         Profil mainProfil = ProfilSingleton.getInstance().getProfil();
 
@@ -292,7 +290,15 @@ public class MainActivityFragment extends Fragment implements UpdateFragment{
     @Override
     public void update() {
         if (initialized()) {
-            calculBilanProfil();
+            upBilanProfil();
+            upProgressBar();
+        }
+    }
+
+    public void changeClassementCalcul(int nbr){
+        if(classementCalcul  > 0 && classementCalcul < 20) {
+
+            classementCalcul += nbr;
             upProgressBar();
         }
     }
