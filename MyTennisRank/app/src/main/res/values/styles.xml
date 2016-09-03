@@ -6,10 +6,11 @@
         <!--<item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>-->
-        <item name="colorPrimary">@color/colorUdacity</item>
-        <item name="colorPrimaryDark">@color/colorUdacityGreen</item>
+        <item name="colorPrimary">@color/colorUda</item>
+        <item name="colorPrimaryDark">@color/colorUdaGreen</item>
         <item name="colorAccent">@color/colorPersoAccent</item>
         <item name="android:textColorPrimary">@color/black</item>
+        <item name="android:navigationBarColor">@color/colorUdaGreen</item>
     </style>
 
     <style name="AppTheme.NoActionBar">
@@ -21,5 +22,16 @@
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
+
+    <style name="MyCustomTabLayout" parent="Widget.Design.TabLayout">
+        <item name="background">@color/colorUda</item>
+        <item name="tabTextAppearance">@style/MyCustomTabText</item>
+        <item name="tabSelectedTextColor">@android:color/white</item>
+    </style>
+
+    <style name="MyCustomTabText" parent="TextAppearance.AppCompat.Button">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/colorUdaGreen</item>
+    </style>
 
 </resources>

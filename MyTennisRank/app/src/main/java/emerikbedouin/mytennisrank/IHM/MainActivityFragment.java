@@ -2,6 +2,7 @@ package emerikbedouin.mytennisrank.ihm;
 
 import android.animation.ObjectAnimator;
 import android.content.Intent;
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
@@ -38,6 +39,7 @@ public class MainActivityFragment extends Fragment implements UpdateFragment{
     private RelativeLayout layoutBilan;
     private DonutProgress ptsBarProgress;
     private Button btnCurrent, btnFutur, btnDown, btnUp;
+    private TabLayout tabLayout;
 
 
     public MainActivityFragment() {
@@ -64,10 +66,11 @@ public class MainActivityFragment extends Fragment implements UpdateFragment{
             upProgressBar();
         }
         else{
-            /*creationProfilComplet();
+            // Profil fictif
+            creationProfilComplet();
             classementCalcul = ProfilSingleton.getInstance().getProfil().getJoueurProfil().getClassement();
-            calculBilanProfil();
-            upProgressBar();*/
+            upBilanProfil();
+            upProgressBar();
         }
 
         return rootView;
@@ -111,36 +114,41 @@ public class MainActivityFragment extends Fragment implements UpdateFragment{
         tvSimulation = (TextView) rootView.findViewById(R.id.simulationTextView);
 
 
-        // Boutons de modification du mode de calcul
-        btnCurrent = (Button) rootView.findViewById(R.id.currentButton);
-        btnFutur = (Button) rootView.findViewById(R.id.futurButton);
-        btnDown = (Button) rootView.findViewById(R.id.downButton);
-        btnUp = (Button) rootView.findViewById(R.id.upButton);
 
-        btnCurrent.setOnClickListener(new View.OnClickListener() {
+        tabLayout = (TabLayout) rootView.findViewById(R.id.tabMode);
+
+        tabLayout.addTab(tabLayout.newTab().setText("Actuel"));
+        tabLayout.addTab(tabLayout.newTab().setText("Prévu"));
+        tabLayout.addTab(tabLayout.newTab().setText("Descente"));
+        tabLayout.addTab(tabLayout.newTab().setText("Monter"));
+
+        tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
-            public void onClick(View v) {
-                setCurrent();
+            public void onTabSelected(TabLayout.Tab tab) {
+                switch (tab.getPosition()){
+                    case 0: setCurrent();
+                            break;
+                    case 1: setFutur();
+                        break;
+                    case 2: setDown();
+                        break;
+                    case 3: setUp();
+                            break;
+                    default: break;
+                }
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
             }
         });
-        btnFutur.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                setFutur();
-            }
-        });
-        btnDown.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                setDown();
-            }
-        });
-        btnUp.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                setUp();
-            }
-        });
+
 
     }
 

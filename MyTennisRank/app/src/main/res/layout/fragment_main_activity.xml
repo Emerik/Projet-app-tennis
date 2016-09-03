@@ -40,7 +40,7 @@
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:text="Classement"
                 android:id="@+id/textViewClassement"
-                android:textColor="@color/colorUdacityGreen"
+                android:textColor="@color/colorUdaGreen"
                 android:layout_centerVertical="true"
                 android:layout_centerHorizontal="true"
                 android:textSize="48sp" />
@@ -150,70 +150,17 @@
         </RelativeLayout>
 
         <!-- Partie mode de simulation -->
-        <LinearLayout
+        <android.support.design.widget.TabLayout
+            android:id="@+id/tabMode"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="0.1"
-            android:orientation="horizontal"
-            android:weightSum="4"
-            tools:context=".ihm.MainActivityFragment"
+            android:background="@color/colorUda"
+            style="@style/MyCustomTabLayout"
             >
-            <Button
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="match_parent"
-                android:id="@+id/currentButton"
-                android:background="@color/colorUdacity"
-                android:textColor="@color/colorUdacityGreen"
-                android:text="Actuel"
-                />
 
-            <View
-                android:layout_width="1dp"
-                android:layout_height="match_parent"
-                android:background="@color/colorUdacityGreen"/>
+            </android.support.design.widget.TabLayout>
 
-            <Button
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="match_parent"
-                android:id="@+id/futurButton"
-                android:background="@color/colorUdacity"
-                android:textColor="@color/colorUdacityGreen"
-                android:text="Prévu"
-                />
-
-            <View
-                android:layout_width="1dp"
-                android:layout_height="match_parent"
-                android:background="@color/colorUdacityGreen"/>
-
-            <Button
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="match_parent"
-                android:id="@+id/downButton"
-                android:background="@color/colorUdacity"
-                android:textColor="@color/colorUdacityGreen"
-                android:text="Descente"
-                />
-
-            <View
-                android:layout_width="1dp"
-                android:layout_height="match_parent"
-                android:background="@color/colorUdacityGreen"/>
-
-            <Button
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="match_parent"
-                android:id="@+id/upButton"
-                android:background="@color/colorUdacity"
-                android:textColor="@color/colorUdacityGreen"
-                android:text="Monter"
-                />
-
-        </LinearLayout>
 
     </LinearLayout>
 </ScrollView>
