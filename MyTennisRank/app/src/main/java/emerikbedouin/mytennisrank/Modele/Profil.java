@@ -2,7 +2,6 @@ package emerikbedouin.mytennisrank.modele;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-
 import java.io.Serializable;
 import java.util.LinkedList;
 

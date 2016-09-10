@@ -13,9 +13,25 @@
         android:title="@string/text_item_new_profil"
         app:showAsAction="never" />
     <item
+        android:id="@+id/action_modify_profil"
+        android:orderInCategory="100"
+        android:title="@string/text_item_modify_profil"
+        app:showAsAction="never" />
+    <item
         android:id="@+id/action_save_profil"
         android:orderInCategory="100"
         android:title="@string/text_item_save_profil"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_delete_profil"
+        android:orderInCategory="100"
+        android:title="@string/text_item_delete_profil"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_demo_profil"
+        android:orderInCategory="100"
+        android:title="@string/text_item_demo_profil"
         app:showAsAction="never" />
 
 </menu>

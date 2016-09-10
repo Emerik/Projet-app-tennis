@@ -3,6 +3,7 @@ package emerikbedouin.mytennisrank.dao;
 import android.app.Activity;
 import android.content.Context;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -60,9 +61,13 @@ public class FileManager {
         return false;
     }
 
-    public static int deleteProfil(Profil p){
+    public static boolean deleteProfil(Activity activity, String fileName){
+        boolean deleted = false;
+        File file = activity.getFileStreamPath(fileName);
 
-        return 0;
+        if(file != null) deleted = file.delete();
+
+        return deleted;
     }
 
     public static Profil loadProfil(Activity activity, String fileName){

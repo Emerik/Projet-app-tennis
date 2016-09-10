@@ -13,8 +13,11 @@
     <string name="text_button_cancel">Annuler</string>
 
     <string name="text_item_new_profil">Nouveau profil</string>
+    <string name="text_item_modify_profil">Modifier profil</string>
     <string name="text_item_save_profil">Sauvegarder</string>
     <string name="text_item_load_profil">Charger</string>
+    <string name="text_item_delete_profil">Supprimer profil</string>
+    <string name="text_item_demo_profil">Profil demo</string>
     <string name="title_activity_main_activity_v2">MainActivityV2</string>
     <string name="title_activity_calcul_details">Détails du calcul</string>
 

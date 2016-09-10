@@ -6,6 +6,7 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,11 +35,10 @@ public class MainActivityFragment extends Fragment implements UpdateFragment{
     private int modeCalcul = 0;
 
     //View
-    private TextView tvBilan, tvClass, tvVict, tvDef, tvSimulation;
+    private TextView tvClass, tvVict, tvDef, tvNom, tvSimulation;
     private Button btnLeft, btnRight;
     private RelativeLayout layoutBilan;
     private DonutProgress ptsBarProgress;
-    private Button btnCurrent, btnFutur, btnDown, btnUp;
     private TabLayout tabLayout;
 
 
@@ -54,23 +54,24 @@ public class MainActivityFragment extends Fragment implements UpdateFragment{
         // Recuperation des Vue
         initComposant(rootView);
 
-
         animateBilan();
 
-
         // Traitement
-        classementCalcul = 0;
+        classementCalcul = 1;
+
         if(ProfilSingleton.getInstance().getProfil() != null) {
             classementCalcul = ProfilSingleton.getInstance().getProfil().getJoueurProfil().getClassement();
             upBilanProfil();
             upProgressBar();
         }
         else{
+
+            //Aucun profil chargé
             // Profil fictif
-            creationProfilComplet();
+            /*creationProfilComplet();
             classementCalcul = ProfilSingleton.getInstance().getProfil().getJoueurProfil().getClassement();
             upBilanProfil();
-            upProgressBar();
+            upProgressBar();*/
         }
 
         return rootView;
@@ -89,6 +90,7 @@ public class MainActivityFragment extends Fragment implements UpdateFragment{
         tvClass = (TextView) rootView.findViewById(R.id.textViewClassement);
         tvVict = (TextView) rootView.findViewById(R.id.textViewVictoire);
         tvDef = (TextView) rootView.findViewById(R.id.textViewDefaite);
+        tvNom = (TextView) rootView.findViewById(R.id.textViewNom);
 
 
         // Hypo - circle
@@ -179,6 +181,7 @@ public class MainActivityFragment extends Fragment implements UpdateFragment{
 
         if(mainProfil != null) {
 
+
             int pts = Classement.calculPointTotal(classementCalcul, mainProfil.getMatchs(), modeCalcul);
             int ptsMaintien = Classement.ptsMaintien(classementCalcul);
 
@@ -223,6 +226,9 @@ public class MainActivityFragment extends Fragment implements UpdateFragment{
                 }
             });
         }
+        else{
+            ptsBarProgress.setProgress(0);
+        }
     }
 
     /**
@@ -232,25 +238,23 @@ public class MainActivityFragment extends Fragment implements UpdateFragment{
 
         Profil mainProfil = ProfilSingleton.getInstance().getProfil();
 
-        //Classement
-        tvClass.setText(Classement.convertirClassementInt(mainProfil.getJoueurProfil().getClassement()));
-        //Victoire
-        tvVict.setText(mainProfil.getNbreVictoire()+" Victoire");
-        //Defaite
-        tvDef.setText(mainProfil.getNbreDefaite()+" Défaites");
-        // Points
-        //tvPts.setText(tvPts.getText()+" "+ Classement.calculPointTotal(mainProfil.getJoueurProfil().getClassement(), mainProfil.getMatchs(), modeCalcul));
-        //Classement final
-        //tvClassFinal.setText(tvClassFinal.getText()+" "+Classement.convertirClassementInt(Classement.calculClassement(mainProfil, modeCalcul)));
-        // Points manquant classement au dessus
-        //tvLevUp.setText(tvLevUp.getText()+" "+mainProfil.getJoueurProfil().getClassement());
 
+        if(mainProfil != null) {
+            //Classement
+            tvClass.setText(Classement.convertirClassementInt(mainProfil.getJoueurProfil().getClassement()));
+            //Victoire
+            tvVict.setText(mainProfil.getNbreVictoire() + " Victoire");
+            //Defaite
+            tvDef.setText(mainProfil.getNbreDefaite() + " Défaites");
+            //Nom du profil
+            tvNom.setText(mainProfil.getNom());
 
-        //La listview
-        //LinkedList<Match> matchsIntoAccount = Classement.getMatchsIntoAccount(mainProfil.getJoueurProfil().getClassement(), mainProfil.getMatchs());
-        //MatchAdapter adapterM = new MatchAdapter(this.getActivity(), matchsIntoAccount);
-
-        //listViewMatch.setAdapter(adapterM);
+        }
+        else{
+            tvClass.setText("Nom profil");
+            tvVict.setText("0");
+            tvDef.setText("0");
+        }
     }
 
 
@@ -285,9 +289,9 @@ public class MainActivityFragment extends Fragment implements UpdateFragment{
      * @return
      */
     public boolean initialized(){
-        if (tvSimulation == null || tvClass == null || tvBilan == null || tvDef == null || tvVict == null) return false;
+        if (tvSimulation == null || tvClass == null || tvDef == null || tvVict == null) return false;
         if(ptsBarProgress == null) return false;
-        if(btnCurrent == null || btnFutur == null || btnDown == null || btnUp == null) return false;
+        if(tabLayout == null) return false;
 
         return true;
     }
@@ -297,69 +301,26 @@ public class MainActivityFragment extends Fragment implements UpdateFragment{
      */
     @Override
     public void update() {
+
         if (initialized()) {
+            if(ProfilSingleton.getInstance().getProfil()!= null ) classementCalcul = ProfilSingleton.getInstance().getProfil().getJoueurProfil().getClassement();
+
             upBilanProfil();
             upProgressBar();
         }
     }
 
+    /**
+     * Cette fonction modifie le classement servant de base a la simulation
+     * @param nbr Le nombre à ajouter au classement actuel
+     */
     public void changeClassementCalcul(int nbr){
-        if(classementCalcul  > 0 && classementCalcul < 20) {
+        if (classementCalcul > 0 && classementCalcul < 20) {
 
             classementCalcul += nbr;
             upProgressBar();
         }
     }
 
-    // Pour les tests ------ To delete
-    public void creationProfilComplet(){
-
-        Profil p = new Profil();
-
-        Joueur j1 = new Joueur(0, "Roger", 10, 10, 0); // Principal 15/3
-        Joueur j2 = new Joueur(0, "David", 10, 9, 0);
-        Joueur j3 = new Joueur(0, "Yannick", 11, 10, 0);
-        Joueur j4 = new Joueur(0, "Victor", 9, 8, 0);
-        Joueur j5 = new Joueur(0, "gwenael", 9, 8, 0);
-        Joueur j6 = new Joueur(0, "Jerome", 8, 8, 0);
-        Joueur j7 = new Joueur(0, "Gaylor", 8, 7, 0);
-        Joueur j8 = new Joueur(0, "Sebastien", 8, 9, 0);
-        Joueur j9 = new Joueur(0, "Noam", 11, 11, 0);
-        Joueur j10 = new Joueur(0, "Pierre", 10, 11, 0);
-
-
-
-        Match m1 = new Match(j1, j2, "6/0,6/0","surface",1, new Epreuve(),0,0);
-        Match m2 = new Match(j1, j3, "6/0,6/0","surface",1, new Epreuve(),0,0);
-        Match m3 = new Match(j1, j4, "6/0,6/0","surface",1, new Epreuve(),0,0);
-        Match m4 = new Match(j1, j5, "6/0,6/0","surface",1, new Epreuve(),0,0);
-        Match m5 = new Match(j1, j6, "6/0,6/0","surface",1, new Epreuve(),0,0);
-        Match m6 = new Match(j1, j7, "6/0,6/0","surface",1, new Epreuve(),0,0);
-        Match m7 = new Match(j1, j8, "6/0,6/0","surface",1, new Epreuve(),0,0);
-        Match m8 = new Match(j1, j6, "6/0,6/0","surface",1, new Epreuve(),0,0);
-
-        Match m9 = new Match(j1, j9, "6/0,6/0","surface",0, new Epreuve(),0,0);
-        Match m10 = new Match(j1, j10, "6/0,6/0","surface",0, new Epreuve(),0,0);
-
-        p.setJoueurProfil(j1);
-
-        p.getMatchs().add(m1);
-        p.getMatchs().add(m2);
-        p.getMatchs().add(m3);
-        p.getMatchs().add(m4);
-        p.getMatchs().add(m5);
-        p.getMatchs().add(m6);
-        p.getMatchs().add(m7);
-        p.getMatchs().add(m8);
-        p.getMatchs().add(m9);
-        p.getMatchs().add(m10);
-
-        ProfilSingleton.getInstance().setProfil(p);
-
-        Toast.makeText(getActivity().getApplicationContext(), "Profil temp !", Toast.LENGTH_LONG).show();
-
-        // Actualisation des données du Fragment des Matchs
-        ((ViewPagerAdapter) ((MainActivity) getActivity()).getViewPager().getAdapter()).updateItems();
-    }
 
 }

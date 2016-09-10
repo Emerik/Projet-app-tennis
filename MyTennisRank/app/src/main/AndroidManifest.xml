@@ -11,7 +11,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".ihm.MatchDetailActivity" />
-        <activity android:name=".ihm.NewProfilActivity" />
+        <activity android:name=".ihm.ProfilActivity" />
         <activity
             android:name=".ihm.MainActivity"
             android:label="@string/app_name"

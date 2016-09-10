@@ -11,7 +11,7 @@ public class ProfilSingleton{
 	private Profil leProfil ;
 	
 	private ProfilSingleton(){
-
+		leProfil = null;
 	}
 	
 	/**

@@ -89,34 +89,36 @@ public class CalculDetailsActivity extends AppCompatActivity {
 
         Profil mainProfil = ProfilSingleton.getInstance().getProfil();
 
-        int points = Classement.calculPointMatchs(classement, mainProfil.getMatchs(), modeCalcul);
-        int bonus = Classement.bonusAbsenceDefaiteSignificative(mainProfil.getMatchs(), classement, modeCalcul) + Classement.bonusChampionnat(mainProfil.getMatchs());
+        if(mainProfil != null) {
+            int points = Classement.calculPointMatchs(classement, mainProfil.getMatchs(), modeCalcul);
+            int bonus = Classement.bonusAbsenceDefaiteSignificative(mainProfil.getMatchs(), classement, modeCalcul) + Classement.bonusChampionnat(mainProfil.getMatchs());
 
-        //Classement
-        tvClass.setText(tvClass.getText()+" "+ Classement.convertirClassementInt(classement));
-        //Victoire
-        tvVict.setText(tvVict.getText()+" "+mainProfil.getNbreVictoire());
-        //Defaite
-        tvDef.setText(tvDef.getText()+" "+mainProfil.getNbreDefaite());
-        // Points
-        tvPts.setText(tvPts.getText()+" "+ points);
-        //Delta
-        tvDelta.setText(tvDelta.getText()+" "+Classement.calculVE2I5G(mainProfil.getMatchs(), classement, modeCalcul));
-        // PEC
-        tvPEC.setText(tvPEC.getText()+" "+Classement.calculNbrVictoirePEC(mainProfil.getMatchs(), classement, modeCalcul));
-        // Bonus
-        tvBonus.setText(tvBonus.getText()+" "+bonus);
-        // Total
-        tvTotal.setText(tvTotal.getText()+" "+(points+bonus));
-        // Bilan
-        tvBilan.setText(tvBilan.getText()+" "+Classement.convertirClassementInt(Classement.calculClassement(mainProfil, modeCalcul)));
+            //Classement
+            tvClass.setText(tvClass.getText() + " " + Classement.convertirClassementInt(classement));
+            //Victoire
+            tvVict.setText(tvVict.getText() + " " + mainProfil.getNbreVictoire());
+            //Defaite
+            tvDef.setText(tvDef.getText() + " " + mainProfil.getNbreDefaite());
+            // Points
+            tvPts.setText(tvPts.getText() + " " + points);
+            //Delta
+            tvDelta.setText(tvDelta.getText() + " " + Classement.calculVE2I5G(mainProfil.getMatchs(), classement, modeCalcul));
+            // PEC
+            tvPEC.setText(tvPEC.getText() + " " + Classement.calculNbrVictoirePEC(mainProfil.getMatchs(), classement, modeCalcul));
+            // Bonus
+            tvBonus.setText(tvBonus.getText() + " " + bonus);
+            // Total
+            tvTotal.setText(tvTotal.getText() + " " + (points + bonus));
+            // Bilan
+            tvBilan.setText(tvBilan.getText() + " " + Classement.convertirClassementInt(Classement.calculClassement(mainProfil, modeCalcul)));
 
 
-        //La listview
-        LinkedList<Match> matchsIntoAccount = Classement.getMatchsIntoAccount(mainProfil.getJoueurProfil().getClassement(), mainProfil.getMatchs(), modeCalcul);
-        MatchAdapter adapterM = new MatchAdapterPoints(this, matchsIntoAccount, 1, classement, modeCalcul);
+            //La listview
+            LinkedList<Match> matchsIntoAccount = Classement.getMatchsIntoAccount(mainProfil.getJoueurProfil().getClassement(), mainProfil.getMatchs(), modeCalcul);
+            MatchAdapter adapterM = new MatchAdapterPoints(this, matchsIntoAccount, 1, classement, modeCalcul);
 
-        listViewMatch.setAdapter(adapterM);
+            listViewMatch.setAdapter(adapterM);
+        }
     }
 
 

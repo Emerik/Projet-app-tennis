@@ -166,29 +166,49 @@ public class MatchFragment extends Fragment implements UpdateFragment{
      * Cette fonction rempli les view avec les informations du profil en mémoire
      */
     public void fillData(){
-        LinkedList<Match> listMatch = ProfilSingleton.getInstance().getProfil().getMatchs();
-        LinkedList<Match> listVictoire = new LinkedList<>();
-        LinkedList<Match> listDefaite = new LinkedList<>();
+
+        System.out.println("Le profil est revenu "+ProfilSingleton.getInstance().getProfil());
+
+        if( ProfilSingleton.getInstance().getProfil() != null ) {
+            LinkedList<Match> listMatch = ProfilSingleton.getInstance().getProfil().getMatchs();
+            LinkedList<Match> listVictoire = new LinkedList<>();
+            LinkedList<Match> listDefaite = new LinkedList<>();
 
 
-        for (int i = 0; i < listMatch.size(); i++) {
-            if (listMatch.get(i).getGagnant().equals(ProfilSingleton.getInstance().getProfil().getJoueurProfil())) {
-                listVictoire.add(listMatch.get(i));
-            } else {
-                listDefaite.add(listMatch.get(i));
+            for (int i = 0; i < listMatch.size(); i++) {
+                if (listMatch.get(i).getGagnant().equals(ProfilSingleton.getInstance().getProfil().getJoueurProfil())) {
+                    listVictoire.add(listMatch.get(i));
+                } else {
+                    listDefaite.add(listMatch.get(i));
+                }
             }
-        }
 
-        //Définition de l'adapter
-        // ArrayAdapter<Match> adapterV = new ArrayAdapter<Match>(this, android.R.layout.simple_list_item_1, android.R.id.text1, listVictoire);
-        // ArrayAdapter<Match> adapterD = new ArrayAdapter<Match>(this, android.R.layout.simple_list_item_1, android.R.id.text1, listDefaite);
-        MatchAdapterDelete adapterV = new MatchAdapterDelete(getActivity(), listVictoire);
-        MatchAdapterDelete adapterD = new MatchAdapterDelete(getActivity(), listDefaite);
-        listViewVictoire.setAdapter(adapterV);
-        listViewDefaite.setAdapter(adapterD);
-        //On click
-        listViewVictoire.setOnItemClickListener(new ClickOnItemMatch());
-        listViewDefaite.setOnItemClickListener(new ClickOnItemMatch());
+            //Définition de l'adapter
+            // ArrayAdapter<Match> adapterV = new ArrayAdapter<Match>(this, android.R.layout.simple_list_item_1, android.R.id.text1, listVictoire);
+            // ArrayAdapter<Match> adapterD = new ArrayAdapter<Match>(this, android.R.layout.simple_list_item_1, android.R.id.text1, listDefaite);
+            MatchAdapterDelete adapterV = new MatchAdapterDelete(getActivity(), listVictoire);
+            MatchAdapterDelete adapterD = new MatchAdapterDelete(getActivity(), listDefaite);
+            listViewVictoire.setAdapter(adapterV);
+            listViewDefaite.setAdapter(adapterD);
+            //On click
+            listViewVictoire.setOnItemClickListener(new ClickOnItemMatch());
+            listViewDefaite.setOnItemClickListener(new ClickOnItemMatch());
+        }
+        else{
+            listViewDefaite.setAdapter(null);
+            listViewVictoire.setAdapter(null);
+        }
+    }
+
+    /**
+     * Cett fonction vérifie que les composants ont bien été initialisé
+     * @return
+     */
+    public boolean initialized(){
+
+        if(listViewVictoire == null || listViewDefaite == null) return false;
+
+        return true;
     }
 
     /**
@@ -196,7 +216,11 @@ public class MatchFragment extends Fragment implements UpdateFragment{
      */
     @Override
     public void update() {
-        fillData();
+
+        if(initialized()) {
+            fillData();
+        }
+
     }
 
 }
