@@ -30,20 +30,20 @@
             android:paddingTop="@dimen/activity_vertical_margin"
             android:background="@drawable/bordershadow"
             android:layout_weight="0.3"
-            android:alpha="1"
-            android:layout_marginTop="10dp"
+            android:alpha="1">
+            <!--android:layout_marginTop="10dp"
             android:layout_marginLeft="5dp"
-            android:layout_marginRight="5dp">
+            android:layout_marginRight="5dp"-->
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:text="Classement"
                 android:id="@+id/textViewClassement"
-                android:textColor="@color/colorUdaGreen"
-                android:layout_centerVertical="true"
+                android:textColor="@color/textColor"
+                android:layout_alignParentBottom="true"
                 android:layout_centerHorizontal="true"
-                android:textSize="48sp" />
+                android:textSize="32sp" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -54,7 +54,7 @@
                 android:textColor="@color/textColor"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentTop="true"
-                android:textSize="22sp"/>
+                android:textSize="18sp"/>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -65,7 +65,7 @@
                 android:id="@+id/textViewDefaite"
                 android:layout_alignParentRight="true"
                 android:layout_alignParentTop="true"
-                android:textSize="22sp"/>
+                android:textSize="18sp"/>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -75,31 +75,33 @@
                 android:id="@+id/textViewNom"
                 android:layout_alignParentTop="true"
                 android:layout_centerHorizontal="true"
-                android:textColor="@android:color/black" />
+                android:textSize="24sp"
+                android:textColor="@color/colorUdaGreen" />
 
 
         </RelativeLayout>
 
         <!--       Partie circle       -->
+
+        <TextView
+            android:id="@+id/simulationTextView"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.05"
+            android:gravity="center"
+            android:text="Simulation classement"
+            android:textSize="20sp"
+            android:textColor="@android:color/black"
+
+            />
+
         <RelativeLayout
             xmlns:android="http://schemas.android.com/apk/res/android"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="0.6"
+            android:layout_weight="0.5"
             android:padding="5dp"
             android:layout_margin="10dp">
-
-            <TextView
-                android:id="@+id/simulationTextView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentTop="true"
-                android:layout_centerHorizontal="true"
-                android:text="Simulation classement"
-                android:textSize="20sp"
-                android:textColor="@android:color/black"
-
-                />
 
             <Button
                 style="?android:attr/buttonStyleSmall"
@@ -108,20 +110,29 @@
                 android:text="&lt;"
                 android:id="@+id/btnLeftArrow"
                 android:background="@drawable/btn_tennisrank"
-                android:layout_alignTop="@+id/btnRightArrow"
-                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:layout_alignParentLeft="true"
                 android:textSize="28sp" />
 
             <com.github.lzyzsd.circleprogress.DonutProgress
-                android:layout_marginLeft="50dp"
                 android:id="@+id/donut_progress"
-                android:layout_width="250dp"
-                android:layout_height="250dp"
+                android:layout_width="230dp"
+                android:layout_height="230dp"
                 custom:donut_progress="0"
-                custom:donut_finished_color="@color/colorPerso"
-                custom:donut_text_color="@color/colorPersoDark"
+                custom:donut_unfinished_color="@android:color/white"
+                custom:donut_finished_color="@color/colorSuccess"
+                custom:donut_text_color="@color/colorFail"
                 android:layout_centerVertical="true"
                 android:layout_centerHorizontal="true" />
+
+
+            <ImageView
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:layout_centerHorizontal="true"
+                android:layout_alignBottom="@id/donut_progress"
+                android:layout_marginBottom="30dp"
+                android:src="@drawable/list2"/>
 
             <Button
                 style="?android:attr/buttonStyleSmall"
@@ -131,23 +142,21 @@
                 android:id="@+id/btnRightArrow"
                 android:background="@drawable/btn_tennisrank"
                 android:layout_centerVertical="true"
-                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
                 android:textSize="28sp" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_centerHorizontal="true"
-                android:text="selection type de simulation"
-                android:textSize="14sp"
-                android:textColor="@android:color/black"
-                android:textAllCaps="true"
-                />
-
-
-
         </RelativeLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.05"
+            android:text="selection type de simulation"
+            android:gravity="center"
+            android:textSize="14sp"
+            android:textColor="@android:color/black"
+            android:textAllCaps="true"
+            />
 
         <!-- Partie mode de simulation -->
         <android.support.design.widget.TabLayout

@@ -19,10 +19,10 @@
     </style>
 
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
-
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
 
+    <!-- Custom TabLayout -->
     <style name="MyCustomTabLayout" parent="Widget.Design.TabLayout">
         <item name="background">@color/colorUda</item>
         <item name="tabTextAppearance">@style/MyCustomTabText</item>
@@ -32,6 +32,12 @@
     <style name="MyCustomTabText" parent="TextAppearance.AppCompat.Button">
         <item name="android:textSize">14sp</item>
         <item name="android:textColor">@color/colorUdaGreen</item>
+    </style>
+
+    <!-- List textView -->
+    <style name="ListTextView" >
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textSize">18sp</item>
     </style>
 
 </resources>

@@ -6,7 +6,6 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,15 +13,11 @@ import android.view.animation.DecelerateInterpolator;
 import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.github.lzyzsd.circleprogress.DonutProgress;
 
 import emerikbedouin.mytennisrank.dao.ProfilSingleton;
 import emerikbedouin.mytennisrank.modele.Classement;
-import emerikbedouin.mytennisrank.modele.Epreuve;
-import emerikbedouin.mytennisrank.modele.Joueur;
-import emerikbedouin.mytennisrank.modele.Match;
 import emerikbedouin.mytennisrank.modele.Profil;
 import emerikbedouin.mytennisrank.R;
 
@@ -36,7 +31,6 @@ public class MainActivityFragment extends Fragment implements UpdateFragment{
 
     //View
     private TextView tvClass, tvVict, tvDef, tvNom, tvSimulation;
-    private Button btnLeft, btnRight;
     private RelativeLayout layoutBilan;
     private DonutProgress ptsBarProgress;
     private TabLayout tabLayout;
@@ -65,13 +59,7 @@ public class MainActivityFragment extends Fragment implements UpdateFragment{
             upProgressBar();
         }
         else{
-
             //Aucun profil chargé
-            // Profil fictif
-            /*creationProfilComplet();
-            classementCalcul = ProfilSingleton.getInstance().getProfil().getJoueurProfil().getClassement();
-            upBilanProfil();
-            upProgressBar();*/
         }
 
         return rootView;
@@ -94,8 +82,8 @@ public class MainActivityFragment extends Fragment implements UpdateFragment{
 
 
         // Hypo - circle
-        btnLeft = (Button) rootView.findViewById(R.id.btnLeftArrow);
-        btnRight = (Button) rootView.findViewById(R.id.btnRightArrow);
+        Button btnLeft = (Button) rootView.findViewById(R.id.btnLeftArrow);
+        Button btnRight = (Button) rootView.findViewById(R.id.btnRightArrow);
 
         btnLeft.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -142,12 +130,12 @@ public class MainActivityFragment extends Fragment implements UpdateFragment{
 
             @Override
             public void onTabUnselected(TabLayout.Tab tab) {
-
+                //Unused
             }
 
             @Override
             public void onTabReselected(TabLayout.Tab tab) {
-
+                //Unused
             }
         });
 
@@ -211,7 +199,7 @@ public class MainActivityFragment extends Fragment implements UpdateFragment{
             animation.start();
 
             ptsBarProgress.setInnerBottomText(pts + " points à " + Classement.convertirClassementInt(classementCalcul));
-            ptsBarProgress.setInnerBottomTextColor(ContextCompat.getColor(getContext(), R.color.colorPersoDark));
+            ptsBarProgress.setInnerBottomTextColor(ContextCompat.getColor(getContext(), R.color.colorUdaGreen));
 
 
             // Onclick lance le detail du calcul

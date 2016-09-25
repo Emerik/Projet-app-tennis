@@ -3,6 +3,7 @@ package emerikbedouin.mytennisrank.ihm;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Layout;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
@@ -116,6 +117,10 @@ public class CalculDetailsActivity extends AppCompatActivity {
             //La listview
             LinkedList<Match> matchsIntoAccount = Classement.getMatchsIntoAccount(mainProfil.getJoueurProfil().getClassement(), mainProfil.getMatchs(), modeCalcul);
             MatchAdapter adapterM = new MatchAdapterPoints(this, matchsIntoAccount, 1, classement, modeCalcul);
+
+            View headerView = (View) getLayoutInflater().inflate(R.layout.listview_header, null);
+
+            listViewMatch.addHeaderView(headerView);
 
             listViewMatch.setAdapter(adapterM);
         }
