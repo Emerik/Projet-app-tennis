@@ -16,6 +16,10 @@ import emerikbedouin.mytennisrank.modele.Classement;
 import emerikbedouin.mytennisrank.modele.Profil;
 import emerikbedouin.mytennisrank.R;
 
+/**
+ * Created by emerikbedouin
+ * Activity destiné à l'ajout/modification d'un profil
+ */
 public class ProfilActivity extends AppCompatActivity {
 
     private Button btnCancel, btnValid;

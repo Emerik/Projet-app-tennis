@@ -73,6 +73,9 @@ public class MatchFragment extends Fragment implements UpdateFragment{
 
     }
 
+    /**
+     * Cette fonction réalise un appel (Intent) à l'activity d'ajout de match
+     */
     public void addMatch(){
         //Lancement de la fenetre d'ajout de match
         Intent intent = new Intent(getActivity(), MatchDetailActivity.class);
@@ -138,6 +141,9 @@ public class MatchFragment extends Fragment implements UpdateFragment{
         startActivity(intent);
     }
 
+    /**
+     * Class event qui appelle l'activity de modification de match
+     */
     class ClickOnItemMatch implements AdapterView.OnItemClickListener{
 
         @Override

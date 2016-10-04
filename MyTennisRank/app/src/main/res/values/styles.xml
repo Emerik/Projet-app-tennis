@@ -35,9 +35,14 @@
     </style>
 
     <!-- List textView -->
-    <style name="ListTextView" >
+    <style name="HeaderListTextView" >
         <item name="android:textColor">@android:color/white</item>
         <item name="android:textSize">18sp</item>
+    </style>
+    <style name="ItemListTextView" >
+        <item name="android:textColor">@color/textColor</item>
+        <item name="android:textAppearance">?android:attr/textAppearanceMedium</item>
+        <item name="android:gravity">center_horizontal|center_vertical</item>
     </style>
 
 </resources>

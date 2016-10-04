@@ -7,8 +7,8 @@
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:orientation="vertical"
-        android:background="@color/colorPersoBackground"
-        android:padding="5dp">
+        android:background="@color/colorUda"
+        >
 
         <TextView
             android:layout_width="wrap_content"
@@ -17,7 +17,7 @@
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:text="Victoire"
             android:id="@+id/textViewVictoire"
-            android:textColor="@color/textColor"
+            android:textColor="@color/white"
             android:padding="5dp"
             android:textStyle="bold" />
 
@@ -26,8 +26,8 @@
             android:layout_height="0dp"
             android:layout_weight="1"
             android:id="@+id/listViewV"
-            android:layout_marginLeft="5dp"
-            android:layout_marginRight="5dp"
+
+
             android:background="@drawable/bordershadow" />
 
         <TextView
@@ -37,7 +37,7 @@
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:text="Défaite"
             android:id="@+id/textViewDefaite"
-            android:textColor="@color/textColor"
+            android:textColor="@color/white"
             android:padding="5dp"
             android:textStyle="bold" />
 
@@ -47,8 +47,7 @@
             android:layout_weight="1"
             android:id="@+id/listViewD"
             android:background="@android:color/white"
-            android:layout_marginLeft="5dp"
-            android:layout_marginRight="5dp" />
+          />
 
 
 

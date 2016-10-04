@@ -1,11 +1,8 @@
 package emerikbedouin.mytennisrank.ihm;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.text.Layout;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -18,6 +15,9 @@ import emerikbedouin.mytennisrank.modele.Match;
 import emerikbedouin.mytennisrank.modele.Profil;
 import emerikbedouin.mytennisrank.R;
 
+/**
+ * Activity affichant le résultat détaillé d'une simulation
+ */
 public class CalculDetailsActivity extends AppCompatActivity {
 
 
@@ -27,7 +27,6 @@ public class CalculDetailsActivity extends AppCompatActivity {
     //View
     private TextView tvClass, tvVict, tvDef, tvPts, tvTotal, tvBonus, tvBilan, tvPEC, tvDelta;
     private RelativeLayout layoutBilan;
-    private Button btnBack;
     private ListView listViewMatch;
 
 
@@ -57,17 +56,10 @@ public class CalculDetailsActivity extends AppCompatActivity {
 
     }
 
-
+    /**
+     * Initialisation des composants graphiques
+     */
     public void initComp(){
-
-        btnBack = (Button) findViewById(R.id.buttonBack);
-        btnBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(CalculDetailsActivity.this, MainActivity.class);
-                startActivity(intent);
-            }
-        });
 
 
         // Bilan
@@ -86,6 +78,9 @@ public class CalculDetailsActivity extends AppCompatActivity {
         listViewMatch = (ListView) findViewById(R.id.listViewMatch);
     }
 
+    /**
+     * Cette fonction rempli les différentes view avec le résultat de la simulation
+     */
     public void fillViewCalcul(){
 
         Profil mainProfil = ProfilSingleton.getInstance().getProfil();
@@ -126,20 +121,4 @@ public class CalculDetailsActivity extends AppCompatActivity {
         }
     }
 
-
-    public void animateBilan(){
-        // Set the content view to 0% opacity but visible, so that it is visible
-        // (but fully transparent) during the animation.
-        // layoutBilan.setAlpha(0f);
-
-        // Animate the content view to 100% opacity, and clear any animation
-        // listener set on the view.
-
-
-        layoutBilan.animate()
-                .alpha(1f)
-                .setDuration(500)
-                .setListener(null);
-
-    }
 }

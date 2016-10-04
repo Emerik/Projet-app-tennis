@@ -36,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main_activity);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        toolbar.setNavigationIcon(R.drawable.balle);
+        toolbar.setNavigationIcon(R.drawable.tennis_ball);
 
         toolbar.setTitle("Tennis Rank");
 
@@ -171,7 +171,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     private void setupViewPager(final ViewPager viewPager) {
-        ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
+        final ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
         adapter.addFragment(new MainActivityFragment(), "Bilan");
         adapter.addFragment(new MatchFragment(), "Matchs");
         viewPager.setAdapter(adapter);

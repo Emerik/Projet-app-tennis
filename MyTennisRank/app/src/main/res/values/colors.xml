@@ -83,4 +83,5 @@
     <color name="colorOrange">#f9c693</color>
     <color name="colorYellow">#FFEB3B</color>
     <color name="black">#000000</color>
+    <color name="white">#FFFFFF</color>
 </resources>

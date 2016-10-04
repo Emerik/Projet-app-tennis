@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    android:fillViewport="true">
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        xmlns:custom="http://schemas.android.com/apk/res-auto"
+        android:orientation="vertical"
+        android:weightSum="5.8">
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.3"
+            android:background="@color/colorUda"
+            />
+
+        <!-- Partie Bilan -->
+        <LinearLayout
+            android:id="@+id/layout_bilan"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="2"
+            android:weightSum="10"
+            android:background="@color/colorUda"
+            android:orientation="vertical"
+            >
+
+            <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="5"
+            android:orientation="horizontal"
+            android:weightSum="10"
+            >
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="4.9"
+                    android:orientation="vertical"
+                    android:paddingLeft="15dp"
+                    >
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Victoire"
+                        android:textSize="16sp"
+                        android:textColor="@android:color/white"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/textViewVictoire"
+                        android:text="0"
+                        android:textSize="48dp"
+                        android:textColor="@android:color/white"/>
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.05"
+                    android:background="@color/colorUdaGreen"
+                    />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="4.9"
+                    android:orientation="vertical"
+                    android:paddingLeft="15dp"
+                    >
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Defaite"
+                        android:textSize="16sp"
+                        android:textColor="@android:color/white"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/textViewDefaite"
+                        android:text="0"
+                        android:textSize="48dp"
+                        android:textColor="@android:color/white"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <View
+                android:id="@+id/vicdef_bottomline"
+                android:layout_width="20dp"
+                android:layout_height="1dp"
+                android:background="@color/colorUdaGreen"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="4"
+                android:id="@+id/textViewClassement"
+                android:gravity="center_horizontal|center_vertical"
+                android:textSize="48sp"
+                android:textColor="@android:color/white"
+                android:text="15/3"
+                android:alpha="0"/>
+            <View
+                android:id="@+id/classement_bottomline"
+                android:layout_width="20dp"
+                android:layout_height="1dp"
+                android:background="@color/colorUdaGreen"
+                android:layout_marginLeft="100dp"
+                android:layout_marginRight="100dp"
+                />
+
+        </LinearLayout>
+
+
+        <!-- Partie simulation -->
+        <RelativeLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="3"
+            >
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:background="@color/colorUda"
+                android:layout_alignParentTop="true"
+
+                />
+
+
+            <TextView
+                android:id="@+id/textview_selection_simulation"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="selection type de simulation"
+                android:layout_alignParentBottom="true"
+                android:gravity="center"
+                android:textSize="14sp"
+                android:textColor="@android:color/black"
+                android:textAllCaps="true"
+                />
+
+            <Button
+                style="?android:attr/buttonStyleSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="&lt;"
+                android:id="@+id/btnLeftArrow"
+                android:background="@drawable/btn_tennisrank"
+                android:textSize="28sp"
+                android:layout_alignBaseline="@+id/btnRightArrow"
+                android:layout_alignBottom="@+id/btnRightArrow"
+                android:layout_alignParentStart="true" />
+
+            <Button
+                style="?android:attr/buttonStyleSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=">"
+                android:id="@+id/btnRightArrow"
+                android:background="@drawable/btn_tennisrank"
+                android:textSize="28sp"
+                android:layout_alignBottom="@+id/donut_progress"
+                android:layout_alignParentEnd="true" />
+
+
+
+            <View
+                android:id="@+id/circle"
+                android:layout_width="210dp"
+                android:layout_height="210dp"
+                android:layout_centerHorizontal="true"
+                android:layout_alignParentTop="true"
+                android:background="@drawable/circle"/>
+
+            <com.github.lzyzsd.circleprogress.DonutProgress
+                android:id="@+id/donut_progress"
+                android:layout_width="200dp"
+                android:layout_height="200dp"
+                custom:donut_progress="75"
+                custom:donut_unfinished_color="@color/colorUdaGreen"
+                custom:donut_finished_color="@color/colorSuccess"
+                custom:donut_text_color="@color/colorUda"
+                custom:donut_background_color="@color/white"
+                android:layout_centerHorizontal="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginTop="5dp"/>
+
+
+            <ImageView
+                android:id="@+id/detail_imageView"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:layout_above="@id/textview_selection_simulation"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="10dp"
+                android:src="@drawable/list2"/>
+
+        </RelativeLayout>
+
+
+        <!-- Partie mode de simulation -->
+        <android.support.design.widget.TabLayout
+            android:id="@+id/tabMode"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.5"
+            android:background="@color/colorUda"
+            style="@style/MyCustomTabLayout"
+            >
+
+        </android.support.design.widget.TabLayout>
+
+    </LinearLayout>
+</ScrollView>

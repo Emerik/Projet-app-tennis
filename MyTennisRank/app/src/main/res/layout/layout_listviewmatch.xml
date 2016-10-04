@@ -4,59 +4,39 @@
     android:layout_height="match_parent"
     android:padding="16dp">
 -->
-<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/tableLayout1"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:stretchColumns="*"
+    android:layout_height="48dp"
+    android:weightSum="3"
+    android:orientation="horizontal"
+    android:paddingTop="8dp"
+    android:paddingBottom="8dp"
+    android:paddingLeft="16dp"
+    android:paddingRight="16dp"
     >
 
-
-    <TableRow
-        android:id="@+id/tableRow1"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="15dip"
-        android:gravity="center_horizontal">
-
     <TextView
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:layout_weight="1"
         android:text="Medium Text"
         android:id="@+id/textViewClassement"
-        android:gravity="center_horizontal"
-        android:textColor="@color/textColor" />
-
-   <!-- <View
-        android:layout_height="match_parent"
-        android:layout_width="1dp"
-        android:background="@android:color/black"
-        android:layout_alignParentTop="true"
-        android:layout_toStartOf="@+id/textViewScore" />
-    -->
+        style="@style/ItemListTextView" />
 
     <TextView
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:layout_weight="1"
         android:text="Medium Text"
         android:id="@+id/textViewNom"
-        android:gravity="center_horizontal"
-        android:textColor="@color/textColor" />
+        style="@style/ItemListTextView" />
 
     <TextView
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:layout_weight="1"
         android:text="Medium Text"
         android:id="@+id/textViewScore"
-        android:gravity="center_horizontal"
-        android:textColor="@color/textColor" />
-<!--
-            android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true" -->
+        style="@style/ItemListTextView" />
 
-
-    </TableRow>
-</TableLayout>
+</LinearLayout>

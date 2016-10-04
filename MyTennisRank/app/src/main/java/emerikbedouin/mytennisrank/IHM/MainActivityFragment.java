@@ -6,12 +6,15 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
+import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.Button;
-import android.widget.RelativeLayout;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.github.lzyzsd.circleprogress.DonutProgress;
@@ -21,19 +24,23 @@ import emerikbedouin.mytennisrank.modele.Classement;
 import emerikbedouin.mytennisrank.modele.Profil;
 import emerikbedouin.mytennisrank.R;
 
+import static android.webkit.ConsoleMessage.MessageLevel.LOG;
+
 /**
  * A placeholder fragment containing a simple view.
  */
 public class MainActivityFragment extends Fragment implements UpdateFragment{
 
-    private int classementCalcul;
-    private int modeCalcul = 0;
+    private int mClassementCalcul;
+    private int mModeCalcul = 0;
 
     //View
     private TextView tvClass, tvVict, tvDef, tvNom, tvSimulation;
-    private RelativeLayout layoutBilan;
+    private LinearLayout layoutBilan;
     private DonutProgress ptsBarProgress;
     private TabLayout tabLayout;
+    private ImageView mDetailImageView;
+    private View classBottomLine,vicdefBottomLine;
 
 
     public MainActivityFragment() {
@@ -43,18 +50,19 @@ public class MainActivityFragment extends Fragment implements UpdateFragment{
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_main_activity, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_main_v2, container, false);
 
         // Recuperation des Vue
         initComposant(rootView);
 
         animateBilan();
+        animateLine();
 
         // Traitement
-        classementCalcul = 1;
+        mClassementCalcul = 1;
 
         if(ProfilSingleton.getInstance().getProfil() != null) {
-            classementCalcul = ProfilSingleton.getInstance().getProfil().getJoueurProfil().getClassement();
+            mClassementCalcul = ProfilSingleton.getInstance().getProfil().getJoueurProfil().getClassement();
             upBilanProfil();
             upProgressBar();
         }
@@ -74,11 +82,11 @@ public class MainActivityFragment extends Fragment implements UpdateFragment{
 
 
         // Bilan
-        layoutBilan = (RelativeLayout) rootView.findViewById(R.id.relativLayoutBilan);
+        layoutBilan = (LinearLayout) rootView.findViewById(R.id.layout_bilan);
         tvClass = (TextView) rootView.findViewById(R.id.textViewClassement);
         tvVict = (TextView) rootView.findViewById(R.id.textViewVictoire);
         tvDef = (TextView) rootView.findViewById(R.id.textViewDefaite);
-        tvNom = (TextView) rootView.findViewById(R.id.textViewNom);
+        //tvNom = (TextView) rootView.findViewById(R.id.textViewNom);
 
 
         // Hypo - circle
@@ -101,9 +109,22 @@ public class MainActivityFragment extends Fragment implements UpdateFragment{
 
         ptsBarProgress = (DonutProgress) rootView.findViewById(R.id.donut_progress);
 
-        tvSimulation = (TextView) rootView.findViewById(R.id.simulationTextView);
+        //tvSimulation = (TextView) rootView.findViewById(R.id.simulationTextView);
 
 
+        mDetailImageView = (ImageView) rootView.findViewById(R.id.detail_imageView);
+
+        // Onclick lance le detail du calcul
+        mDetailImageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //Lancement de la fenetre de création d'un nouveau profil
+                Intent intent = new Intent(getActivity(), CalculDetailsActivity.class);
+                intent.putExtra("classement", mClassementCalcul);
+                intent.putExtra("mode", mModeCalcul);
+                startActivity(intent);
+            }
+        });
 
         tabLayout = (TabLayout) rootView.findViewById(R.id.tabMode);
 
@@ -140,6 +161,10 @@ public class MainActivityFragment extends Fragment implements UpdateFragment{
         });
 
 
+        // Les bottom line
+        classBottomLine = rootView.findViewById(R.id.classement_bottomline);
+        vicdefBottomLine = rootView.findViewById(R.id.vicdef_bottomline);
+
     }
 
     public void animateBilan(){
@@ -151,13 +176,33 @@ public class MainActivityFragment extends Fragment implements UpdateFragment{
         // listener set on the view.
 
 
-        layoutBilan.animate()
+        tvClass.animate()
                 .alpha(1f)
                 .setDuration(500)
                 .setListener(null);
 
     }
 
+
+    public void animateLine(){
+
+
+        DisplayMetrics metrics = new DisplayMetrics();
+        getActivity().getWindowManager().getDefaultDisplay().getMetrics(metrics);
+        int screenWidth = metrics.widthPixels;
+
+        Log.v("MAIN FRGAMENT","screen w : "+screenWidth);
+
+        ViewWidthAnimation anim2 = new ViewWidthAnimation(vicdefBottomLine, screenWidth*18/20);
+        anim2.setDuration(500);
+
+        ViewWidthAnimation anim = new ViewWidthAnimation(classBottomLine, screenWidth*3/6);
+        anim.setDuration(750);
+
+        classBottomLine.startAnimation(anim);
+        vicdefBottomLine.startAnimation(anim2);
+
+    }
 
     /**
      * Cette fonction actualise la bar de progression du joueur
@@ -170,8 +215,8 @@ public class MainActivityFragment extends Fragment implements UpdateFragment{
         if(mainProfil != null) {
 
 
-            int pts = Classement.calculPointTotal(classementCalcul, mainProfil.getMatchs(), modeCalcul);
-            int ptsMaintien = Classement.ptsMaintien(classementCalcul);
+            int pts = Classement.calculPointTotal(mClassementCalcul, mainProfil.getMatchs(), mModeCalcul);
+            int ptsMaintien = Classement.ptsMaintien(mClassementCalcul);
 
             int res = 0;
 
@@ -182,7 +227,7 @@ public class MainActivityFragment extends Fragment implements UpdateFragment{
                 ptsBarProgress.setFinishedStrokeColor(ContextCompat.getColor(getContext(), R.color.colorSuccess));
                 ptsBarProgress.setProgress(0);
             } else {
-                ptsBarProgress.setFinishedStrokeColor(ContextCompat.getColor(getContext(), R.color.colorFail));
+                ptsBarProgress.setFinishedStrokeColor(ContextCompat.getColor(getContext(), R.color.colorSuccess));
             }
 
             //ptsBarProgress.setProgress(res);
@@ -198,21 +243,11 @@ public class MainActivityFragment extends Fragment implements UpdateFragment{
             animation.setInterpolator(new DecelerateInterpolator());
             animation.start();
 
-            ptsBarProgress.setInnerBottomText(pts + " points à " + Classement.convertirClassementInt(classementCalcul));
-            ptsBarProgress.setInnerBottomTextColor(ContextCompat.getColor(getContext(), R.color.colorUdaGreen));
+            ptsBarProgress.setInnerBottomText(pts + " points à " + Classement.convertirClassementInt(mClassementCalcul));
+            ptsBarProgress.setInnerBottomTextColor(ContextCompat.getColor(getContext(), R.color.colorUda));
 
 
-            // Onclick lance le detail du calcul
-            ptsBarProgress.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    //Lancement de la fenetre de création d'un nouveau profil
-                    Intent intent = new Intent(getActivity(), CalculDetailsActivity.class);
-                    intent.putExtra("classement", classementCalcul);
-                    intent.putExtra("mode", modeCalcul);
-                    startActivity(intent);
-                }
-            });
+
         }
         else{
             ptsBarProgress.setProgress(0);
@@ -231,11 +266,11 @@ public class MainActivityFragment extends Fragment implements UpdateFragment{
             //Classement
             tvClass.setText(Classement.convertirClassementInt(mainProfil.getJoueurProfil().getClassement()));
             //Victoire
-            tvVict.setText(mainProfil.getNbreVictoire() + " Victoire");
+            tvVict.setText(mainProfil.getNbreVictoire() + "");
             //Defaite
-            tvDef.setText(mainProfil.getNbreDefaite() + " Défaites");
+            tvDef.setText(mainProfil.getNbreDefaite() + "");
             //Nom du profil
-            tvNom.setText(mainProfil.getNom());
+            //tvNom.setText(mainProfil.getNom());
 
         }
         else{
@@ -249,26 +284,27 @@ public class MainActivityFragment extends Fragment implements UpdateFragment{
     // Fonctions pour la séléction du mode de calcul
 
     public void setCurrent(){
-        modeCalcul = 0;
-        tvSimulation.setText("Simulation classement ACTUEL");
+
+        mModeCalcul = 0;
+        //tvSimulation.setText("Simulation classement ACTUEL");
         upProgressBar();
     }
 
     public void setFutur(){
-        modeCalcul = 1;
-        tvSimulation.setText("Simulation classement PRÉVU");
+        mModeCalcul = 1;
+        //tvSimulation.setText("Simulation classement PRÉVU");
         upProgressBar();
     }
 
     public void setDown(){
-        modeCalcul = 2;
-        tvSimulation.setText("Simulation classement DESCENTE");
+        mModeCalcul = 2;
+        //tvSimulation.setText("Simulation classement DESCENTE");
         upProgressBar();
     }
 
     public void setUp(){
-        modeCalcul = 3;
-        tvSimulation.setText("Simulation classement MONTER");
+        mModeCalcul = 3;
+        //tvSimulation.setText("Simulation classement MONTER");
         upProgressBar();
     }
 
@@ -277,9 +313,11 @@ public class MainActivityFragment extends Fragment implements UpdateFragment{
      * @return
      */
     public boolean initialized(){
-        if (tvSimulation == null || tvClass == null || tvDef == null || tvVict == null) return false;
+
+        if ( tvClass == null || tvDef == null || tvVict == null ) return false;
         if(ptsBarProgress == null) return false;
         if(tabLayout == null) return false;
+
 
         return true;
     }
@@ -291,10 +329,12 @@ public class MainActivityFragment extends Fragment implements UpdateFragment{
     public void update() {
 
         if (initialized()) {
-            if(ProfilSingleton.getInstance().getProfil()!= null ) classementCalcul = ProfilSingleton.getInstance().getProfil().getJoueurProfil().getClassement();
+
+            if(ProfilSingleton.getInstance().getProfil()!= null ) mClassementCalcul = ProfilSingleton.getInstance().getProfil().getJoueurProfil().getClassement();
 
             upBilanProfil();
             upProgressBar();
+            animateLine();
         }
     }
 
@@ -303,9 +343,9 @@ public class MainActivityFragment extends Fragment implements UpdateFragment{
      * @param nbr Le nombre à ajouter au classement actuel
      */
     public void changeClassementCalcul(int nbr){
-        if (classementCalcul > 0 && classementCalcul < 20) {
+        if (mClassementCalcul > 0 && mClassementCalcul < 20) {
 
-            classementCalcul += nbr;
+            mClassementCalcul += nbr;
             upProgressBar();
         }
     }
