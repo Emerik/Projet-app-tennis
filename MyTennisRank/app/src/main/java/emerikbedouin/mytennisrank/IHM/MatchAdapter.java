@@ -10,6 +10,7 @@ import java.util.LinkedList;
 import emerikbedouin.mytennisrank.modele.Match;
 
 /**
+ * Copyright (C) 2016 Emerik Bedouin - All Rights Reserved
  * Created by emerikbedouin on 06/04/16.
  */
 abstract class MatchAdapter extends BaseAdapter {

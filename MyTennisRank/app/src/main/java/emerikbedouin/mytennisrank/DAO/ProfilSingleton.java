@@ -3,7 +3,8 @@ package emerikbedouin.mytennisrank.dao;
 import emerikbedouin.mytennisrank.modele.Profil;
 
 /**
-*	Classe d'acc�s unique au profil actuel
+ * Copyright (C) 2016 Emerik Bedouin - All Rights Reserved
+ * Classe d'acc�s unique au profil actuel
 **/
 public class ProfilSingleton{
 

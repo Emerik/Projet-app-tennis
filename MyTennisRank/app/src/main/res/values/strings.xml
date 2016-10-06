@@ -8,13 +8,16 @@
     <string name="text_VE2I5G">V-E-2I-5G</string>
     <string name="text_bonus">Bonus</string>
     <string name="text_points">Points</string>
+    <string name="text_victory">Victoire</string>
+    <string name="text_defeat">Défaite</string>
+    <string name="text_victory_into_account">Victoire PEC</string>
 
     <string name="text_button_valid">Valider</string>
     <string name="text_button_cancel">Annuler</string>
 
     <string name="text_item_new_profil">Nouveau profil</string>
     <string name="text_item_modify_profil">Modifier profil</string>
-    <string name="text_item_save_profil">Sauvegarder</string>
+    <string name="text_item_save_profil">Sauvegarder profil</string>
     <string name="text_item_load_profil">Charger</string>
     <string name="text_item_delete_profil">Supprimer profil</string>
     <string name="text_item_demo_profil">Profil demo</string>

@@ -15,6 +15,7 @@ import emerikbedouin.mytennisrank.modele.Match;
 import emerikbedouin.mytennisrank.R;
 
 /**
+ * Copyright (C) 2016 Emerik Bedouin - All Rights Reserved
  * Created by emerikbedouin on 22/06/16.
  */
 public class MatchAdapterPoints extends MatchAdapter implements AdapterView.OnItemClickListener {

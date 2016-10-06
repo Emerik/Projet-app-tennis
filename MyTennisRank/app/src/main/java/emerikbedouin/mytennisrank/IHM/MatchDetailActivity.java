@@ -19,6 +19,10 @@ import emerikbedouin.mytennisrank.modele.Joueur;
 import emerikbedouin.mytennisrank.modele.Match;
 import emerikbedouin.mytennisrank.R;
 
+/**
+ * Copyright (C) 2016 Emerik Bedouin - All Rights Reserved
+ * Activity affichant un match en détail
+ */
 public class MatchDetailActivity extends AppCompatActivity {
 
     private int mode;

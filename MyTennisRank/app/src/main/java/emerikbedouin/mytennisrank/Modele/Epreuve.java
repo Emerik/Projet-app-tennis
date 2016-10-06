@@ -6,6 +6,7 @@ import android.os.Parcelable;
 import java.io.Serializable;
 
 /**
+ * Copyright (C) 2016 Emerik Bedouin - All Rights Reserved
  * Created by emerikbedouin on 10/03/16.
  */
 

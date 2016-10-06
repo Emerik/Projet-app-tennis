@@ -6,6 +6,7 @@ import java.io.Serializable;
 import java.util.LinkedList;
 
 /**
+ * Copyright (C) 2016 Emerik Bedouin - All Rights Reserved
  * Created by emerikbedouin on 10/03/16.
  */
 public class Profil implements Parcelable, Serializable{

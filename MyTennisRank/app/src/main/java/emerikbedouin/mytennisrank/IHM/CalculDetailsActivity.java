@@ -16,6 +16,7 @@ import emerikbedouin.mytennisrank.modele.Profil;
 import emerikbedouin.mytennisrank.R;
 
 /**
+ * Copyright (C) 2016 Emerik Bedouin - All Rights Reserved
  * Activity affichant le résultat détaillé d'une simulation
  */
 public class CalculDetailsActivity extends AppCompatActivity {
@@ -26,7 +27,6 @@ public class CalculDetailsActivity extends AppCompatActivity {
 
     //View
     private TextView tvClass, tvVict, tvDef, tvPts, tvTotal, tvBonus, tvBilan, tvPEC, tvDelta;
-    private RelativeLayout layoutBilan;
     private ListView listViewMatch;
 
 
@@ -63,7 +63,6 @@ public class CalculDetailsActivity extends AppCompatActivity {
 
 
         // Bilan
-        layoutBilan = (RelativeLayout) findViewById(R.id.relativLayoutBilan);
         tvClass = (TextView) findViewById(R.id.textViewClassement);
         tvVict = (TextView) findViewById(R.id.textViewVictoire);
         tvDef = (TextView) findViewById(R.id.textViewDefaite);

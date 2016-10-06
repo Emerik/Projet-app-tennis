@@ -21,6 +21,7 @@ import emerikbedouin.mytennisrank.modele.Match;
 import emerikbedouin.mytennisrank.R;
 
 /**
+ * Copyright (C) 2016 Emerik Bedouin - All Rights Reserved
  * Created by emerikbedouin on 16/08/16.
  * Fragment d'affichage des matchs du joueur
  */

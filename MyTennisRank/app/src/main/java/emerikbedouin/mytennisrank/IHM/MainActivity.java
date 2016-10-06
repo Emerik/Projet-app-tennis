@@ -18,10 +18,13 @@ import emerikbedouin.mytennisrank.modele.Joueur;
 import emerikbedouin.mytennisrank.modele.Match;
 import emerikbedouin.mytennisrank.modele.Profil;
 
+/**
+ * Copyright (C) 2016 Emerik Bedouin - All Rights Reserved
+ * Activity principal de l'application
+ */
 
 public class MainActivity extends AppCompatActivity {
 
-    //private Profil mainProfil = null;
     private TabLayout tabLayout;
     private ViewPager viewPager;
 
@@ -73,9 +76,6 @@ public class MainActivity extends AppCompatActivity {
         // as you specify a parent activity in AndroidManifest.xml.
 
         switch (item.getItemId()) {
-            case R.id.action_settings:
-                settings();
-                return true;
             case R.id.action_new_profil:
                 newProfil();
                 return true;
@@ -99,10 +99,9 @@ public class MainActivity extends AppCompatActivity {
 
     // Fonction des items du menu
 
-    public void settings(){
-        // To define
-    }
-
+    /**
+     * Cette fonction lance l'activity pour créer un nouveau profil
+     */
     public void newProfil(){
         //Lancement de la fenetre de création d'un nouveau profil
         Intent intent = new Intent(MainActivity.this, ProfilActivity.class);
@@ -110,6 +109,9 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    /**
+     * Cette fonction lance l'activity pour modifier le profil
+     */
     public void modifyProfil(){
         //Lancement de la fenetre de création d'un nouveau profil
         Intent intent = new Intent(MainActivity.this, ProfilActivity.class);
@@ -117,6 +119,9 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    /**
+     * Cette focntion sauvegarde le pofil actuel en mémoire
+     */
     public void saveProfil(){
 
         boolean res = FileManager.saveProfil(this, ProfilSingleton.getInstance().getProfil(), "profil.txt");
@@ -128,6 +133,9 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * Cette fonction charge le profil sauvegardé
+     */
     public void loadProfil(){
 
         if(ProfilSingleton.getInstance().getProfil() == null) {
@@ -144,6 +152,9 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * Cette fonction supprime le profil actuel
+     */
     public void deleteProfil(){
         if(ProfilSingleton.getInstance().getProfil() != null) {
 
@@ -158,18 +169,23 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), "Erreur !", Toast.LENGTH_LONG).show();
             }
 
-            System.out.println("Profil encore la : "+ProfilSingleton.getInstance().getProfil());
 
         }
     }
 
+    /**
+     * Cette fonction créee un profil de démo avec plusieurs matchs
+     */
     public void demoProfil(){
 
         creationProfilComplet();
         ((ViewPagerAdapter) viewPager.getAdapter()).updateItems();
     }
 
-
+    /**
+     * Cette fonction configure l'adapter du ViewPager
+     * @param viewPager
+     */
     private void setupViewPager(final ViewPager viewPager) {
         final ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
         adapter.addFragment(new MainActivityFragment(), "Bilan");
@@ -178,13 +194,17 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-
+    /**
+     * Cette fonction retourne le ViewPager
+     */
     public ViewPager getViewPager(){
         return viewPager;
     }
 
 
-    // Pour les tests ------ To delete
+    /**
+     * Cette fonction créee un profil pour la démo
+     */
     public void creationProfilComplet(){
 
         Profil p = new Profil();

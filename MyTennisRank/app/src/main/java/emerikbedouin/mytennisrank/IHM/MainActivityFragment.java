@@ -7,7 +7,6 @@ import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,10 +23,9 @@ import emerikbedouin.mytennisrank.modele.Classement;
 import emerikbedouin.mytennisrank.modele.Profil;
 import emerikbedouin.mytennisrank.R;
 
-import static android.webkit.ConsoleMessage.MessageLevel.LOG;
-
 /**
- * A placeholder fragment containing a simple view.
+ * Copyright (C) 2016 Emerik Bedouin - All Rights Reserved
+ * Fragment principal affichant un bilan simple et permettant de simuler le nombre de points au classement choisis
  */
 public class MainActivityFragment extends Fragment implements UpdateFragment{
 
@@ -35,7 +33,7 @@ public class MainActivityFragment extends Fragment implements UpdateFragment{
     private int mModeCalcul = 0;
 
     //View
-    private TextView tvClass, tvVict, tvDef, tvNom, tvSimulation;
+    private TextView tvClass, tvVict, tvDef;
     private LinearLayout layoutBilan;
     private DonutProgress ptsBarProgress;
     private TabLayout tabLayout;
@@ -50,7 +48,7 @@ public class MainActivityFragment extends Fragment implements UpdateFragment{
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_main_v2, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_main_fragment, container, false);
 
         // Recuperation des Vue
         initComposant(rootView);
@@ -167,6 +165,10 @@ public class MainActivityFragment extends Fragment implements UpdateFragment{
 
     }
 
+
+    /**
+     * Cette fonction réalise l'animation du bloc bilan
+     */
     public void animateBilan(){
         // Set the content view to 0% opacity but visible, so that it is visible
         // (but fully transparent) during the animation.
@@ -183,15 +185,15 @@ public class MainActivityFragment extends Fragment implements UpdateFragment{
 
     }
 
-
+    /**
+     * Cette fonction réalise l'animation des bottom line
+     */
     public void animateLine(){
 
 
         DisplayMetrics metrics = new DisplayMetrics();
         getActivity().getWindowManager().getDefaultDisplay().getMetrics(metrics);
         int screenWidth = metrics.widthPixels;
-
-        Log.v("MAIN FRGAMENT","screen w : "+screenWidth);
 
         ViewWidthAnimation anim2 = new ViewWidthAnimation(vicdefBottomLine, screenWidth*18/20);
         anim2.setDuration(500);

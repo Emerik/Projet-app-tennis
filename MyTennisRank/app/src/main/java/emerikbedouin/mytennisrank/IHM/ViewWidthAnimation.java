@@ -7,7 +7,7 @@ import android.view.animation.Transformation;
 import android.widget.LinearLayout;
 
 /**
- * Created by emerikbedouin on 03/10/2016.
+ * Class réalisant une animation lié à la largeur d'une View
  */
 
 public class ViewWidthAnimation extends Animation {

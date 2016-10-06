@@ -17,7 +17,7 @@ import emerikbedouin.mytennisrank.modele.Profil;
 import emerikbedouin.mytennisrank.R;
 
 /**
- * Created by emerikbedouin
+ * Copyright (C) 2016 Emerik Bedouin - All Rights Reserved
  * Activity destiné à l'ajout/modification d'un profil
  */
 public class ProfilActivity extends AppCompatActivity {
@@ -37,7 +37,7 @@ public class ProfilActivity extends AppCompatActivity {
     }
 
     /**
-     * Cette fonction initialise les composant de l'activity
+     * Cette fonction initialise les composants de l'activity
      */
     public void initComp(){
         editTextName = (EditText) findViewById(R.id.editTextName);

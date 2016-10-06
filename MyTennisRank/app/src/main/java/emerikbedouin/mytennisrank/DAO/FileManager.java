@@ -14,6 +14,7 @@ import java.io.ObjectOutputStream;
 import emerikbedouin.mytennisrank.modele.Profil;
 
 /**
+ * Copyright (C) 2016 Emerik Bedouin - All Rights Reserved
  * Created by emerikbedouin on 25/03/16.
  */
 

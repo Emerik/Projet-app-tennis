@@ -19,6 +19,7 @@
             android:layout_width="wrap_content"
             android:layout_height="0dp"
             android:layout_weight="0.1"
+            android:paddingLeft="10dp"
             android:gravity="center_vertical"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:text="Détails du calcul"
@@ -55,7 +56,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:text="Nbre Victoire :"
+                    android:text="@string/text_victory"
                     android:id="@+id/textViewVictoire"
                     android:layout_marginBottom="5dp"
                     android:textColor="@color/textColor" />
@@ -64,7 +65,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:text="Nbre Défaite :"
+                    android:text="@string/text_defeat"
                     android:id="@+id/textViewDefaite"
                     android:textColor="@color/textColor" />
 
@@ -72,7 +73,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:text="V-E-2I-5G : "
+                    android:text="@string/text_VE2I5G"
                     android:id="@+id/textViewDelta"
                     android:textColor="@color/textColor" />
 
@@ -91,7 +92,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:text="Nombre PEC :"
+                    android:text="@string/text_victory_into_account"
                     android:id="@+id/textViewPEC"
                     android:textColor="@color/textColor" />
 
@@ -114,7 +115,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:text="Total (requis) : "
+                    android:text="Total (requis)"
                     android:id="@+id/textViewTotal"
                     android:textColor="@color/textColor" />
 
