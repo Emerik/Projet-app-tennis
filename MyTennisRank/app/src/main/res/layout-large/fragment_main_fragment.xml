@@ -14,7 +14,7 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="0.2"
+            android:layout_weight="0.3"
             android:background="@color/colorUda"
             />
 
@@ -42,12 +42,12 @@
                     android:layout_height="match_parent"
                     android:layout_weight="4.9"
                     android:orientation="vertical"
-                    android:paddingStart="15dp"
+                    android:paddingLeft="15dp"
                     >
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/text_victory"
+                        android:text="Victoire"
                         android:textSize="16sp"
                         android:textColor="@android:color/white"/>
                     <TextView
@@ -55,7 +55,7 @@
                         android:layout_height="wrap_content"
                         android:id="@+id/textViewVictoire"
                         android:text="0"
-                        android:textSize="48sp"
+                        android:textSize="48dp"
                         android:textColor="@android:color/white"/>
 
                 </LinearLayout>
@@ -72,12 +72,12 @@
                     android:layout_height="match_parent"
                     android:layout_weight="4.9"
                     android:orientation="vertical"
-                    android:paddingStart="15dp"
+                    android:paddingLeft="15dp"
                     >
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/text_defeat"
+                        android:text="Defaite"
                         android:textSize="16sp"
                         android:textColor="@android:color/white"/>
                     <TextView
@@ -85,7 +85,7 @@
                         android:layout_height="wrap_content"
                         android:id="@+id/textViewDefaite"
                         android:text="0"
-                        android:textSize="48sp"
+                        android:textSize="48dp"
                         android:textColor="@android:color/white"/>
 
                 </LinearLayout>
@@ -128,7 +128,7 @@
             xmlns:android="http://schemas.android.com/apk/res/android"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="3.1"
+            android:layout_weight="3"
             >
 
 
@@ -140,16 +140,17 @@
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
-                    android:layout_weight="1.5"
+                    android:layout_weight="1.7"
                     android:background="@color/colorUda"
+                    android:layout_alignParentTop="true"
+
                     />
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
-                    android:layout_weight="1.6"
+                    android:layout_weight="1.3"
                     android:orientation="horizontal"
-                    android:gravity="center_vertical"
                     android:weightSum="1">
                     <Button
                         style="?android:attr/buttonStyleSmall"
@@ -186,14 +187,13 @@
                     android:layout_height="0dp"
                     android:layout_weight="0.5"
                     android:layout_gravity="center_horizontal"
-                    android:contentDescription="Detail de la simulation"
                     android:src="@drawable/list2"/>
 
                 <TextView
                     android:id="@+id/textview_selection_simulation"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
-                    android:layout_weight="0.4"
+                    android:layout_weight="0.5"
                     android:text="selection type de simulation"
                     android:gravity="center"
                     android:textSize="14sp"
@@ -206,19 +206,20 @@
 
             <View
                 android:id="@+id/circle"
-                android:layout_width="190dp"
-                android:layout_height="190dp"
+                android:layout_width="250dp"
+                android:layout_height="250dp"
                 android:layout_centerHorizontal="true"
                 android:layout_alignParentTop="true"
-                android:background="@drawable/circle"/>
+                android:background="@drawable/circle"
+                android:layout_marginTop="40dp"/>
 
             <com.github.lzyzsd.circleprogress.DonutProgress
                 android:id="@+id/donut_progress"
-                android:layout_width="180dp"
-                android:layout_height="180dp"
+                android:layout_width="240dp"
+                android:layout_height="240dp"
                 android:layout_alignParentTop="true"
                 android:layout_centerHorizontal="true"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="45dp"
                 custom:donut_progress="75"
                 custom:donut_unfinished_color="@color/colorUdaGreen"
                 custom:donut_finished_color="@color/colorSuccess"
