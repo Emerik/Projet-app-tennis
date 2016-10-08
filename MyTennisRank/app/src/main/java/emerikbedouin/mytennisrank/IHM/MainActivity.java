@@ -201,6 +201,12 @@ public class MainActivity extends AppCompatActivity {
         return viewPager;
     }
 
+    /**
+     * Cette fonction update les fragement de l'adapter
+     */
+    public void updateFragment(){
+        ((ViewPagerAdapter) viewPager.getAdapter()).updateItems();
+    }
 
     /**
      * Cette fonction créee un profil pour la démo
@@ -224,17 +230,17 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-        Match m1 = new Match(j1, j2, "6/0,6/0","surface",1, new Epreuve(),0,0);
-        Match m2 = new Match(j1, j3, "6/0,6/0","surface",1, new Epreuve(),0,0);
-        Match m3 = new Match(j1, j4, "6/0,6/0","surface",1, new Epreuve(),0,0);
-        Match m4 = new Match(j1, j5, "6/0,6/0","surface",1, new Epreuve(),0,0);
-        Match m5 = new Match(j1, j6, "6/0,6/0","surface",1, new Epreuve(),0,0);
-        Match m6 = new Match(j1, j7, "6/0,6/0","surface",1, new Epreuve(),0,0);
-        Match m7 = new Match(j1, j8, "6/0,6/0","surface",1, new Epreuve(),0,0);
-        Match m8 = new Match(j1, j6, "6/0,6/0","surface",1, new Epreuve(),0,0);
+        Match m1 = new Match(j1, j2, "6/4-6/2","surface",1, new Epreuve(),0,0);
+        Match m2 = new Match(j1, j3, "7/5-6/3","surface",1, new Epreuve(),0,0);
+        Match m3 = new Match(j1, j4, "6/0-4/6-6/2","surface",1, new Epreuve(),0,0);
+        Match m4 = new Match(j1, j5, "6/1-6/1","surface",1, new Epreuve(),0,0);
+        Match m5 = new Match(j1, j6, "6/4-6/0","surface",1, new Epreuve(),0,0);
+        Match m6 = new Match(j1, j7, "7/6-6/4","surface",1, new Epreuve(),0,0);
+        Match m7 = new Match(j1, j8, "6/3-6/3","surface",1, new Epreuve(),0,0);
+        Match m8 = new Match(j1, j6, "6/4-6/3","surface",1, new Epreuve(),0,0);
 
-        Match m9 = new Match(j1, j9, "6/0,6/0","surface",0, new Epreuve(),0,0);
-        Match m10 = new Match(j1, j10, "6/0,6/0","surface",0, new Epreuve(),0,0);
+        Match m9 = new Match(j1, j9, "6/4,6/3","surface",0, new Epreuve(),0,0);
+        Match m10 = new Match(j1, j10, "6/3,6/3","surface",0, new Epreuve(),0,0);
 
         p.setJoueurProfil(j1);
 

@@ -1,5 +1,6 @@
 package emerikbedouin.mytennisrank.ihm;
 
+import android.database.DataSetObserver;
 import android.support.v4.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
@@ -136,7 +137,6 @@ public class MatchFragment extends Fragment implements UpdateFragment{
         // Lancement de l'activité MatchDetailActivity
         Intent intent = new Intent(getActivity(), MatchDetailActivity.class);
         //Passage du profil
-        //intent.putExtra("profil", (Parcelable) mainProfil);
         intent.putExtra("mode","modify");
         intent.putExtra("match", (Parcelable) matchSelected);
         startActivity(intent);
@@ -156,14 +156,7 @@ public class MatchFragment extends Fragment implements UpdateFragment{
             // On récupère le match  cliqué
             Match matchSelected = (Match) parent.getItemAtPosition(itemPosition);
 
-            // Lancement de l'activité MatchDetailActivity
-            Intent intent = new Intent(getActivity(), MatchDetailActivity.class);
-            //Passage du profil
-            //intent.putExtra("profil", (Parcelable) mainProfil);
-            intent.putExtra("mode","modify");
-            intent.putExtra("match", (Parcelable) matchSelected);
-            startActivity(intent);
-
+            modifyMatch(matchSelected);
 
         }
 
@@ -190,9 +183,7 @@ public class MatchFragment extends Fragment implements UpdateFragment{
                 }
             }
 
-            //Définition de l'adapter
-            // ArrayAdapter<Match> adapterV = new ArrayAdapter<Match>(this, android.R.layout.simple_list_item_1, android.R.id.text1, listVictoire);
-            // ArrayAdapter<Match> adapterD = new ArrayAdapter<Match>(this, android.R.layout.simple_list_item_1, android.R.id.text1, listDefaite);
+            //Définition des adapter
             MatchAdapterDelete adapterV = new MatchAdapterDelete(getActivity(), listVictoire);
             MatchAdapterDelete adapterD = new MatchAdapterDelete(getActivity(), listDefaite);
             listViewVictoire.setAdapter(adapterV);
@@ -200,6 +191,15 @@ public class MatchFragment extends Fragment implements UpdateFragment{
             //On click
             listViewVictoire.setOnItemClickListener(new ClickOnItemMatch());
             listViewDefaite.setOnItemClickListener(new ClickOnItemMatch());
+
+            // Data Observer pour actualiser les views
+            adapterV.registerDataSetObserver(new DataSetObserver() {
+                @Override
+                public void onChanged() {
+                    super.onChanged();
+                    ((MainActivity) getActivity()).updateFragment();
+                }
+            });
         }
         else{
             listViewDefaite.setAdapter(null);
