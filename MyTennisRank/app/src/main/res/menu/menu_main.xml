@@ -24,6 +24,12 @@
         app:showAsAction="never" />
 
     <item
+        android:id="@+id/action_email_profil"
+        android:orderInCategory="100"
+        android:title="@string/text_item_email_profil"
+        app:showAsAction="never" />
+
+    <item
         android:id="@+id/action_demo_profil"
         android:orderInCategory="100"
         android:title="@string/text_item_demo_profil"

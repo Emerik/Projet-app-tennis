@@ -30,12 +30,12 @@
             >
 
             <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="5"
-            android:orientation="horizontal"
-            android:weightSum="10"
-            >
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="5"
+                android:orientation="horizontal"
+                android:weightSum="10"
+                >
 
                 <LinearLayout
                     android:layout_width="0dp"
@@ -129,77 +129,11 @@
             android:layout_weight="3.2"
             >
 
-
-            <LinearLayout
+            <View
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:weightSum="4">
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="1.5"
-                    android:background="@color/colorUda"
-                    />
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="1.6"
-                    android:orientation="horizontal"
-                    android:gravity="center_vertical"
-                    android:weightSum="1">
-                    <Button
-                        style="?android:attr/buttonStyleSmall"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="0.2"
-                        android:text="&lt;"
-                        android:id="@+id/btnLeftArrow"
-                        android:background="@drawable/btn_tennisrank"
-                        android:textSize="28sp"
-                        />
-
-                    <View
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="0.6"/>
-
-                    <Button
-                        style="?android:attr/buttonStyleSmall"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="0.2"
-                        android:text=">"
-                        android:id="@+id/btnRightArrow"
-                        android:background="@drawable/btn_tennisrank"
-                        android:textSize="28sp" />
-
-                </LinearLayout>
-
-
-                <ImageView
-                    android:id="@+id/detail_imageView"
-                    android:layout_width="36dp"
-                    android:layout_height="0dp"
-                    android:layout_weight="0.5"
-                    android:layout_gravity="center_horizontal"
-                    android:contentDescription="Detail de la simulation"
-                    android:src="@drawable/list2"/>
-
-                <TextView
-                    android:id="@+id/textview_selection_simulation"
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="0.4"
-                    android:text="selection type de simulation"
-                    android:gravity="center"
-                    android:textSize="14sp"
-                    android:textColor="@android:color/black"
-                    android:textAllCaps="true"
-                    />
-            </LinearLayout>
-
+                android:layout_height="90dp"
+                android:background="@color/colorUda"
+                />
 
 
             <View
@@ -224,10 +158,68 @@
                 custom:donut_background_color="@color/white"
                 />
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_alignParentBottom="true"
+                android:weightSum="1">
+                <Button
+                    style="?android:attr/buttonStyleSmall"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.2"
+                    android:text="&lt;"
+                    android:id="@+id/btnLeftArrow"
+                    android:background="@drawable/btn_tennisrank"
+                    android:textSize="28sp"
+                    />
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.6"/>
+
+                <Button
+                    style="?android:attr/buttonStyleSmall"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.2"
+                    android:text=">"
+                    android:id="@+id/btnRightArrow"
+                    android:background="@drawable/btn_tennisrank"
+                    android:textSize="28sp" />
+
+            </LinearLayout>
 
 
         </RelativeLayout>
 
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:padding="5dp"
+            >
+            <ImageView
+                android:id="@+id/detail_imageView"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:layout_gravity="center_horizontal"
+                android:contentDescription="Detail de la simulation"
+                android:src="@drawable/list2"/>
+        </FrameLayout>
+
+        <TextView
+            android:id="@+id/textview_selection_simulation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="selection type de simulation"
+            android:gravity="center"
+            android:textSize="14sp"
+            android:textColor="@android:color/black"
+            android:textAllCaps="true"
+            />
 
         <!-- Partie mode de simulation -->
         <android.support.design.widget.TabLayout

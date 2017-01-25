@@ -13,6 +13,8 @@ import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import emerikbedouin.mytennisrank.BuildConfig;
+import emerikbedouin.mytennisrank.dao.FileManager;
 import emerikbedouin.mytennisrank.dao.ProfilSingleton;
 import emerikbedouin.mytennisrank.modele.Classement;
 import emerikbedouin.mytennisrank.modele.Joueur;
@@ -205,18 +207,27 @@ public class MatchDetailActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * Cette fonction ajoute un match en mémoire
+     */
     public void addMatch(){
 
         // Ajout au profil
         if(ProfilSingleton.getInstance().getProfil() != null) {
             Match matchTemp = getMatchFromEntry();
             ProfilSingleton.getInstance().getProfil().getMatchs().add(matchTemp);
+
+            //Sauvegarde en mémoire
+            saveMatch();
         }
         else{
             Toast.makeText(getApplicationContext(), "Erreur : Aucun profil !", Toast.LENGTH_LONG).show();
         }
     }
 
+    /**
+     * Cette fonction modifie le match affiché en mémoire
+     */
     public void modifyMatch(){
 
         if(ProfilSingleton.getInstance().getProfil() != null) {
@@ -229,12 +240,28 @@ public class MatchDetailActivity extends AppCompatActivity {
                 }
             }
             ProfilSingleton.getInstance().getProfil().getMatchs().add(matchTemp);
+
+            // Sauvegarde en mémoire
+            saveMatch();
         }
         else{
             Toast.makeText(getApplicationContext(), "Erreur : Aucun profil !", Toast.LENGTH_LONG).show();
         }
     }
 
+    public void saveMatch(){
+
+        if(FileManager.saveProfilJSON(this, ProfilSingleton.getInstance().getProfil(), BuildConfig.SAVE_FILE_NAME)){
+            Toast.makeText(getApplicationContext(), "Profil sauvegardé !", Toast.LENGTH_LONG).show();
+        }
+        else{
+            Toast.makeText(getApplicationContext(), "Erreur lors de la sauvegarde", Toast.LENGTH_LONG).show();
+        }
+    }
+
+    /**
+     * Cette fonction lance le Fragment Match
+     */
     public void appelFenetreMatchs(){
         //Lancement de la fenetre des matchs
         Intent intent = new Intent(MatchDetailActivity.this, MainActivity.class);

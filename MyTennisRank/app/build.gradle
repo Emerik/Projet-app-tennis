@@ -17,6 +17,10 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
+    buildTypes.each {
+        it.buildConfigField 'String', 'SAVE_FILE_NAME', '"my_tennis_save.txt"'
+    }
 }
 
 dependencies {

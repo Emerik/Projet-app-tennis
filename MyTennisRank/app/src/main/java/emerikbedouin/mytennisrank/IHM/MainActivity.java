@@ -1,16 +1,20 @@
 package emerikbedouin.mytennisrank.ihm;
 
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+
+import emerikbedouin.mytennisrank.BuildConfig;
 import emerikbedouin.mytennisrank.R;
 import android.content.Intent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import emerikbedouin.mytennisrank.Utility;
 import emerikbedouin.mytennisrank.dao.FileManager;
 import emerikbedouin.mytennisrank.dao.ProfilSingleton;
 import emerikbedouin.mytennisrank.modele.Epreuve;
@@ -91,6 +95,9 @@ public class MainActivity extends AppCompatActivity {
             case R.id.action_demo_profil:
                 demoProfil();
                 return true;
+            case R.id.action_email_profil:
+                exportByMail();
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -124,7 +131,7 @@ public class MainActivity extends AppCompatActivity {
      */
     public void saveProfil(){
 
-        boolean res = FileManager.saveProfil(this, ProfilSingleton.getInstance().getProfil(), "profil.txt");
+        boolean res = FileManager.saveProfilJSON(this, ProfilSingleton.getInstance().getProfil(), BuildConfig.SAVE_FILE_NAME);
 
         if (res)
             Toast.makeText(getApplicationContext(), "Profil sauvegardé !", Toast.LENGTH_LONG).show();
@@ -140,7 +147,7 @@ public class MainActivity extends AppCompatActivity {
 
         if(ProfilSingleton.getInstance().getProfil() == null) {
 
-            ProfilSingleton.getInstance().setProfil( FileManager.loadProfil(this, "profil.txt") );
+            ProfilSingleton.getInstance().setProfil( FileManager.loadProfilJSON(this, BuildConfig.SAVE_FILE_NAME) );
 
             if (ProfilSingleton.getInstance().getProfil() != null)
                 Toast.makeText(getApplicationContext(), "Profil chargé !", Toast.LENGTH_LONG).show();
@@ -180,6 +187,19 @@ public class MainActivity extends AppCompatActivity {
 
         creationProfilComplet();
         ((ViewPagerAdapter) viewPager.getAdapter()).updateItems();
+    }
+
+    /**
+     * Cette fonction exporte les données du profil par mail
+     */
+    public void exportByMail(){
+        Intent intent = new Intent(Intent.ACTION_SENDTO);
+        intent.setData(Uri.parse("mailto:")); // only email apps should handle this
+        intent.putExtra(Intent.EXTRA_SUBJECT, "Ma saison");
+        intent.putExtra(Intent.EXTRA_TEXT, Utility.getJSONfromProfil(ProfilSingleton.getInstance().getProfil()));
+        if (intent.resolveActivity(getPackageManager()) != null) {
+            startActivity(intent);
+        }
     }
 
     /**

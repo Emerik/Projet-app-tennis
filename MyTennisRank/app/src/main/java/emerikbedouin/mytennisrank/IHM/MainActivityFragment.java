@@ -195,6 +195,8 @@ public class MainActivityFragment extends Fragment implements UpdateFragment{
         getActivity().getWindowManager().getDefaultDisplay().getMetrics(metrics);
         int screenWidth = metrics.widthPixels;
 
+
+
         ViewWidthAnimation anim2 = new ViewWidthAnimation(vicdefBottomLine, screenWidth*18/20);
         anim2.setDuration(500);
 

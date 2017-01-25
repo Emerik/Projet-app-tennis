@@ -10,6 +10,7 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import emerikbedouin.mytennisrank.BuildConfig;
 import emerikbedouin.mytennisrank.dao.FileManager;
 import emerikbedouin.mytennisrank.dao.ProfilSingleton;
 import emerikbedouin.mytennisrank.modele.Classement;
@@ -104,7 +105,7 @@ public class ProfilActivity extends AppCompatActivity {
 
 
             // Enregistrement
-            if( FileManager.saveProfil(ProfilActivity.this, ProfilSingleton.getInstance().getProfil(), "profil.txt") ){
+            if( FileManager.saveProfilJSON(ProfilActivity.this, ProfilSingleton.getInstance().getProfil(), BuildConfig.SAVE_FILE_NAME) ){
                 Toast.makeText(getApplicationContext(), "Profil sauvegardé", Toast.LENGTH_LONG).show();
             }
             else{
